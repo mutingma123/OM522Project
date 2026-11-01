@@ -1,0 +1,152 @@
+{
+  "manifest": {
+    "instance": "development_medium",
+    "uncertain_input": "processing_times.csv, processing_time",
+    "model": "each processing time times an independent lognormal factor, mean 1",
+    "coefficient_of_variation": 0.2,
+    "scenarios": 30,
+    "seed": 20261103,
+    "generator": "numpy.random.default_rng(seed).lognormal(mean=-s^2/2, sigma=s), s^2 = ln(1 + cv^2), drawn job by job and stage by stage in jobs.csv and stage order, scenario after scenario",
+    "files": [
+      "scenario_01.csv",
+      "scenario_02.csv",
+      "scenario_03.csv",
+      "scenario_04.csv",
+      "scenario_05.csv",
+      "scenario_06.csv",
+      "scenario_07.csv",
+      "scenario_08.csv",
+      "scenario_09.csv",
+      "scenario_10.csv",
+      "scenario_11.csv",
+      "scenario_12.csv",
+      "scenario_13.csv",
+      "scenario_14.csv",
+      "scenario_15.csv",
+      "scenario_16.csv",
+      "scenario_17.csv",
+      "scenario_18.csv",
+      "scenario_19.csv",
+      "scenario_20.csv",
+      "scenario_21.csv",
+      "scenario_22.csv",
+      "scenario_23.csv",
+      "scenario_24.csv",
+      "scenario_25.csv",
+      "scenario_26.csv",
+      "scenario_27.csv",
+      "scenario_28.csv",
+      "scenario_29.csv",
+      "scenario_30.csv"
+    ]
+  },
+  "ig_settings": {
+    "iterations": 5000,
+    "seed": 522,
+    "iterations_run": 5000,
+    "seconds": 3.764808781999818
+  },
+  "computer": {
+    "cpu": "Intel(R) Core(TM) Ultra 7 155U",
+    "os": "Linux 6.18.54.1-microsoft-standard-WSL2",
+    "python": "3.12.16",
+    "numpy": "2.5.4",
+    "numba": "0.68.0"
+  },
+  "methods": {
+    "rule": {
+      "deterministic_total_weighted_tardiness": 2371.0,
+      "deterministic_total_waiting": 2040.0,
+      "total_weighted_tardiness": {
+        "mean": 3541.0596214263237,
+        "p90": 4616.615918437773
+      },
+      "total_waiting": {
+        "mean": 2454.5463374164315,
+        "p90": 2768.5659986994215
+      },
+      "scenarios_breaking_a_hard_constraint": 0
+    },
+    "ig": {
+      "deterministic_total_weighted_tardiness": 58.0,
+      "deterministic_total_waiting": 794.0,
+      "total_weighted_tardiness": {
+        "mean": 420.5961109617384,
+        "p90": 592.1507509505151
+      },
+      "total_waiting": {
+        "mean": 1276.9265377442923,
+        "p90": 1454.8522237015134
+      },
+      "scenarios_breaking_a_hard_constraint": 0
+    }
+  },
+  "ig_better_tardiness_in_scenarios": 30,
+  "sweep": [
+    {
+      "cv": 0.1,
+      "seed": 6522,
+      "rule": {
+        "mean": 2720.052656576884,
+        "p90": 3171.5662302620517
+      },
+      "ig": {
+        "mean": 148.06260518143327,
+        "p90": 228.3925065588977
+      },
+      "ig_better_in_scenarios": 30
+    },
+    {
+      "cv": 0.2,
+      "seed": 6523,
+      "rule": {
+        "mean": 3273.5402449475005,
+        "p90": 4424.955864739072
+      },
+      "ig": {
+        "mean": 407.17004490256403,
+        "p90": 643.9096507718026
+      },
+      "ig_better_in_scenarios": 30
+    },
+    {
+      "cv": 0.3,
+      "seed": 6524,
+      "rule": {
+        "mean": 4139.802210396908,
+        "p90": 6213.354660687715
+      },
+      "ig": {
+        "mean": 952.5484470679243,
+        "p90": 1676.024631899677
+      },
+      "ig_better_in_scenarios": 30
+    },
+    {
+      "cv": 0.5,
+      "seed": 6525,
+      "rule": {
+        "mean": 6680.402588490676,
+        "p90": 9498.838141076989
+      },
+      "ig": {
+        "mean": 2996.67242226699,
+        "p90": 5434.210170100863
+      },
+      "ig_better_in_scenarios": 30
+    },
+    {
+      "cv": 0.8,
+      "seed": 6526,
+      "rule": {
+        "mean": 12230.510855894134,
+        "p90": 17419.98796521238
+      },
+      "ig": {
+        "mean": 8901.551016335023,
+        "p90": 14219.806204671338
+      },
+      "ig_better_in_scenarios": 29
+    }
+  ]
+}
