@@ -77,6 +77,19 @@ def solve(args) -> int:
     return 0
 
 
+def results_dir(text: str | None, default: str) -> Path:
+    from .compare import ROOT
+
+    return user_path(text) if text else ROOT / "results" / default
+
+
+def compare(args) -> int:
+    from . import compare as comparison
+
+    comparison.run(results_dir(args.out, "comparison"))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="pfsp", description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -92,6 +105,10 @@ def main(argv: list[str] | None = None) -> int:
     p_solve.add_argument("--seed", type=int, default=DEFAULT_SEED, help="ig random seed")
     p_solve.add_argument("--time-cap", type=float, default=DEFAULT_TIME_CAP, help="ig safety cap, seconds")
     p_solve.set_defaults(handler=solve)
+
+    p_compare = commands.add_parser("compare", help="deterministic comparison on four instances")
+    p_compare.add_argument("--out", help="output directory (default results/comparison)")
+    p_compare.set_defaults(handler=compare)
 
     args = parser.parse_args(argv)
     return args.handler(args)
