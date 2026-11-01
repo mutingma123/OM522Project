@@ -30,6 +30,11 @@ class Unreadable(Exception):
     pass
 
 
+def _t(value: float) -> str:
+    """Format a time for a message: whole numbers without a decimal point, others in full."""
+    return str(int(value)) if float(value).is_integer() else repr(float(value))
+
+
 def _rows(path: Path, columns: list[str]) -> list[dict[str, str]]:
     if not path.is_file():
         raise Unreadable(f"{path.name}: file is missing")
@@ -146,8 +151,8 @@ def check_decision(input_dir, decision_path, processing_times=None) -> dict:
             violations.append(f"{job} at {stage}: no processing time in the input")
         elif abs((completion - start) - expected) > TOL:
             violations.append(
-                f"{job} at {stage}: runs {completion - start!r} from {start!r} to {completion!r}, "
-                f"but its processing time is {expected!r}"
+                f"{job} at {stage}: runs {_t(completion - start)} from {_t(start)} to {_t(completion)}, "
+                f"but its processing time is {_t(expected)}"
             )
 
     # Constraint 3: release at the first stage, then stage order.
@@ -159,11 +164,11 @@ def check_decision(input_dir, decision_path, processing_times=None) -> dict:
                 continue
             start, completion = times[(job, stage)]
             if previous is None and stage == stages[0] and start < release - TOL:
-                violations.append(f"{job} at {stage}: starts at {start!r} before its release {release!r}")
+                violations.append(f"{job} at {stage}: starts at {_t(start)} before its release {_t(release)}")
             if previous is not None and start < previous[1] - TOL:
                 violations.append(
-                    f"{job} at {stage}: starts at {start!r} before it completes {previous[0]} "
-                    f"at {previous[1]!r}"
+                    f"{job} at {stage}: starts at {_t(start)} before it completes {previous[0]} "
+                    f"at {_t(previous[1])}"
                 )
             previous = (stage, completion)
 
@@ -174,7 +179,7 @@ def check_decision(input_dir, decision_path, processing_times=None) -> dict:
         )
         for (s1, c1, j1), (s2, c2, j2) in zip(on_stage, on_stage[1:]):
             if s2 < c1 - TOL:
-                violations.append(f"{stage}: {j2} starts at {s2!r} while {j1} runs until {c1!r}")
+                violations.append(f"{stage}: {j2} starts at {_t(s2)} while {j1} runs until {_t(c1)}")
         order = [job for _, _, job in on_stage]
         if sequence and order != [job for job in sequence if (job, stage) in times]:
             violations.append(f"{stage}: processing order {order} differs from the sequence")
