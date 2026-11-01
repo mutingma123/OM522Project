@@ -1,0 +1,16 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "option6-flow-line"
+version = "0.1.0"
+description = "OM 522 option 6: one job sequence for an eight-stage production line"
+requires-python = ">=3.12"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pfsp", "src/pfsp_check"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

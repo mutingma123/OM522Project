@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# OM 522 option 6 project
+# Scratch output from ad hoc solve runs; submitted results live in results/
+out/
+# Paper PDFs and extracted text are not ours to redistribute; LEDGER.md and index.json are kept
+library/*.pdf
+library/*.txt
+library/*.html
+library/logs/
