@@ -1,0 +1,110 @@
+{
+  "10.1016_j.ejor.2005.12.009": {
+    "query": "10.1016/j.ejor.2005.12.009",
+    "source": "downloaded from www-sciencedirect-com through the library proxy",
+    "route": "library",
+    "version": "",
+    "url": "",
+    "doi": "10.1016/j.ejor.2005.12.009",
+    "title": "A simple and effective iterated greedy algorithm for the permutation flowshop scheduling problem",
+    "matched_title": "A simple and effective iterated greedy algorithm for the permutation flowshop scheduling problem",
+    "authors": [
+      "Rubén Ruíz",
+      "Thomas Stützle"
+    ],
+    "year": 2006,
+    "venue": "European Journal of Operational Research",
+    "cited_by": 1144,
+    "arxiv": "",
+    "openalex": "https://openalex.org/W2006751452",
+    "title_check": "pass",
+    "pdf": "10.1016_j.ejor.2005.12.009.pdf",
+    "text": "10.1016_j.ejor.2005.12.009.txt",
+    "pages": 17,
+    "bytes": 540901,
+    "fetched_at": "2026-11-01T17:19:05",
+    "notes": [
+      {
+        "at": "2026-11-01T17:36:29",
+        "why": "",
+        "note": "Read pp. 2036-2041. Original IG for makespan: NEH steps (Sec. 3), destruction/construction, iterative improvement insertion (Fig. 1), constant-temperature acceptance eq. (1); DOE settles d=4 (3 to 5 statistically similar) and T=0.4 (T not significant)."
+      }
+    ]
+  },
+  "10.1016_j.cor.2006.08.016": {
+    "query": "10.1016/j.cor.2006.08.016",
+    "source": "downloaded from www-sciencedirect-com through the library proxy",
+    "route": "library",
+    "version": "",
+    "url": "",
+    "doi": "10.1016/j.cor.2006.08.016",
+    "title": "Minimising total tardiness in the m-machine flowshop problem: A review and evaluation of heuristics and metaheuristics",
+    "matched_title": "Minimising total tardiness in the m-machine flowshop problem: A review and evaluation of heuristics and metaheuristics",
+    "authors": [
+      "Eva Vallada",
+      "Rubén Ruíz",
+      "Gerardo Minella"
+    ],
+    "year": 2006,
+    "venue": "Computers & Operations Research",
+    "cited_by": 189,
+    "arxiv": "",
+    "openalex": "https://openalex.org/W2006358835",
+    "title_check": "pass",
+    "pdf": "10.1016_j.cor.2006.08.016.pdf",
+    "text": "10.1016_j.cor.2006.08.016.txt",
+    "pages": 24,
+    "bytes": 372813,
+    "fetched_at": "2026-11-01T17:20:09",
+    "notes": [
+      {
+        "at": "2026-11-01T17:36:29",
+        "why": "",
+        "note": "Read Secs. 3, 5 (heuristics results) and 6. Review of 40 total tardiness methods: insertion and interchange heuristics (ENS1, ENS2 starting from NEHedd) best among heuristics; NEHedd outranks EDD; simulated annealing methods best metaheuristics; adapted makespan methods perform well for tardiness. Supports insertion-based search over a dispatching rule."
+      }
+    ]
+  },
+  "10.1016_j.ejor.2006.07.029": {
+    "query": "10.1016/j.ejor.2006.07.029",
+    "source": "downloaded from www-sciencedirect-com through the library proxy",
+    "route": "library",
+    "version": "",
+    "url": "",
+    "doi": "10.1016/j.ejor.2006.07.029",
+    "title": "An Iterated Greedy heuristic for the sequence dependent setup times flowshop problem with makespan and weighted tardiness objectives",
+    "matched_title": "An Iterated Greedy heuristic for the sequence dependent setup times flowshop problem with makespan and weighted tardiness objectives",
+    "authors": [
+      "Rubén Ruíz",
+      "Thomas Stützle"
+    ],
+    "year": 2006,
+    "venue": "European Journal of Operational Research",
+    "cited_by": 396,
+    "arxiv": "",
+    "openalex": "https://openalex.org/W1977133017",
+    "title_check": "pass",
+    "pdf": "10.1016_j.ejor.2006.07.029.pdf",
+    "text": "10.1016_j.ejor.2006.07.029.txt",
+    "pages": 17,
+    "bytes": 689850,
+    "fetched_at": "2026-11-01T17:20:25",
+    "notes": [
+      {
+        "at": "2026-11-01T17:36:29",
+        "why": "",
+        "note": "Read pp. 1146-1148, 1153-1156. IG_RS_LS for weighted tardiness: NEH_EWDD start (ascending d/w), d=4, T=0.5, temperature T*sum(p)/(n*m*10), descent insertion local search (Fig. 2), acceptance as Fig. 3. NEH_EWDD beat NEH on 470 of 480 instances; IG_RS_LS best of the methods tested for SDST-FSP-WT. Source of the project's researched method."
+      }
+    ]
+  },
+  "10.1016_0305_0483_83_90088_9": {
+    "query": "10.1016/0305-0483(83)90088-9",
+    "title": "",
+    "notes": [
+      {
+        "at": "2026-11-01T17:22:10",
+        "why": "",
+        "note": "Not obtained: three attempts returned Campbell, Dudek and Smith (1970), then an unrelated 2025 paper; files removed. NEH steps are taken from Ruiz and Stuetzle (2007), Section 3, and the project does not cite NEH (1983) as read."
+      }
+    ]
+  }
+}

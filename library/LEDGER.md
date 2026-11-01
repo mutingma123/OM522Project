@@ -1,0 +1,16 @@
+# Paper ledger: library/
+
+Every fetch, read and note made through `paper`, newest at the bottom.
+
+| when | action | key | title | why | detail |
+|---|---|---|---|---|---|
+| 2026-11-01 17:17 | fetched | 10.1016_0305_0483_83_90088_9 | A heuristic algorithm for the m-machine, n-job flow-shop sequencing problem | OM 522 option 6: researched method (NEH insertion, iterated greedy for weighted tardiness, tardiness heuristic review) named in the brief | 9 pages, 554 KB, library |
+| 2026-11-01 17:19 | fetched | 10.1016_j.ejor.2005.12.009 | A simple and effective iterated greedy algorithm for the permutation flowshop scheduling problem | OM 522 option 6: researched method (NEH insertion, iterated greedy for weighted tardiness, tardiness heuristic review) named in the brief | 17 pages, 528 KB, library |
+| 2026-11-01 17:20 | fetched | 10.1016_j.cor.2006.08.016 | Minimising total tardiness in the m-machine flowshop problem: A review and evaluation of heuristics and metahe | OM 522 option 6: researched method (NEH insertion, iterated greedy for weighted tardiness, tardiness heuristic review) named in the brief | 24 pages, 364 KB, library |
+| 2026-11-01 17:20 | fetched | 10.1016_j.ejor.2006.07.029 | An Iterated Greedy heuristic for the sequence dependent setup times flowshop problem with makespan and weighte | OM 522 option 6: researched method (NEH insertion, iterated greedy for weighted tardiness, tardiness heuristic review) named in the brief | 17 pages, 673 KB, library |
+| 2026-11-01 17:21 | fetched | 10.1016_0305_0483_83_90088_9 | A heuristic algorithm for the m-machine, n-job flow-shop sequencing problem | refetch: the first copy was Campbell, Dudek and Smith (1970), not NEH (1983) | 9 pages, 554 KB, library |
+| 2026-11-01 17:21 | fetched | 10.1016_0305_0483_83_90088_9 | BNMG: A Novel Deterministic Hybrid Algorithm with Global Makespan-Based Swap Mechanism for the Permutation Flo | refetch through the publisher page: EBSCO returns Campbell, Dudek and Smith (1970) for this DOI | 25 pages, 430 KB, library |
+| 2026-11-01 17:22 | noted | 10.1016_0305_0483_83_90088_9 |  |  | Not obtained: three attempts returned Campbell, Dudek and Smith (1970), then an unrelated 2025 paper; files removed. NEH steps are taken from Ruiz and Stuetzle  |
+| 2026-11-01 17:36 | noted | 10.1016_j.ejor.2006.07.029 | An Iterated Greedy heuristic for the sequence dependent setup times flowshop problem with makespan and weighte |  | Read pp. 1146-1148, 1153-1156. IG_RS_LS for weighted tardiness: NEH_EWDD start (ascending d/w), d=4, T=0.5, temperature T*sum(p)/(n*m*10), descent insertion loc |
+| 2026-11-01 17:36 | noted | 10.1016_j.ejor.2005.12.009 | A simple and effective iterated greedy algorithm for the permutation flowshop scheduling problem |  | Read pp. 2036-2041. Original IG for makespan: NEH steps (Sec. 3), destruction/construction, iterative improvement insertion (Fig. 1), constant-temperature accep |
+| 2026-11-01 17:36 | noted | 10.1016_j.cor.2006.08.016 | Minimising total tardiness in the m-machine flowshop problem: A review and evaluation of heuristics and metahe |  | Read Secs. 3, 5 (heuristics results) and 6. Review of 40 total tardiness methods: insertion and interchange heuristics (ENS1, ENS2 starting from NEHedd) best am |
