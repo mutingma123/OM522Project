@@ -1,0 +1,86 @@
+"""Command line for the decision tool: `python -m pfsp solve <input_dir> <output_dir>`."""
+
+from __future__ import annotations
+
+import argparse
+import os
+import platform
+import sys
+import time
+from pathlib import Path
+
+from .data import InputError, load_instance
+from .output import build_decision, measures, write_outputs
+from .rule import edd_sequence
+
+
+def user_path(text: str) -> Path:
+    """Resolve a path the way the user typed it. Pixi runs tasks from the project root and records
+    the directory the command was typed in as INIT_CWD, so relative paths resolve against that."""
+    path = Path(text).expanduser()
+    if not path.is_absolute():
+        path = Path(os.environ.get("INIT_CWD", os.getcwd())) / path
+    return path.resolve()
+
+
+def run_method(instance, method: str, args) -> tuple[object, dict]:
+    """Run one method and return (sequence or None, settings and stopping details)."""
+    if method == "rule":
+        return edd_sequence(instance), {"rule": "earliest due date, ties by job_id"}
+    raise ValueError(f"unknown method {method}")
+
+
+def solve(args) -> int:
+    input_dir, output_dir = user_path(args.input_dir), user_path(args.output_dir)
+    if output_dir == input_dir:
+        print("The output directory must differ from the input directory.", file=sys.stderr)
+        return 2
+    try:
+        instance = load_instance(input_dir)
+    except InputError as error:
+        print(f"Input rejected ({len(error.messages)} problem(s)); no decision.json written:", file=sys.stderr)
+        for message in error.messages:
+            print(f"  {message}", file=sys.stderr)
+        return 1
+
+    began = time.perf_counter()
+    seq, details = run_method(instance, args.method, args)
+    elapsed = time.perf_counter() - began
+    if seq is None:
+        print("no feasible decision found")
+        return 0
+
+    found = measures(instance, seq)
+    summary = {
+        "status": "decision written",
+        "instance": str(input_dir.name),
+        "jobs": instance.n,
+        "stages": instance.m,
+        "time_unit": instance.time_unit,
+        "method": args.method,
+        "details": details,
+        "computation_seconds": elapsed,
+        "computer": f"{platform.processor() or platform.machine()} ({platform.system()})",
+        "measures": found,
+    }
+    write_outputs(output_dir, build_decision(instance, seq), summary)
+    print(f"{args.method} on {input_dir.name}: {instance.n} jobs, {instance.m} stages")
+    print(f"  total weighted tardiness     {found['total_weighted_tardiness']}")
+    print(f"  total waiting between stages {found['downstream_waiting_time']}")
+    print(f"  computation time (s)         {elapsed:.3f}")
+    print(f"  wrote {output_dir / 'decision.json'} and summary.json")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(prog="pfsp", description=__doc__)
+    commands = parser.add_subparsers(dest="command", required=True)
+
+    p_solve = commands.add_parser("solve", help="solve one instance directory")
+    p_solve.add_argument("input_dir")
+    p_solve.add_argument("output_dir")
+    p_solve.add_argument("--method", choices=["rule"], default="rule")
+    p_solve.set_defaults(handler=solve)
+
+    args = parser.parse_args(argv)
+    return args.handler(args)
