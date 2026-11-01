@@ -90,6 +90,23 @@ def compare(args) -> int:
     return 0
 
 
+def stress(args) -> int:
+    from . import stress as stress_test
+
+    stress_test.run(results_dir(args.out, "stress"))
+    return 0
+
+
+def reproduce(args) -> int:
+    """Regenerate every submitted comparison table and plot."""
+    from . import compare as comparison
+    from . import stress as stress_test
+
+    comparison.run(results_dir(None, "comparison"))
+    stress_test.run(results_dir(None, "stress"))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="pfsp", description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
@@ -109,6 +126,13 @@ def main(argv: list[str] | None = None) -> int:
     p_compare = commands.add_parser("compare", help="deterministic comparison on four instances")
     p_compare.add_argument("--out", help="output directory (default results/comparison)")
     p_compare.set_defaults(handler=compare)
+
+    p_stress = commands.add_parser("stress", help="stress test of both fixed plans")
+    p_stress.add_argument("--out", help="output directory (default results/stress)")
+    p_stress.set_defaults(handler=stress)
+
+    p_reproduce = commands.add_parser("reproduce", help="regenerate every submitted result")
+    p_reproduce.set_defaults(handler=reproduce)
 
     args = parser.parse_args(argv)
     return args.handler(args)
