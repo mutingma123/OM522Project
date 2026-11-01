@@ -1,0 +1,156 @@
+{
+  "sequence": [
+    "J001",
+    "J002",
+    "J003",
+    "J004",
+    "J006",
+    "J005"
+  ],
+  "schedule": [
+    {
+      "job_id": "J001",
+      "stage_id": "S1",
+      "start": 13,
+      "completion": 24
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S2",
+      "start": 24,
+      "completion": 34
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S3",
+      "start": 34,
+      "completion": 40
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S4",
+      "start": 40,
+      "completion": 52
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S1",
+      "start": 24,
+      "completion": 38
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S2",
+      "start": 38,
+      "completion": 47
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S3",
+      "start": 47,
+      "completion": 60
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S4",
+      "start": 60,
+      "completion": 73
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S1",
+      "start": 51,
+      "completion": 61
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S2",
+      "start": 61,
+      "completion": 64
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S3",
+      "start": 64,
+      "completion": 83
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S4",
+      "start": 83,
+      "completion": 97
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S1",
+      "start": 66,
+      "completion": 78
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S2",
+      "start": 78,
+      "completion": 91
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S3",
+      "start": 91,
+      "completion": 108
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S4",
+      "start": 108,
+      "completion": 119
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S1",
+      "start": 78,
+      "completion": 83
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S2",
+      "start": 91,
+      "completion": 106
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S3",
+      "start": 108,
+      "completion": 111
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S4",
+      "start": 119,
+      "completion": 127
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S1",
+      "start": 83,
+      "completion": 100
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S2",
+      "start": 106,
+      "completion": 109
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S3",
+      "start": 111,
+      "completion": 116
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S4",
+      "start": 127,
+      "completion": 136
+    }
+  ]
+}

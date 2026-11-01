@@ -1,0 +1,741 @@
+{
+  "sequence": [
+    "J012",
+    "J006",
+    "J010",
+    "J001",
+    "J005",
+    "J013",
+    "J011",
+    "J003",
+    "J002",
+    "J009",
+    "J004",
+    "J008",
+    "J014",
+    "J015",
+    "J007"
+  ],
+  "schedule": [
+    {
+      "job_id": "J012",
+      "stage_id": "S1",
+      "start": 47,
+      "completion": 56
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S2",
+      "start": 56,
+      "completion": 68
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S3",
+      "start": 68,
+      "completion": 76
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S4",
+      "start": 76,
+      "completion": 94
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S5",
+      "start": 94,
+      "completion": 103
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S6",
+      "start": 103,
+      "completion": 123
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S7",
+      "start": 123,
+      "completion": 128
+    },
+    {
+      "job_id": "J012",
+      "stage_id": "S8",
+      "start": 128,
+      "completion": 132
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S1",
+      "start": 56,
+      "completion": 64
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S2",
+      "start": 68,
+      "completion": 87
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S3",
+      "start": 87,
+      "completion": 101
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S4",
+      "start": 101,
+      "completion": 111
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S5",
+      "start": 111,
+      "completion": 119
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S6",
+      "start": 123,
+      "completion": 131
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S7",
+      "start": 131,
+      "completion": 150
+    },
+    {
+      "job_id": "J006",
+      "stage_id": "S8",
+      "start": 150,
+      "completion": 162
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S1",
+      "start": 64,
+      "completion": 81
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S2",
+      "start": 87,
+      "completion": 95
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S3",
+      "start": 101,
+      "completion": 107
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S4",
+      "start": 111,
+      "completion": 130
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S5",
+      "start": 130,
+      "completion": 134
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S6",
+      "start": 134,
+      "completion": 154
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S7",
+      "start": 154,
+      "completion": 158
+    },
+    {
+      "job_id": "J010",
+      "stage_id": "S8",
+      "start": 162,
+      "completion": 164
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S1",
+      "start": 81,
+      "completion": 86
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S2",
+      "start": 95,
+      "completion": 103
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S3",
+      "start": 107,
+      "completion": 115
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S4",
+      "start": 130,
+      "completion": 147
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S5",
+      "start": 147,
+      "completion": 163
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S6",
+      "start": 163,
+      "completion": 177
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S7",
+      "start": 177,
+      "completion": 190
+    },
+    {
+      "job_id": "J001",
+      "stage_id": "S8",
+      "start": 190,
+      "completion": 206
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S1",
+      "start": 133,
+      "completion": 145
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S2",
+      "start": 145,
+      "completion": 162
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S3",
+      "start": 162,
+      "completion": 180
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S4",
+      "start": 180,
+      "completion": 185
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S5",
+      "start": 185,
+      "completion": 190
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S6",
+      "start": 190,
+      "completion": 197
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S7",
+      "start": 197,
+      "completion": 203
+    },
+    {
+      "job_id": "J005",
+      "stage_id": "S8",
+      "start": 206,
+      "completion": 208
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S1",
+      "start": 145,
+      "completion": 151
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S2",
+      "start": 162,
+      "completion": 167
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S3",
+      "start": 180,
+      "completion": 200
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S4",
+      "start": 200,
+      "completion": 219
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S5",
+      "start": 219,
+      "completion": 226
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S6",
+      "start": 226,
+      "completion": 235
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S7",
+      "start": 235,
+      "completion": 240
+    },
+    {
+      "job_id": "J013",
+      "stage_id": "S8",
+      "start": 240,
+      "completion": 249
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S1",
+      "start": 151,
+      "completion": 156
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S2",
+      "start": 167,
+      "completion": 178
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S3",
+      "start": 200,
+      "completion": 210
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S4",
+      "start": 219,
+      "completion": 239
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S5",
+      "start": 239,
+      "completion": 255
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S6",
+      "start": 255,
+      "completion": 264
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S7",
+      "start": 264,
+      "completion": 284
+    },
+    {
+      "job_id": "J011",
+      "stage_id": "S8",
+      "start": 284,
+      "completion": 289
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S1",
+      "start": 156,
+      "completion": 171
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S2",
+      "start": 178,
+      "completion": 197
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S3",
+      "start": 210,
+      "completion": 221
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S4",
+      "start": 239,
+      "completion": 247
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S5",
+      "start": 255,
+      "completion": 272
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S6",
+      "start": 272,
+      "completion": 282
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S7",
+      "start": 284,
+      "completion": 292
+    },
+    {
+      "job_id": "J003",
+      "stage_id": "S8",
+      "start": 292,
+      "completion": 298
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S1",
+      "start": 171,
+      "completion": 178
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S2",
+      "start": 197,
+      "completion": 204
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S3",
+      "start": 221,
+      "completion": 241
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S4",
+      "start": 247,
+      "completion": 264
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S5",
+      "start": 272,
+      "completion": 287
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S6",
+      "start": 287,
+      "completion": 305
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S7",
+      "start": 305,
+      "completion": 308
+    },
+    {
+      "job_id": "J002",
+      "stage_id": "S8",
+      "start": 308,
+      "completion": 311
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S1",
+      "start": 178,
+      "completion": 189
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S2",
+      "start": 204,
+      "completion": 213
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S3",
+      "start": 241,
+      "completion": 248
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S4",
+      "start": 264,
+      "completion": 284
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S5",
+      "start": 287,
+      "completion": 295
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S6",
+      "start": 305,
+      "completion": 319
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S7",
+      "start": 319,
+      "completion": 325
+    },
+    {
+      "job_id": "J009",
+      "stage_id": "S8",
+      "start": 325,
+      "completion": 341
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S1",
+      "start": 189,
+      "completion": 199
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S2",
+      "start": 213,
+      "completion": 224
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S3",
+      "start": 248,
+      "completion": 258
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S4",
+      "start": 284,
+      "completion": 290
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S5",
+      "start": 295,
+      "completion": 307
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S6",
+      "start": 319,
+      "completion": 330
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S7",
+      "start": 330,
+      "completion": 340
+    },
+    {
+      "job_id": "J004",
+      "stage_id": "S8",
+      "start": 341,
+      "completion": 361
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S1",
+      "start": 199,
+      "completion": 204
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S2",
+      "start": 224,
+      "completion": 236
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S3",
+      "start": 258,
+      "completion": 271
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S4",
+      "start": 290,
+      "completion": 310
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S5",
+      "start": 310,
+      "completion": 323
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S6",
+      "start": 330,
+      "completion": 347
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S7",
+      "start": 347,
+      "completion": 350
+    },
+    {
+      "job_id": "J008",
+      "stage_id": "S8",
+      "start": 361,
+      "completion": 369
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S1",
+      "start": 204,
+      "completion": 218
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S2",
+      "start": 236,
+      "completion": 251
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S3",
+      "start": 271,
+      "completion": 278
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S4",
+      "start": 310,
+      "completion": 328
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S5",
+      "start": 328,
+      "completion": 332
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S6",
+      "start": 347,
+      "completion": 350
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S7",
+      "start": 350,
+      "completion": 356
+    },
+    {
+      "job_id": "J014",
+      "stage_id": "S8",
+      "start": 369,
+      "completion": 376
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S1",
+      "start": 218,
+      "completion": 231
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S2",
+      "start": 251,
+      "completion": 264
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S3",
+      "start": 278,
+      "completion": 288
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S4",
+      "start": 328,
+      "completion": 345
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S5",
+      "start": 345,
+      "completion": 348
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S6",
+      "start": 350,
+      "completion": 367
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S7",
+      "start": 367,
+      "completion": 384
+    },
+    {
+      "job_id": "J015",
+      "stage_id": "S8",
+      "start": 384,
+      "completion": 404
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S1",
+      "start": 231,
+      "completion": 239
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S2",
+      "start": 264,
+      "completion": 272
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S3",
+      "start": 288,
+      "completion": 297
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S4",
+      "start": 345,
+      "completion": 352
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S5",
+      "start": 352,
+      "completion": 364
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S6",
+      "start": 367,
+      "completion": 385
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S7",
+      "start": 385,
+      "completion": 394
+    },
+    {
+      "job_id": "J007",
+      "stage_id": "S8",
+      "start": 404,
+      "completion": 417
+    }
+  ]
+}

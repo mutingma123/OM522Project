@@ -1,0 +1,14 @@
+instance,jobs,stages,method,feasible,violations,total_weighted_tardiness,total_waiting,makespan,on_time_rate,computation_seconds,iterations_run,stop_reason
+hand_checkable,6,4,rule,True,0,281.0,13.0,139.0,0.0,0.0001,,
+hand_checkable,6,4,ig,True,0,233.0,37.0,136.0,0.0,0.2116,5000,completed 5000 iterations
+hand_checkable,6,4,neh,True,0,233.0,37.0,136.0,0.0,0.0,,
+hand_checkable,6,4,optimum,True,0,233.0,37.0,136.0,0.0,0.0006,,
+development_small,15,8,rule,True,0,1417.0,732.0,417.0,0.3333333333333333,0.0,,
+development_small,15,8,ig,True,0,21.0,252.0,357.0,0.8666666666666667,0.5242,5000,completed 5000 iterations
+development_small,15,8,neh,True,0,70.0,291.0,368.0,0.7333333333333333,0.0001,,
+development_medium,45,8,rule,True,0,2371.0,2040.0,781.0,0.24444444444444444,0.0,,
+development_medium,45,8,ig,True,0,58.0,794.0,751.0,0.9111111111111111,3.2167,5000,completed 5000 iterations
+development_medium,45,8,neh,True,0,360.0,1068.0,751.0,0.7777777777777778,0.0004,,
+development_large,120,8,rule,True,0,23015.0,7863.0,1812.0,0.23333333333333334,0.0,,
+development_large,120,8,ig,True,0,4383.0,3005.0,1804.0,0.6416666666666667,37.2438,5000,completed 5000 iterations
+development_large,120,8,neh,True,0,9452.0,3928.0,1804.0,0.4,0.0026,,
