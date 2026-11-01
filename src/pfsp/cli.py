@@ -10,6 +10,7 @@ import time
 from pathlib import Path
 
 from .data import InputError, load_instance
+from .ig import DEFAULT_ITERATIONS, DEFAULT_SEED, DEFAULT_TIME_CAP, iterated_greedy, neh_ewdd
 from .output import build_decision, measures, write_outputs
 from .rule import edd_sequence
 
@@ -25,8 +26,12 @@ def user_path(text: str) -> Path:
 
 def run_method(instance, method: str, args) -> tuple[object, dict]:
     """Run one method and return (sequence or None, settings and stopping details)."""
+    if method == "ig":
+        return iterated_greedy(instance, iterations=args.iterations, seed=args.seed, time_cap=args.time_cap)
     if method == "rule":
         return edd_sequence(instance), {"rule": "earliest due date, ties by job_id"}
+    if method == "neh":
+        return neh_ewdd(instance)
     raise ValueError(f"unknown method {method}")
 
 
@@ -79,7 +84,13 @@ def main(argv: list[str] | None = None) -> int:
     p_solve = commands.add_parser("solve", help="solve one instance directory")
     p_solve.add_argument("input_dir")
     p_solve.add_argument("output_dir")
-    p_solve.add_argument("--method", choices=["rule"], default="rule")
+    p_solve.add_argument(
+        "--method", choices=["ig", "rule", "neh"], default="ig",
+        help="ig: researched method (default); rule: the rule to beat; neh: NEH_EWDD construction only",
+    )
+    p_solve.add_argument("--iterations", type=int, default=DEFAULT_ITERATIONS, help="ig stopping rule")
+    p_solve.add_argument("--seed", type=int, default=DEFAULT_SEED, help="ig random seed")
+    p_solve.add_argument("--time-cap", type=float, default=DEFAULT_TIME_CAP, help="ig safety cap, seconds")
     p_solve.set_defaults(handler=solve)
 
     args = parser.parse_args(argv)
