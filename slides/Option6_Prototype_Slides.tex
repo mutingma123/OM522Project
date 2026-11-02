@@ -53,10 +53,6 @@
 % \point{summary}{sentence}: a frame's takeaway; the summary shows only in draft mode.
 \newcommand{\point}[2]{\par\medskip\sumpara #1\sumparaend
   {\color{uablue}\fin #2\fine}\par}
-% \terminal{commands}: what to run in the terminal at this frame of the recording.
-\newcommand{\terminal}[1]{\par\vfill{\scriptsize\color{muted}\textbf{Terminal:}\par
-  \texttt{#1}\par}}
-\newcommand{\tl}{\textasciitilde}
 
 % \gantt{list of job/stage/start/completion/weight}: one schedule on four stages, 0 to 140 min.
 \newcommand{\gantt}[1]{%
@@ -106,13 +102,11 @@
 \end{center}
 \end{frame}
 
-\clearpage
 \begin{frame}{Ten minutes in five parts}
 \tableofcontents[hideallsubsections]
 \vfill
 {\scriptsize\color{muted}Times are the planned share of the 10-minute limit; the title and closing take 30 seconds.}
 \end{frame}
-\clearpage
 
 \section{The decision (0:50)}\label{sec:decision}
 \begin{frame}{A planner picks one job order for all eight stages}
@@ -141,8 +135,7 @@
 \point{State why order matters.}{A job that is slow at a later stage holds up every job behind it, so a good order depends on more than due dates.}
 \end{frame}
 
-\clearpage
-\section{Rule to beat and checker (2:40)}\label{sec:rule}
+\section{Rule to beat and checker (2:35)}\label{sec:rule}
 \begin{frame}{Rule to beat: earliest due date gives 281 on the hand-checkable case}
 \small
 \sumpara State the rule exactly.\sumparaend
@@ -155,9 +148,6 @@
 \end{center}
 \point{Trace the first jobs by hand.}{J001 starts S1 at its release 13; J002, released at 8, waits for S1 until 24; S1 then sits idle until J005 is released at 45.}
 \point{Report test 1.}{Weighted tardiness 281 and waiting 13: the decision is identical to the worked example.}
-\terminal{pixi run test\\
-pixi run solve data/hand\_checkable out/hand\_rule -{}-method rule\\
-pixi run check data/hand\_checkable out/hand\_rule/decision.json -{}-expect data/worked-example/metrics.json}
 \end{frame}
 
 \begin{frame}{Separate code confirms each decision from the input files}
@@ -177,34 +167,29 @@ pixi run check data/hand\_checkable out/hand\_rule/decision.json -{}-expect data
 \begin{block}{What it reported}
 \footnotesize
 \begin{itemize}
-\item Worked example: feasible; every recomputed measure matches \texttt{metrics.json}.
-\item Fresh copy of \texttt{development\_medium} under EDD: feasible, weighted tardiness 2,371.
-\item Edge case: rejected with \texttt{line 2: 0 is not positive}, no \texttt{decision.json}, exit status 1.
+\item Worked example: feasible; every recomputed measure matches the worked example's measures.
+\item Fresh copy of the 45-job development instance under EDD: feasible, weighted tardiness 2,371.
+\item Edge case: rejected with a message naming the file, column, and line of the zero processing time; no decision is written; exit status 1.
 \end{itemize}
 \end{block}
 \end{column}
 \end{columns}
 \point{Say why it is separate.}{It recomputes every measure and imports nothing from the solver, so a method's timing error cannot repeat here.}
-\terminal{cp -r data/development\_medium \tl/fresh\_medium\\
-pixi run solve \tl/fresh\_medium out/medium\_rule -{}-method rule\\
-pixi run check \tl/fresh\_medium out/medium\_rule/decision.json\\
-pixi run solve data/edge\_case out/edge}
 \end{frame}
 
-\clearpage
-\section{Researched method (2:10)}\label{sec:method}
+\section{Researched method (2:00)}\label{sec:method}
 \begin{frame}{Researched method: iterated greedy for weighted tardiness}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
 \begin{block}{Source}
 \small
-Ruiz and Stützle's IG\_RS\_LS for flow shops with total weighted tardiness \cite{ruiz2008igwt}, which adapts their iterated greedy for the makespan \cite{ruiz2007ig}.
+Ruiz and Stützle's IG\_RS\_LS for flow shops with setup times and weighted tardiness \cite{ruiz2008igwt}, built on their makespan version \cite{ruiz2007ig}; we set every setup time to zero.
 \end{block}
 \begin{block}{Why it should beat EDD here}
 \small
 \begin{itemize}
-\item EDD sorts on due dates alone and ignores weights, release times, and processing times.
-\item Iterated greedy compares candidate sequences by their actual weighted tardiness over all eight stages, so a heavy job can move ahead of a light one.
+\item EDD sorts on due dates alone; it ignores weights, releases, and processing times.
+\item Iterated greedy compares sequences by their actual weighted tardiness on all eight stages, so a heavy job can move ahead of a light one.
 \end{itemize}
 \end{block}
 \end{column}
@@ -227,10 +212,10 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with total weighted tardiness \cit
 \begin{tikzpicture}[node distance=0.55cm and 0.9cm]
 \node[box] (start) {\textbf{1. Start}\\NEH\_EWDD: order by $d_j/w_j$, insert each job at its best position};
 \node[box,below=of start] (ls0) {\textbf{2. Local search}\\reinsert each job at its best position until nothing improves};
-\node[loopbox,right=1.3cm of start] (destroy) {\textbf{3. Destroy}\\remove $d=4$ jobs at random};
+\node[loopbox,right=1.3cm of start] (destroy) {\textbf{3. Destroy}\\remove $\delta=4$ jobs at random};
 \node[loopbox,right=of destroy] (rebuild) {\textbf{4. Rebuild}\\reinsert them one by one at their best positions};
 \node[loopbox,below=of rebuild] (ls) {\textbf{5. Local search}\\as in step 2};
-\node[loopbox,below=of destroy] (accept) {\textbf{6. Accept}\\if better, or with probability $e^{-\Delta/\mathrm{Temp}}$};
+\node[loopbox,below=of destroy] (accept) {\textbf{6. Accept}\\if better, or with probability $e^{-\Delta/\Theta}$};
 \draw[arr] (start) -- (ls0);
 \draw[arr] (ls0.east) -- ++(0.35,0) |- (destroy.west);
 \draw[arr] (destroy) -- (rebuild);
@@ -247,7 +232,7 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with total weighted tardiness \cit
 \begin{itemize}
 \item Solution: a permutation of the jobs.
 \item Compare: weighted tardiness, then waiting.
-\item $d=4$, $T=0.5$, $\mathrm{Temp} = T \sum_{j,k} p_{jk} / (10\,n\,m)$ \cite{ruiz2008igwt}.
+\item $\delta=4$, $\lambda=0.5$, $\Theta = \lambda \sum_{j,k} p_{jk} / (10\,n\,m)$ \cite{ruiz2008igwt}.
 \end{itemize}
 \end{column}
 \begin{column}{0.47\textwidth}
@@ -259,8 +244,7 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with total weighted tardiness \cit
 \end{columns}
 \end{frame}
 
-\clearpage
-\section{First implementation against the rule (1:40)}\label{sec:results}
+\section{First implementation against the rule (1:45)}\label{sec:results}
 \begin{frame}{On the hand-checkable case it reaches the optimum: 233 against 281}
 \begin{center}
 {\scriptsize\color{muted}EDD rule: J001, J002, J005, J003, J006, J004}\\
@@ -283,40 +267,38 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with total weighted tardiness \cit
 \cmidrule(lr){3-4}\cmidrule(lr){5-6}
 Instance & Jobs & EDD & Iterated greedy & EDD & Iterated greedy & Seconds \\
 \midrule
-hand\_checkable & 6 & 281 & 233 & 13 & 37 & 0.2 \\
-development\_small & 15 & 1,417 & 21 & 732 & 252 & 0.5 \\
-development\_medium & 45 & 2,371 & 58 & 2,040 & 794 & 3.2 \\
-development\_large & 120 & 23,015 & 4,383 & 7,863 & 3,005 & 37.2 \\
+Hand-checkable & 6 & 281 & 233 & 13 & 37 & 0.2 \\
+Small development & 15 & 1,417 & 21 & 732 & 252 & 0.5 \\
+Medium development & 45 & 2,371 & 58 & 2,040 & 794 & 3.2 \\
+Large development & 120 & 23,015 & 4,383 & 7,863 & 3,005 & 37.2 \\
 \bottomrule
 \end{tabular}
 \end{center}
 \small
 \begin{itemize}
 \item All eight decisions pass the checker. Seconds are for iterated greedy; the rule takes under a millisecond. Intel Core Ultra 7 155U laptop.
+\item A mixed-integer program solved with HiGHS proves 233 and 21 optimal on the 6- and 15-job instances, and iterated greedy reaches both.
 \item At 120 jobs, 5000 iterations have not converged: five other seeds reached 4,159 to 4,306.
 \item For the final submission: how results change with size, and a stress test of both fixed plans on 30 saved processing-time scenarios.
 \end{itemize}
-\terminal{pixi run solve \tl/fresh\_medium out/medium\_ig\\
-pixi run check \tl/fresh\_medium out/medium\_ig/decision.json}
 \end{frame}
 
-\clearpage
-\section{Walk-throughs, one per member (1:50)}\label{sec:walk}
+\section{Walk-throughs, one per member (1:30)}\label{sec:walk}
 \begin{frame}{Walk-through: the checker's violation messages}
-\framesubtitle{\texttt{src/pfsp\_check/check.py}, drafted by Claude Code}
+\framesubtitle{The independent checker, drafted by Claude Code}
 \begin{block}{What it does}
-\small Reads only the instance CSVs and \texttt{decision.json}, names every job and stage that breaks a constraint, and recomputes the measures.
+\small Reads only the instance files and the exported decision, names every job and stage that breaks a constraint, and recomputes the measures.
 \end{block}
 \begin{block}{What was wrong in the agent's version}
 \small Messages printed every time as a float, such as \texttt{starts at 23.0 before it completes S1 at 24.0}. The data are whole minutes, so the messages did not read like the input and did not match the test we wrote.
 \end{block}
 \begin{block}{How we checked it}
-\small \texttt{tests/test\_checker.py} damages the worked example in six ways and asserts each message; the fix is commit \texttt{9db7864}.
+\small Our checker tests damage the worked example in six ways and assert each message; one commit fixed the format.
 \end{block}
 \end{frame}
 
 \begin{frame}{Walk-through: the shortcut in the insertion search}
-\framesubtitle{\texttt{best\_insertion} in \texttt{src/pfsp/timing.py}, drafted by Claude Code}
+\framesubtitle{The best-position search, drafted by Claude Code}
 \begin{block}{What it does}
 \small Tries one job at every position of a partial sequence and returns the best, timing the jobs ahead of each position only once.
 \end{block}
@@ -324,20 +306,20 @@ pixi run check \tl/fresh\_medium out/medium\_ig/decision.json}
 \small It abandons a position as soon as the running totals exceed the best position found. Could that skip the true best position?
 \end{block}
 \begin{block}{How we checked it}
-\small The shortcut is safe because weighted tardiness and waiting only grow as jobs are appended. \texttt{test\_best\_insertion\_matches\_brute\_force} compares it with evaluating every position on 20 random cases.
+\small The shortcut is safe because weighted tardiness and waiting only grow as jobs are appended. A test compares it with evaluating every position on 20 random cases, and the two always agree.
 \end{block}
 \end{frame}
 
 \begin{frame}{Walk-through: the method's start and temperature}
-\framesubtitle{\texttt{src/pfsp/ig.py}, drafted by Claude Code}
+\framesubtitle{The researched method, drafted by Claude Code}
 \begin{block}{What it does}
 \small Builds the NEH\_EWDD start, then runs the destroy, rebuild, local search, and accept loop.
 \end{block}
 \begin{block}{What was wrong in the agent's first plan}
-\small It ordered the start by plain due date and used $T = 0.4$ from the makespan paper \cite{ruiz2007ig}. The weighted tardiness paper orders by $d_j / w_j$ and uses $T = 0.5$ \cite{ruiz2008igwt}.
+\small It ordered the start by plain due date and used a temperature factor of 0.4 from the makespan paper \cite{ruiz2007ig}. The weighted tardiness paper orders by $d_j / w_j$ and uses 0.5 \cite{ruiz2008igwt}.
 \end{block}
 \begin{block}{How we checked it}
-\small Reading pages 1146 to 1148 of the 2008 paper; on the hand-checkable case the method matches the optimum from enumerating all 720 sequences, and it beats the rule on all four instances in \texttt{tests/test\_ig.py}.
+\small Reading pages 1146 to 1148 of the 2008 paper; on the hand-checkable case the method matches the optimum from enumerating all 720 sequences, and our tests confirm it beats the rule on all four instances.
 \end{block}
 \end{frame}
 
@@ -351,7 +333,6 @@ pixi run check \tl/fresh\_medium out/medium\_ig/decision.json}
 \end{itemize}
 \end{frame}
 
-\clearpage
 \section{Sources}\label{sec:sources}
 \begin{frame}{Sources}
 \footnotesize
