@@ -44,7 +44,7 @@
     "iterations": 5000,
     "seed": 522,
     "iterations_run": 5000,
-    "seconds": 2.8050604179989023
+    "seconds": 2.66255326800092
   },
   "computer": {
     "cpu": "Intel(R) Core(TM) Ultra 7 155U",
@@ -92,6 +92,10 @@
     }
   },
   "ig_better_tardiness_in_scenarios": 30,
+  "tardiness_reduction": {
+    "mean": 3120.463510464585,
+    "standard_error": 150.1308713267753
+  },
   "sweep": [
     {
       "cv": 0.1,
@@ -104,7 +108,11 @@
         "mean": 148.06260518143327,
         "p90": 228.3925065588977
       },
-      "ig_better_in_scenarios": 30
+      "ig_better_in_scenarios": 30,
+      "reduction": {
+        "mean": 2571.9900513954503,
+        "standard_error": 65.85667334946923
+      }
     },
     {
       "cv": 0.2,
@@ -117,7 +125,11 @@
         "mean": 407.17004490256403,
         "p90": 643.9096507718026
       },
-      "ig_better_in_scenarios": 30
+      "ig_better_in_scenarios": 30,
+      "reduction": {
+        "mean": 2866.3702000449357,
+        "standard_error": 121.29970330126608
+      }
     },
     {
       "cv": 0.3,
@@ -130,7 +142,11 @@
         "mean": 952.5484470679243,
         "p90": 1676.024631899677
       },
-      "ig_better_in_scenarios": 30
+      "ig_better_in_scenarios": 30,
+      "reduction": {
+        "mean": 3187.253763328984,
+        "standard_error": 203.7770846916744
+      }
     },
     {
       "cv": 0.5,
@@ -143,7 +159,11 @@
         "mean": 2996.67242226699,
         "p90": 5434.210170100863
       },
-      "ig_better_in_scenarios": 30
+      "ig_better_in_scenarios": 30,
+      "reduction": {
+        "mean": 3683.730166223687,
+        "standard_error": 223.7649375299599
+      }
     },
     {
       "cv": 0.8,
@@ -156,7 +176,11 @@
         "mean": 8901.551016335023,
         "p90": 14219.806204671338
       },
-      "ig_better_in_scenarios": 29
+      "ig_better_in_scenarios": 29,
+      "reduction": {
+        "mean": 3328.9598395591156,
+        "standard_error": 342.7494737408003
+      }
     }
   ]
 }

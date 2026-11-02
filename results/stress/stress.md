@@ -12,14 +12,14 @@ Instance development_medium. Each processing time is multiplied by an independen
 | EDD rule | 34 | 36.1 | 11 | 28.0 | 3 |
 | Iterated greedy | 4 | 11.5 | 41 | 31.0 | 3 |
 
-Iterated greedy has the lower weighted tardiness in 30 of 30 scenarios.
+Iterated greedy has the lower weighted tardiness in 30 of 30 scenarios; the mean per-scenario reduction is 3,120.5 weighted minutes with a standard error of 150.1.
 
 ## Sweep over variability
 
-| Coefficient of variation | Seed | Rule mean TWT | Rule 90th percentile | Iterated greedy mean TWT | Iterated greedy 90th percentile | Scenarios where iterated greedy is better |
-| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 0.1 | 6522 | 2,720.1 | 3,171.6 | 148.1 | 228.4 | 30 of 30 |
-| 0.2 | 6523 | 3,273.5 | 4,425.0 | 407.2 | 643.9 | 30 of 30 |
-| 0.3 | 6524 | 4,139.8 | 6,213.4 | 952.5 | 1,676.0 | 30 of 30 |
-| 0.5 | 6525 | 6,680.4 | 9,498.8 | 2,996.7 | 5,434.2 | 30 of 30 |
-| 0.8 | 6526 | 12,230.5 | 17,420.0 | 8,901.6 | 14,219.8 | 29 of 30 |
+| Coefficient of variation | Seed | Rule mean TWT | Rule 90th percentile | Iterated greedy mean TWT | Iterated greedy 90th percentile | Mean reduction (standard error) | Scenarios where iterated greedy is better |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 0.1 | 6522 | 2,720.1 | 3,171.6 | 148.1 | 228.4 | 2,572.0 (65.9) | 30 of 30 |
+| 0.2 | 6523 | 3,273.5 | 4,425.0 | 407.2 | 643.9 | 2,866.4 (121.3) | 30 of 30 |
+| 0.3 | 6524 | 4,139.8 | 6,213.4 | 952.5 | 1,676.0 | 3,187.3 (203.8) | 30 of 30 |
+| 0.5 | 6525 | 6,680.4 | 9,498.8 | 2,996.7 | 5,434.2 | 3,683.7 (223.8) | 30 of 30 |
+| 0.8 | 6526 | 12,230.5 | 17,420.0 | 8,901.6 | 14,219.8 | 3,329.0 (342.7) | 29 of 30 |
