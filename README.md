@@ -8,7 +8,7 @@ Install [Pixi](https://pixi.sh), then run every command from the repository root
 
 ```bash
 pixi install                                                   # build the environment from pixi.lock
-pixi run test                                                  # the three required tests and 27 more
+pixi run test                                                  # the three required tests and 28 more
 pixi run solve data/hand_checkable out/hand                    # researched method, default settings
 pixi run solve data/hand_checkable out/rule --method rule      # the rule to beat
 pixi run check data/hand_checkable out/hand/decision.json      # independent checker
@@ -21,9 +21,10 @@ pixi run reproduce                                             # regenerate ever
 | `pixi run solve ... --method rule` | The rule to beat. `--method neh` runs NEH_EWDD alone | under 1 s |
 | `pixi run check <input_dir> <decision.json>` | Confirms the four constraints and recomputes every measure. `--expect metrics.json` compares the measures with a reference file | under 1 s |
 | `pixi run compare` | Deterministic comparison on four instances, written to `results/comparison/` | 5.5 min |
+| `pixi run benchmark` | Solves a mixed-integer formulation with HiGHS on the 6-job and 15-job instances, written to `results/benchmark/` | 1.5 min |
 | `pixi run stress` | Stress test on the medium instance, written to `results/stress/` | 9 s |
-| `pixi run reproduce` | Runs `compare` and then `stress` | 6 min |
-| `pixi run test` | Runs the 30 tests in `tests/` | 9 s |
+| `pixi run reproduce` | Runs `compare`, `benchmark`, and `stress` | 7 min |
+| `pixi run test` | Runs the 31 tests in `tests/` | 9 s |
 
 Relative paths are read from the directory where the command is typed. The output directory must differ from the input directory, and the tool never writes into the input directory. The first run on a new computer compiles the timing kernels with Numba, which adds a few seconds once; later runs reuse the compiled cache.
 
@@ -77,7 +78,7 @@ The values $d = 4$ and $T = 0.5$ are the settings of Ruiz and Stützle (2008), w
 
 **Departures from the source.** The waiting tie-break, the start from the better of NEH_EWDD and EDD, and the iteration-count stopping rule are ours. The source stops on a CPU-time limit, which would not reproduce across computers.
 
-**Known limitations.** Nothing certifies optimality except on the six-job case, where enumerating all 720 sequences shows that the method's answer (weighted tardiness 233) is optimal. On the 120-job instance 5000 iterations have not converged: five other seeds found sequences with weighted tardiness from 4,159 to 4,306, against 4,383 for the default seed. Each local search pass costs on the order of $n^3 m$ operations, so run time grows quickly with the number of jobs (0.5 s at 15 jobs, 37 s at 120). Waiting enters only as a tie-break, so the method will accept more waiting for any reduction in weighted tardiness; on the six-job case it accepts 37 minutes of waiting where the rule has 13.
+**Known limitations.** Optimality is certified only on the two smallest instances: enumerating all 720 sequences of the six-job case and solving a mixed-integer formulation with HiGHS on both the six-job and 15-job cases prove the method's answers (233 and 21) optimal. On the 120-job instance 5000 iterations have not converged: five other seeds found sequences with weighted tardiness from 4,159 to 4,306, against 4,383 for the default seed. Each local search pass costs on the order of $n^3 m$ operations, so run time grows quickly with the number of jobs (0.5 s at 15 jobs, 37 s at 120). Waiting enters only as a tie-break, so the method will accept more waiting for any reduction in weighted tardiness; on the six-job case it accepts 37 minutes of waiting where the rule has 13.
 
 NEH_EWDD alone (`--method neh`) appears in the comparison as a construction-only reference. It is step 1 of the researched method, not a separate method.
 
@@ -95,13 +96,13 @@ It then recomputes makespan, total weighted tardiness, on-time fraction, total w
 
 ## Tests
 
-`pixi run test` runs 30 tests. The three the guide requires are in `tests/test_required.py`:
+`pixi run test` runs 31 tests. The three the guide requires are in `tests/test_required.py`:
 
 1. the rule reproduces the worked example's decision and every measure in `metrics.json`;
 2. the supplied edge case is rejected with a message naming `processing_times.csv` and `processing_time`, no `decision.json`, and a nonzero exit status; and
 3. a copy of `development_small` whose `jobs.csv` lacks the `due_date` column is rejected with `jobs.csv, column due_date: required column is missing`.
 
-The other tests cover each input check, reordered rows, renamed identifiers, every kind of violation the checker reports, the insertion search against brute force, and the researched method (checker-confirmed decisions that beat the rule by more than 0.001 on all four instances, reproducibility under one seed, and the enumerated optimum on the six-job case).
+The other tests cover each input check, reordered rows, renamed identifiers, every kind of violation the checker reports, the insertion search against brute force, and the researched method (checker-confirmed decisions that beat the rule by more than 0.001 on all four instances, reproducibility under one seed, and the enumerated optimum on the six-job case) and the mixed-integer benchmark, which must prove the same optimum.
 
 ## Deterministic comparison
 
@@ -116,7 +117,7 @@ The other tests cover each input check, reordered rows, renamed identifiers, eve
 
 ![Each method's weighted tardiness and waiting as a percentage of the rule's](results/comparison/comparison.png)
 
-Every decision of both methods is feasible. On the six-job case the researched method lowers weighted tardiness by 17 percent and reaches the enumerated optimum, but it has nearly three times the rule's waiting. On the 15-job and 45-job instances it removes 98 percent of the rule's weighted tardiness and 61 to 66 percent of its waiting. On the 120-job instance it removes 81 percent of the weighted tardiness, the smallest share among the development instances, and the other seeds listed under the method's known limitations show that more search lowers it further. The run time grows from under a second to 37 s across these sizes. These are four instances from one generator, and the held-out instance may behave differently.
+Every decision of both methods is feasible. `pixi run benchmark` solves a positional mixed-integer formulation with HiGHS (one thread, zero gap tolerance, 600 s limit) and proves the optimal weighted tardiness: 233 on the six-job case in 0.4 s and 21 on the 15-job case in 85.8 s, both equal to the researched method's results; on the 15-job case the solver's optimal order has 323 minutes of waiting where iterated greedy's has 252 ([results/benchmark/benchmark.md](results/benchmark/benchmark.md)). On the six-job case the researched method lowers weighted tardiness by 17 percent and reaches the enumerated optimum, but it has nearly three times the rule's waiting. On the 15-job and 45-job instances it removes 98 percent of the rule's weighted tardiness and 61 to 66 percent of its waiting. On the 120-job instance it removes 81 percent of the weighted tardiness, the smallest share among the development instances, and the other seeds listed under the method's known limitations show that more search lowers it further. The run time grows from under a second to 37 s across these sizes. These are four instances from one generator, and the held-out instance may behave differently.
 
 ## Stress test
 
@@ -129,7 +130,7 @@ The uncertain input is processing time. In each scenario every processing time o
 
 ![Per-scenario weighted tardiness and waiting of both fixed plans](results/stress/stress_per_scenario.png)
 
-The iterated greedy plan has the lower weighted tardiness in all 30 scenarios. Both plans lose ground to variability: the iterated greedy plan's mean weighted tardiness rises from the planned 58 to 421 and the rule's from 2,371 to 3,541. The iterated greedy plan finishes 41 of its 45 jobs on time, 15 of them within 20 minutes of their due dates, so longer realized times push some of those jobs past their due dates; the rule's plan finishes only 11 jobs on time. No scenario breaks a hard constraint for either plan. Under the execution rule every operation still follows release, stage order, and one job per stage, and the brief's due dates are soft targets.
+The iterated greedy plan has the lower weighted tardiness in all 30 scenarios. Both plans lose ground to variability: the iterated greedy plan's mean weighted tardiness rises from the planned 58 to 421 and the rule's from 2,371 to 3,541. The iterated greedy plan has 4 late jobs as planned and 11.5 on average across the scenarios, while the rule's plan has 34 and 36.1. The iterated greedy plan's on-time jobs do not have thinner margins (median slack 31 minutes against the rule's 28); it loses more because it has more on-time jobs at stake, 41 against 11. No scenario breaks a hard constraint for either plan. Under the execution rule every operation still follows release, stage order, and one job per stage, and the brief's due dates are soft targets.
 
 We repeated the execution at other coefficients of variation, 30 scenarios each, to find where the comparison changes (`results/stress/stress.md`):
 
@@ -149,17 +150,18 @@ We recommend sequencing the line with iterated greedy. On the 45-job instance, w
 
 ## Tools and attribution
 
-We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which drafted the code, tests, and documentation under our direction. Every number reported here comes from `pixi run reproduce`, and the independent checker confirmed every decision behind it. The papers were retrieved through the University of Alabama library; `library/LEDGER.md` records each fetch and what each reading established. The data in `data/` are the instructor's synthetic option 6 package for OM 522, Fall 2026, copied unchanged. No code from the in-class notebooks is used. Python packages: NumPy, Numba, Matplotlib, and pytest from conda-forge.
+We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which drafted the code, tests, and documentation under our direction. Every number reported here comes from `pixi run reproduce`, and the independent checker confirmed every decision behind it. The papers were retrieved through the University of Alabama library; `library/LEDGER.md` records each fetch and what each reading established. The data in `data/` are the instructor's synthetic option 6 package for OM 522, Fall 2026, copied unchanged. No code from the in-class notebooks is used. Python packages: NumPy, Numba, Matplotlib, HiGHS (highspy), and pytest from conda-forge. HiGHS appears only in the labeled benchmark, never in either method.
 
 ## Repository layout
 
 | Path | Contents |
 | --- | --- |
-| `src/pfsp/` | The tool: `data.py` (loader and input checks), `timing.py` (schedule timing kernels), `rule.py` (method 1), `ig.py` (method 2), `output.py` (decision and summary files), `cli.py` (commands), `compare.py`, `stress.py`, `figures.py` |
+| `src/pfsp/` | The tool: `data.py` (loader and input checks), `timing.py` (schedule timing kernels), `rule.py` (method 1), `ig.py` (method 2), `output.py` (decision and summary files), `cli.py` (commands), `compare.py`, `mip.py` and `benchmark.py` (mixed-integer benchmark), `stress.py`, `figures.py` |
 | `src/pfsp_check/` | The independent checker |
 | `tests/` | The 30 tests |
 | `data/` | The supplied instances, worked example, data dictionary, and brief |
 | `results/comparison/` | Comparison tables, plot, settings, and every compared decision |
+| `results/benchmark/` | Mixed-integer benchmark table, settings, and the solver's decisions |
 | `results/stress/` | Saved scenarios, both plans, per-scenario results, summary, and plots |
 | `library/` | Ledger and index of the papers read (the PDFs are not redistributed) |
 | `docs/` | Outline of the prototype video |
