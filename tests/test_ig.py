@@ -64,3 +64,19 @@ def test_default_solve_command_on_a_fresh_copy(copy_instance, tmp_path):
     assert summary["method"] == "ig" and summary["details"]["iterations_run"] == 5000
     check = run_tool("pfsp_check", str(instance), str(out / "decision.json"))
     assert check.returncode == 0, check.stdout
+
+
+def test_mip_matches_enumeration_on_hand_checkable(tmp_path):
+    """The mixed-integer benchmark proves the same optimum as enumeration, and the checker
+    confirms the solver's order."""
+    from pfsp.mip import solve_mip
+
+    instance = load_instance(DATA / "hand_checkable")
+    order, report = solve_mip(instance, time_limit=60)
+    assert report["status"] == "Optimal"
+    path = tmp_path / "decision.json"
+    path.write_text(json.dumps(build_decision(instance, order)))
+    checked = check_decision(DATA / "hand_checkable", path)
+    assert checked["feasible"]
+    assert checked["measures"]["total_weighted_tardiness"] == 233
+    assert report["dual_bound"] == pytest.approx(233)
