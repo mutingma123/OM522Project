@@ -44,7 +44,7 @@
     "iterations": 5000,
     "seed": 522,
     "iterations_run": 5000,
-    "seconds": 3.764808781999818
+    "seconds": 2.8050604179989023
   },
   "computer": {
     "cpu": "Intel(R) Core(TM) Ultra 7 155U",
@@ -65,7 +65,12 @@
         "mean": 2454.5463374164315,
         "p90": 2768.5659986994215
       },
-      "scenarios_breaking_a_hard_constraint": 0
+      "scenarios_breaking_a_hard_constraint": 0,
+      "planned_late_jobs": 34,
+      "mean_late_jobs": 36.06666666666667,
+      "planned_on_time_jobs": 11,
+      "planned_median_slack_of_on_time_jobs": 28.0,
+      "planned_on_time_jobs_with_slack_below_own_sd": 3
     },
     "ig": {
       "deterministic_total_weighted_tardiness": 58.0,
@@ -78,7 +83,12 @@
         "mean": 1276.9265377442923,
         "p90": 1454.8522237015134
       },
-      "scenarios_breaking_a_hard_constraint": 0
+      "scenarios_breaking_a_hard_constraint": 0,
+      "planned_late_jobs": 4,
+      "mean_late_jobs": 11.533333333333333,
+      "planned_on_time_jobs": 41,
+      "planned_median_slack_of_on_time_jobs": 31.0,
+      "planned_on_time_jobs_with_slack_below_own_sd": 3
     }
   },
   "ig_better_tardiness_in_scenarios": 30,
