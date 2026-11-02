@@ -1,0 +1,117 @@
+% ============================================================================
+% AUTOMATIC COUNTER CONTROL FOR SECTION MANAGEMENT
+% ============================================================================
+%
+% This file automatically increments summary counters when you use
+% standard LaTeX section commands. No manual intervention needed!
+%
+% The counters will automatically update when you use:
+% \section{...}, \subsection{...}, \subsubsection{...}
+% ============================================================================
+
+% Hook into section counter increments instead of redefining commands
+\makeatletter
+
+% Define counters first (if not already defined)
+\@ifundefined{c@SumSection}{\newcounter{SumSection}}{}
+\@ifundefined{c@SumSubsection}{\newcounter{SumSubsection}[SumSection]}{}
+\@ifundefined{c@SumSubsubsection}{\newcounter{SumSubsubsection}[SumSubsection]}{}
+\@ifundefined{c@SumPara}{\newcounter{SumPara}[SumSubsubsection]}{}
+\@ifundefined{c@SumFin}{\newcounter{SumFin}[SumSubsubsection]}{}
+\@ifundefined{c@SumTodo}{\newcounter{SumTodo}[SumSubsubsection]}{}
+
+% Create a flag to detect bibliography
+\newif\if@inbibliography
+\@inbibliographyfalse
+
+% Hook into the bibliography environment
+\let\old@bibliography\bibliography
+\renewcommand{\bibliography}[1]{%
+  \@inbibliographytrue
+  \old@bibliography{#1}%
+  \@inbibliographyfalse
+}
+
+% Only redefine thebibliography if it exists (not all document classes have it)
+\@ifundefined{thebibliography}{}{%
+  \let\old@thebibliography\thebibliography
+  \renewcommand{\thebibliography}[1]{%
+    \@inbibliographytrue
+    \old@thebibliography{#1}%
+  }
+}
+
+\@ifundefined{endthebibliography}{}{%
+  \let\old@endthebibliography\endthebibliography
+  \renewcommand{\endthebibliography}{%
+    \old@endthebibliography
+    \@inbibliographyfalse
+  }
+}
+
+% Hook into the section counter increments
+\let\old@stepcounter\stepcounter
+\renewcommand{\stepcounter}[1]{%
+  \old@stepcounter{#1}%
+  % Only track if not in bibliography
+  \if@inbibliography\else
+    \def\@tmpa{#1}%
+    \def\@tmpb{section}%
+    \ifx\@tmpa\@tmpb
+      \stepcounter{SumSection}%
+      \setcounter{SumSubsection}{0}%
+      \setcounter{SumSubsubsection}{0}%
+      \setcounter{SumPara}{0}%
+      \setcounter{SumFin}{0}%
+      \setcounter{SumTodo}{0}%
+    \fi
+    \def\@tmpb{subsection}%
+    \ifx\@tmpa\@tmpb
+      \stepcounter{SumSubsection}%
+      \setcounter{SumSubsubsection}{0}%
+      \setcounter{SumPara}{0}%
+      \setcounter{SumFin}{0}%
+      \setcounter{SumTodo}{0}%
+    \fi
+    \def\@tmpb{subsubsection}%
+    \ifx\@tmpa\@tmpb
+      \stepcounter{SumSubsubsection}%
+      \setcounter{SumPara}{0}%
+      \setcounter{SumFin}{0}%
+      \setcounter{SumTodo}{0}%
+    \fi
+  \fi
+}
+
+\makeatother
+
+% Quick reset command for beginning of document
+\newcommand\resetallcounters{%
+  \setcounter{SumSection}{0}%
+  \setcounter{SumSubsection}{0}%
+  \setcounter{SumSubsubsection}{0}%
+  \setcounter{SumPara}{0}%
+  \setcounter{SumFin}{0}%
+  \setcounter{SumTodo}{0}%
+}
+
+% Initialize counters at document start
+\resetallcounters
+
+% Utility command to display current counter values (for debugging)
+\newcommand\showcounters{%
+  \ifthenelse{\boolean{draftmode}}{%
+    \marginpar{\tiny Counter: \arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumPara}}%
+  }{}%
+}
+
+% Help command for quick reference
+\newcommand\sumhelp{%
+  \typeout{========================================}%
+  \typeout{SUMMARY CONTROL USAGE EXAMPLES:}%
+  \typeout{Counters auto-increment with sections!}%
+  \typeout{1. Marker-based: \string\sump\space Text here \string\sumpe}%
+  \typeout{2. Brace-based: \string\sumparab{Text here}}%
+  \typeout{3. TODO marker: \string\todostart\space Task \string\todoend}%
+  \typeout{========================================}%
+}
