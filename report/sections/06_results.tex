@@ -10,28 +10,28 @@
 
 \begin{table}[ht]
 \centering
-\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:design}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on development\_small the optimal tardiness of 21 was reached by an order with 323~minutes of waiting.}
+\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:design}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the optimal tardiness of 21 was reached by an order with 323~minutes of waiting.}
 \label{tab:comparison}
 \small
 \begin{tabular}{llrrr}
 \toprule
 Instance (jobs) & Method & Total weighted tardiness & Total waiting & Seconds \\
 \midrule
-hand\_checkable (6) & Earliest due date & 281 & 13 & 0.000 \\
+Hand-checkable (6) & Earliest due date & 281 & 13 & 0.000 \\
  & NEH\_EWDD only & 233 & 37 & 0.000 \\
  & Iterated greedy & 233 & 37 & 0.21 \\
  & Optimum (HiGHS) & 233 & 37 & 0.36 \\
 \midrule
-development\_small (15) & Earliest due date & 1,417 & 732 & 0.000 \\
+Small development (15) & Earliest due date & 1,417 & 732 & 0.000 \\
  & NEH\_EWDD only & 70 & 291 & 0.000 \\
  & Iterated greedy & 21 & 252 & 0.52 \\
  & Optimum (HiGHS) & 21 & 323 & 85.8 \\
 \midrule
-development\_medium (45) & Earliest due date & 2,371 & 2,040 & 0.000 \\
+Medium development (45) & Earliest due date & 2,371 & 2,040 & 0.000 \\
  & NEH\_EWDD only & 360 & 1,068 & 0.000 \\
  & Iterated greedy & 58 & 794 & 3.22 \\
 \midrule
-development\_large (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
+Large development (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
  & NEH\_EWDD only & 9,452 & 3,928 & 0.003 \\
  & Iterated greedy & 4,383 & 3,005 & 37.2 \\
 \bottomrule

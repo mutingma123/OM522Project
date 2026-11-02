@@ -17,8 +17,8 @@ S_{\pi(i),k} = \max\bigl\{C_{\pi(i),k-1},\; C_{\pi(i-1),k}\bigr\}, \qquad C_{\pi
 \begin{equation}\label{eq:measures}
 Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \bigl(S_{jk} - C_{j,k-1}\bigr).
 \end{equation}
-\fin By induction over positions and stages, any schedule that keeps sequence $\pi$ and satisfies the brief's constraints starts each operation no earlier than \eqref{eq:recursion}, so the recursion gives every job its earliest completion at the last stage and $\pi$ its smallest value of $Z$. \fine
-\fin The planning problem is therefore to choose the sequence $\pi$ that minimizes $Z(\pi)$, and \eqref{eq:recursion} is also the execution rule that the brief prescribes for the stress test~\cite{om522brief}. \fine
+\fin By induction over positions and stages, any schedule that keeps sequence $\pi$ and satisfies the constraints of the course project starts each operation no earlier than \eqref{eq:recursion}, so the recursion gives every job its earliest completion at the last stage and $\pi$ its smallest value of $Z$. \fine
+\fin The planning problem is therefore to choose the sequence $\pi$ that minimizes $Z(\pi)$, and \eqref{eq:recursion} is also the execution rule that the course project prescribes for the stress test. \fine
 
 \subsection{A mixed-integer program defines the optimum}\label{sec:mip}
 
@@ -46,7 +46,7 @@ Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \
 \subsection{The rule sorts once, and iterated greedy searches by insertion}\label{sec:methods}
 
 \sumpara The rule to beat is a single sort by due date. \sumparaend
-\fin The earliest due date rule sorts the jobs by $d_j$, breaks ties by job identifier, and times the resulting sequence by \eqref{eq:recursion}, exactly as the course brief defines it~\cite{om522brief}. \fine
+\fin The earliest due date rule sorts the jobs by $d_j$, breaks ties by job identifier, and times the resulting sequence by \eqref{eq:recursion}, exactly as the course project defines it. \fine
 
 \sumpara Iterated greedy builds a weighted start, then repeatedly destroys and rebuilds the sequence around a local search. \sumparaend
 \fin Our researched method is IG\_RS\_LS, the iterated greedy algorithm with local search that Ruiz and St\"utzle proposed for the flow shop with sequence-dependent setup times and the makespan or weighted tardiness objective~\cite{ruiz2008igwt}; our line has no setup times, so we apply its weighted tardiness version with every setup time equal to zero, as shown in \cref{alg:ig}. \fine
@@ -87,7 +87,7 @@ Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \
 \end{algorithm}
 
 \sumpara Three choices are ours, each made to fit this decision. \sumparaend
-\fin We break ties in $Z$ by waiting, because the brief names waiting as the secondary measure and the source compares on one objective. \fine
+\fin We break ties in $Z$ by waiting, because the course project names waiting as the secondary measure and the source compares on one objective. \fine
 \fin We start from the earliest due date sequence whenever it beats NEH\_EWDD, so the method can never return a sequence worse than the rule; on all four instances NEH\_EWDD was the better start. \fine
-\fin We stop after $L = 5000$ iterations with a fixed seed of 522, where the source stops at a CPU-time limit, because the course requires a rerun on another computer to reproduce the submitted result~\cite{om522guide}. \fine
+\fin We stop after $L = 5000$ iterations with a fixed seed of 522, where the source stops at a CPU-time limit, because the course requires a rerun on another computer to reproduce the submitted result. \fine
 \fin The best-position search times the jobs ahead of each position once and abandons a position as soon as its running pair $(Z, W)$ can no longer beat the best position found, which is safe because $Z$ and $W$ only grow as jobs are appended. \fine

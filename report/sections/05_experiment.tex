@@ -11,7 +11,7 @@
 
 \sumpara An independent program checked every schedule that any method produced. \sumparaend
 \fin Each method's sequence was timed by \eqref{eq:recursion} and exported as a list of start and completion times for every job and stage. \fine
-\fin A separate checker, written without any code from the methods, read only the input files and the exported schedule, confirmed each constraint of the brief within a tolerance of $10^{-8}$~minutes, and recomputed $Z$, $W$, and the share of jobs finishing on time. \fine
+\fin A separate checker, written without any code from the methods, read only the input files and the exported schedule, confirmed each constraint of the course project within a tolerance of $10^{-8}$~minutes, and recomputed $Z$, $W$, and the share of jobs finishing on time. \fine
 \fin Every number we report for a schedule comes from this checker. \fine
 
 \subsection{HiGHS certified optimal values on the two smallest instances}\label{sec:benchmark-design}
@@ -24,11 +24,11 @@
 \subsection{Thirty saved scenarios tested the fixed plans}\label{sec:stress-design}
 
 \sumpara Random processing times were drawn once, saved, and then faced by both plans. \sumparaend
-\fin The uncertain input is processing time, as the brief specifies~\cite{om522brief}. \fine
+\fin The uncertain input is processing time, as the course project specifies for this option. \fine
 \fin In scenario $\omega$, each processing time becomes $p_{jk}\,\varepsilon_{jk\omega}$, where the factors $\varepsilon_{jk\omega}$ are independent lognormal draws with mean 1 and coefficient of variation $\nu$, obtained with $\sigma^2 = \ln(1 + \nu^2)$ and log-mean $-\sigma^2/2$. \fine
 \fin For the main test we drew 30~scenarios at $\nu = 0.2$ for the 45-job instance from seed 20261103 and saved them to files before either method ran, so both plans faced identical realizations. \fine
 \fin Each method's plan is its sequence for the exact data under default settings. \fine
-\fin Each plan kept its sequence in every scenario and was timed by \eqref{eq:recursion} with the realized times, the brief's execution rule, and the checker confirmed each realized schedule against that scenario's times. \fine
+\fin Each plan kept its sequence in every scenario and was timed by \eqref{eq:recursion} with the realized times, the course project's execution rule, and the checker confirmed each realized schedule against that scenario's times. \fine
 
 \sumpara We report the distribution of both measures and repeated the test at five levels of variability. \sumparaend
 \fin For each plan we report the mean and the 90th percentile, by linear interpolation, of $Z$ and $W$ over the 30~scenarios, and the number of scenarios in which the plan breaks a hard constraint. \fine

@@ -1,10 +1,10 @@
 \section{Background}\label{sec:background}
 
 \sumpara A planner on a line where jobs cannot pass must fix one order, and the due-date rule the course sets as the baseline cannot see weights, releases, or later stages. \sumparaend
-\fin On a flow line such as printed circuit board assembly or furniture finishing, every job visits the same stages in the same order, and when jobs cannot pass one another, the order chosen at the first stage holds at every stage~\cite{om522brief}. \fine
+\fin On a flow line such as printed circuit board assembly or furniture finishing, every job visits the same stages in the same order, and when jobs cannot pass one another, the order chosen at the first stage holds at every stage. \fine
 \fin On the line studied here operations take 2 to 20~minutes, so a job that needs 2~minutes at the first stage and 20 at a later one would delay every job behind it at that later stage, and the waiting would build up downstream. \fine
 \fin The planner chooses one sequence for a period's jobs, which are released at different times and carry due dates of different importance, expressed as weights. \fine
-\fin Vallada, Ruiz, and Minella report that dispatching rules are used very often in practice and that earliest due date is among the most common rules for total tardiness~\cite{vallada2008review}, and the course brief for this line makes it the rule that a researched method must beat~\cite{om522brief}. \fine
+\fin Vallada, Ruiz, and Minella report that dispatching rules are used very often in practice and that earliest due date is among the most common rules for total tardiness~\cite{vallada2008review}, and the course project makes it the rule that a researched method must beat. \fine
 \fin Earliest due date orders the jobs by due date alone, so it cannot see a job's weight, its release time, or its processing times at the stages after the first. \fine
 
 \sumpara Better sequences require search, and the searches we build on were tested only on exact data without release times. \sumparaend
@@ -15,7 +15,7 @@
 \fin A sequence tuned to the exact times in a data file could lose its advantage once the 2- to 20-minute operations run long or short, and a planner who must fix the order in advance cannot tell from these studies whether it does. \fine
 
 \sumpara We built both methods, certified small optima, scored every schedule independently, and tested the fixed plans on paired scenarios of random processing times. \sumparaend
-\fin We implemented the earliest due date rule exactly as the course brief states it~\cite{om522brief} and applied iterated greedy with local search~\cite{ruiz2008igwt} to an eight-stage line with release times and no setup times. \fine
+\fin We implemented the earliest due date rule exactly as the course project states it and applied iterated greedy with local search~\cite{ruiz2008igwt} to an eight-stage line with release times and no setup times. \fine
 \fin A mixed-integer program solved with HiGHS~\cite{highs} certified the optimal values of the two smallest instances, and a checker that shares no code with either method scored every schedule. \fine
 \fin We then held each method's sequence fixed and executed it on 30~scenarios in which every processing time was multiplied by an independent lognormal factor with mean 1 and a coefficient of variation of 0.2, and on 30~further scenarios at each of five levels of variation from 0.1 to 0.8. \fine
 

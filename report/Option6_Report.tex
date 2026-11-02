@@ -6,6 +6,8 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \input{support/aitrading-preamble.tex}
+% No page break before each section.
+\renewcommand{\sectionbreak}{}
 \newboolean{draftmode}
 \setboolean{draftmode}{false}
 \input{support/SumCounterControl.tex}
@@ -85,9 +87,7 @@
 \hypersetup{pageanchor=true}
 \setcounter{page}{1}
 
-\clearpage
 \tableofcontents
-\clearpage
 
 \input{sections/01_background}
 \input{sections/02_data}
@@ -99,7 +99,6 @@
 \input{sections/08_discussion}
 \input{sections/09_conclusions}
 
-\clearpage
 \phantomsection\addcontentsline{toc}{section}{References}
 \bibliographystyle{unsrturl}
 \bibliography{Option6_Report}
