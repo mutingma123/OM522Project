@@ -1,0 +1,36 @@
+\section{Experiment}\label{sec:experiment}
+
+\subsection{Both methods ran on the same instances with fixed settings}\label{sec:design}
+
+\sumpara Both methods received identical inputs, and every result came from fixed settings on one computer. \sumparaend
+\fin Both methods ran on the hand-checkable instance and the three development instances, with the same input files and the measure definitions of \cref{sec:objective}. \fine
+\fin Iterated greedy used its default settings of $L = 5000$ iterations and seed 522, with a safety cap of 300~seconds that no run reached, and we repeated it with seeds 1 to 5 to see how much the result depends on the seed. \fine
+\fin NEH\_EWDD alone, the first step of \cref{alg:ig}, appears in the comparison as a construction-only reference, so the share of the improvement due to the search can be read off. \fine
+\fin All runs used one laptop with an Intel Core Ultra 7 155U processor under Linux, Python 3.12, NumPy 2.5.4, and Numba 0.68.0, and the computation time covers the method alone, after one warm-up run that compiles the timing code. \fine
+\fin We expected iterated greedy to have the lower total weighted tardiness on every instance, because it evaluates the actual tardiness of each candidate sequence while the rule never does. \fine
+
+\sumpara An independent program checked every schedule that any method produced. \sumparaend
+\fin Each method's sequence was timed by \eqref{eq:recursion} and exported as a list of start and completion times for every job and stage. \fine
+\fin A separate checker, written without any code from the methods, read only the input files and the exported schedule, confirmed each constraint of the brief within a tolerance of $10^{-8}$~minutes, and recomputed $Z$, $W$, and the share of jobs finishing on time. \fine
+\fin Every number we report for a schedule comes from this checker. \fine
+
+\subsection{HiGHS certified optimal values on the two smallest instances}\label{sec:benchmark-design}
+
+\sumpara The solver ran with a zero gap tolerance, and its sequence was checked like any other. \sumparaend
+\fin We solved program \eqref{eq:mip-obj} to \eqref{eq:mip-tardy} with HiGHS 1.15.1~\cite{highs} on the 6-job and 15-job instances, using one thread, a relative gap tolerance of zero, and a limit of 600~seconds. \fine
+\fin The job order of each solution was re-timed by \eqref{eq:recursion} and confirmed by the checker, which supplied its $Z$ and $W$. \fine
+\fin We did not run the program on the larger instances, because the 15-job instance already needed 85.8~seconds and more than 15,000 branch-and-bound nodes. \fine
+
+\subsection{Thirty saved scenarios tested the fixed plans}\label{sec:stress-design}
+
+\sumpara Random processing times were drawn once, saved, and then faced by both plans. \sumparaend
+\fin The uncertain input is processing time, as the brief specifies~\cite{om522brief}. \fine
+\fin In scenario $\omega$, each processing time becomes $p_{jk}\,\varepsilon_{jk\omega}$, where the factors $\varepsilon_{jk\omega}$ are independent lognormal draws with mean 1 and coefficient of variation $\nu$, obtained with $\sigma^2 = \ln(1 + \nu^2)$ and log-mean $-\sigma^2/2$. \fine
+\fin For the main test we drew 30~scenarios at $\nu = 0.2$ for the 45-job instance from seed 20261103 and saved them to files before either method ran, so both plans faced identical realizations. \fine
+\fin Each method's plan is its sequence for the exact data under default settings. \fine
+\fin Each plan kept its sequence in every scenario and was timed by \eqref{eq:recursion} with the realized times, the brief's execution rule, and the checker confirmed each realized schedule against that scenario's times. \fine
+
+\sumpara We report the distribution of both measures and repeated the test at five levels of variability. \sumparaend
+\fin For each plan we report the mean and the 90th percentile, by linear interpolation, of $Z$ and $W$ over the 30~scenarios, and the number of scenarios in which the plan breaks a hard constraint. \fine
+\fin To find where the comparison changes, we repeated the execution with 30~new scenarios at each of $\nu = 0.1$, 0.2, 0.3, 0.5, and 0.8, drawn from seeds 6522 to 6526. \fine
+\fin We expected both plans to grow later as $\nu$ grows and the iterated greedy plan to lose part of its advantage, because a plan tuned to exact times has more on-time jobs that a delay can make late. \fine
