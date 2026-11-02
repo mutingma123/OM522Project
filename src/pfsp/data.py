@@ -117,7 +117,7 @@ def _read_table(
     """Read one CSV, check its columns and value types, and return its typed rows."""
     path = directory / file_name
     if not path.is_file():
-        errors.append(f"{file_name}: required file is missing from {directory}")
+        errors.append(f"{file_name}: required file is missing from {directory.name}")
         return None
     with path.open(newline="", encoding="utf-8-sig") as handle:
         reader = csv.DictReader(handle)
@@ -169,7 +169,7 @@ def load_instance(directory: str | Path) -> Instance:
     directory = Path(directory)
     errors: list[str] = []
     if not directory.is_dir():
-        raise InputError([f"{directory}: input directory does not exist"])
+        raise InputError([f"{directory.name}: input directory does not exist"])
 
     types = _declared_types(directory, errors)
     tables = {name: _read_table(directory, name, types[name], errors) for name in REQUIRED}

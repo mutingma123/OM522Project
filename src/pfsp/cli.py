@@ -73,7 +73,8 @@ def solve(args) -> int:
     print(f"  total weighted tardiness     {found['total_weighted_tardiness']}")
     print(f"  total waiting between stages {found['downstream_waiting_time']}")
     print(f"  computation time (s)         {elapsed:.3f}")
-    print(f"  wrote {output_dir / 'decision.json'} and summary.json")
+    # Echo the directory as typed, so no absolute path of the user's machine is printed.
+    print(f"  wrote decision.json and summary.json to {args.output_dir}")
     return 0
 
 

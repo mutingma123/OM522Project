@@ -312,7 +312,7 @@ def _plot_scenarios(path: Path, rows) -> None:
         ax.set_ylim(bottom=0)
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=2)
-    fig.suptitle(f"Fixed plans on {SCENARIOS} processing-time scenarios ({INSTANCE}, CV {CV})", fontweight="bold")
+    fig.suptitle(f"Fixed plans on {SCENARIOS} processing-time scenarios (45-job instance, CV {CV})", fontweight="bold")
     save(fig, path, rect=(0, 0.08, 1, 1))
 
 
