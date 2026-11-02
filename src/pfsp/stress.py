@@ -111,6 +111,12 @@ def summarize(values: list[float]) -> dict:
     return {"mean": float(np.mean(values)), "p90": float(np.percentile(values, 90))}
 
 
+def paired_reduction(rule: list[float], ig: list[float]) -> dict:
+    """Mean of the per-scenario reduction (rule minus iterated greedy) and its standard error."""
+    diff = np.asarray(rule) - np.asarray(ig)
+    return {"mean": float(diff.mean()), "standard_error": float(diff.std(ddof=1) / np.sqrt(diff.size))}
+
+
 def run(out_dir: Path) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     instance_dir = DATA / INSTANCE
@@ -183,6 +189,7 @@ def run(out_dir: Path) -> dict:
     pairs = [(a["total_weighted_tardiness"], b["total_weighted_tardiness"])
              for a, b in zip(rows[0::2], rows[1::2])]
     summary["ig_better_tardiness_in_scenarios"] = sum(ig < rule for rule, ig in pairs)
+    summary["tardiness_reduction"] = paired_reduction([p[0] for p in pairs], [p[1] for p in pairs])
     summary["sweep"] = sweep(instance, plans)
     (out_dir / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     _write_markdown(out_dir / "stress.md", summary)
@@ -217,6 +224,7 @@ def sweep(instance, plans) -> list[dict]:
             values[method] = [execute(instance, seq, p)["total_weighted_tardiness"] for p in scenarios]
             entry[method] = summarize(values[method])
         entry["ig_better_in_scenarios"] = sum(i < r for r, i in zip(values["rule"], values["ig"]))
+        entry["reduction"] = paired_reduction(values["rule"], values["ig"])
         results.append(entry)
     return results
 
@@ -265,17 +273,19 @@ def _write_markdown(path: Path, summary: dict) -> None:
     lines += [
         "",
         f"Iterated greedy has the lower weighted tardiness in {summary['ig_better_tardiness_in_scenarios']} "
-        f"of {SCENARIOS} scenarios.",
+        f"of {SCENARIOS} scenarios; the mean per-scenario reduction is {summary['tardiness_reduction']['mean']:,.1f} weighted minutes "
+        f"with a standard error of {summary['tardiness_reduction']['standard_error']:,.1f}.",
         "",
         "## Sweep over variability",
         "",
-        "| Coefficient of variation | Seed | Rule mean TWT | Rule 90th percentile | Iterated greedy mean TWT | Iterated greedy 90th percentile | Scenarios where iterated greedy is better |",
-        "| ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+        "| Coefficient of variation | Seed | Rule mean TWT | Rule 90th percentile | Iterated greedy mean TWT | Iterated greedy 90th percentile | Mean reduction (standard error) | Scenarios where iterated greedy is better |",
+        "| ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for e in summary["sweep"]:
         lines.append(
             f"| {e['cv']} | {e['seed']} | {e['rule']['mean']:,.1f} | {e['rule']['p90']:,.1f} | "
-            f"{e['ig']['mean']:,.1f} | {e['ig']['p90']:,.1f} | {e['ig_better_in_scenarios']} of {SCENARIOS} |"
+            f"{e['ig']['mean']:,.1f} | {e['ig']['p90']:,.1f} | {e['reduction']['mean']:,.1f} ({e['reduction']['standard_error']:,.1f}) | "
+            f"{e['ig_better_in_scenarios']} of {SCENARIOS} |"
         )
     path.write_text("\n".join(lines) + "\n")
 
