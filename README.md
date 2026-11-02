@@ -163,6 +163,7 @@ We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which dra
 | `results/stress/` | Saved scenarios, both plans, per-scenario results, summary, and plots |
 | `library/` | Ledger and index of the papers read (the PDFs are not redistributed) |
 | `docs/` | Outline of the prototype video |
+| `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) |
 
 ## References
 
