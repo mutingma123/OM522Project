@@ -2,15 +2,15 @@
 
 \subsection{Iterated greedy lowers weighted tardiness on every instance and reaches the proven optima}\label{sec:deterministic}
 
-\sumpara On exact data the searched sequence beats the rule on all four instances, by the largest margins at 15 and 45 jobs. \sumparaend
+\sumpara On exact data the searched sequence beats EDD on all four instances, by the largest margins at 15 and 45 jobs. \sumparaend
 \fin \Cref{tab:comparison} reports every method on every instance, and every one of these schedules is feasible. \fine
-\fin Iterated greedy lowered total weighted tardiness relative to earliest due date by 17.1~percent on the 6-job instance, from 281 to 233 weighted minutes, and by 98.5, 97.6, and 81.0~percent on the development instances with 15, 45, and 120~jobs. \fine
+\fin Iterated greedy lowered total weighted tardiness relative to EDD by 17.1~percent on the 6-job instance, from 281 to 233 weighted minutes, and by 98.5, 97.6, and 81.0~percent on the development instances with 15, 45, and 120~jobs. \fine
 \fin It also lowered total waiting on the three development instances, by 65.6, 61.1, and 61.8~percent, but raised it on the 6-job instance from 13 to 37~minutes. \fine
-\fin \Cref{fig:comparison} shows both effects by instance size: the tardiness of the searched sequence is smallest relative to the rule at 15 and 45~jobs and rises to 19~percent of the rule's value at 120~jobs. \fine
+\fin \Cref{fig:comparison} shows both effects by instance size: the tardiness of the searched sequence is smallest relative to EDD at 15 and 45~jobs and rises to 19~percent of the EDD value at 120~jobs. \fine
 
 \begin{table}[ht]
 \centering
-\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:design}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the optimal tardiness of 21 was reached by an order with 323~minutes of waiting.}
+\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:settings}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the optimal tardiness of 21 was reached by an order with 323~minutes of waiting.}
 \label{tab:comparison}
 \small
 \begin{tabular}{llrrr}
@@ -41,7 +41,7 @@ Large development (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{comparison/comparison.png}
-\caption{Total weighted tardiness (left) and total waiting (right) of iterated greedy and of NEH\_EWDD alone, each as a percentage of the earliest due date rule's value on the same instance (the rule is the line at 100). The horizontal axis gives the instance size; the labels at the right edge are the 120-job values. The two methods coincide on the 6-job instance.}
+\caption{Total weighted tardiness (left) and total waiting (right) of iterated greedy and of NEH\_EWDD alone, each as a percentage of the EDD value on the same instance (EDD is the line at 100). The horizontal axis gives the instance size; the labels at the right edge are the 120-job values. The two methods coincide on the 6-job instance.}
 \label{fig:comparison}
 \end{figure}
 
@@ -49,28 +49,28 @@ Large development (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
 \fin HiGHS proved the optimal total weighted tardiness to be 233 on the 6-job instance in 0.36~seconds and 21 on the 15-job instance in 85.8~seconds, and iterated greedy reached both values. \fine
 \fin On the 15-job instance, the solver's optimal order had 323~minutes of waiting and iterated greedy's had 252, because only iterated greedy breaks ties in $Z$ by waiting. \fine
 \fin With seeds 1 to 5, iterated greedy returned exactly the default seed's tardiness on the 6-, 15-, and 45-job instances, and values from 4,159 to 4,306 on the 120-job instance, all below the default seed's 4,383. \fine
-\fin Its computation time grew from 0.21~seconds at 6~jobs to 37.2~seconds at 120~jobs, while the rule took under a millisecond on every instance. \fine
+\fin Its computation time grew from 0.21~seconds at 6~jobs to 37.2~seconds at 120~jobs, while EDD took under a millisecond on every instance. \fine
 
-\subsection{The fixed plan keeps the lower tardiness in all 30 scenarios}\label{sec:stress-results}
+\subsection{The fixed searched sequence has the lower tardiness in all 30 scenarios at a coefficient of variation of 0.2}\label{sec:stress-results}
 
-\sumpara At a coefficient of variation of 0.2, the searched plan stays far ahead of the rule's plan on both measures in every scenario. \sumparaend
-\fin \Cref{tab:stress} summarizes the two plans for the 45-job instance over the 30~saved scenarios at $\nu = 0.2$. \fine
-\fin The iterated greedy plan had the lower weighted tardiness in all 30~scenarios, with a mean of 420.6 weighted minutes against 3,541.1, a reduction of 3,120.5 weighted minutes (standard error 150.1 over the paired scenarios) or 88.1~percent, and a 90th percentile of 592.2 against 4,616.6. \fine
+\sumpara At a coefficient of variation of 0.2, the searched sequence stays far ahead of the EDD sequence on both measures in every scenario. \sumparaend
+\fin \Cref{tab:stress} summarizes the two fixed sequences for the 45-job instance over the 30~saved scenarios at $\nu = 0.2$. \fine
+\fin The iterated greedy sequence had the lower weighted tardiness in all 30~scenarios, with a mean of 420.6 weighted minutes against 3,541.1, a reduction of 3,120.5 weighted minutes (standard error 150.1 over the paired scenarios) or 88.1~percent, and a 90th percentile of 592.2 against 4,616.6. \fine
 \fin In every scenario the reduction was at least 1,948.6 weighted minutes, and its 10th percentile was 2,235.1. \fine
 \fin Its mean waiting was 1,276.9~minutes against 2,454.5, a reduction of 48.0~percent. \fine
-\fin Neither plan broke a hard constraint in any scenario, because the execution rule preserves release, stage order, and one job per stage for any processing times, and due dates are soft targets. \fine
-\fin \Cref{fig:stress} shows that the ranges do not overlap: the iterated greedy plan's weighted tardiness ran from 103.3 to 1,120.0, and the rule's from 2,276.2 to 6,013.8. \fine
+\fin Neither sequence violated a hard constraint in any scenario, because right-shift execution preserves release dates, stage order, and one job per stage for any processing times, and due dates are soft targets. \fine
+\fin \Cref{fig:stress} shows that the ranges do not overlap: the weighted tardiness of the iterated greedy sequence ranged from 103.3 to 1,120.0, and that of EDD from 2,276.2 to 6,013.8. \fine
 
 \begin{table}[ht]
 \centering
-\caption{Stress test on the 45-job instance: 30~scenarios at a coefficient of variation of 0.2, seed 20261103. ``Planned'' is the plan's value on the exact data; the mean and the 90th percentile are over the scenarios. Tardiness is in weighted minutes and waiting in minutes.}
+\caption{Stress test on the 45-job instance: 30~scenarios at a coefficient of variation of 0.2, seed 20261103. ``Planned'' is the value of the sequence on the exact data; the mean and the 90th percentile are over the scenarios. Tardiness is in weighted minutes and waiting in minutes.}
 \label{tab:stress}
 \small
 \begin{tabular}{lrrrrrrr}
 \toprule
  & \multicolumn{3}{c}{Total weighted tardiness} & \multicolumn{3}{c}{Total waiting} & Scenarios breaking \\
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}
-Plan & Planned & Mean & 90th pct. & Planned & Mean & 90th pct. & a hard constraint \\
+Sequence & Planned & Mean & 90th pct. & Planned & Mean & 90th pct. & a hard constraint \\
 \midrule
 Earliest due date & 2,371.0 & 3,541.1 & 4,616.6 & 2,040.0 & 2,454.5 & 2,768.6 & 0 \\
 Iterated greedy & 58.0 & 420.6 & 592.2 & 794.0 & 1,276.9 & 1,454.9 & 0 \\
@@ -81,22 +81,22 @@ Iterated greedy & 58.0 & 420.6 & 592.2 & 794.0 & 1,276.9 & 1,454.9 & 0 \\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{stress/stress_per_scenario.png}
-\caption{Total weighted tardiness (left) and total waiting (right) of the two fixed plans in each of the 30~scenarios of \cref{tab:stress}. Each dot is one plan in one scenario, and both plans face the same realized processing times in a scenario.}
+\caption{Total weighted tardiness (left) and total waiting (right) of the two fixed sequences in each of the 30~scenarios of \cref{tab:stress}. Each dot is one sequence in one scenario, and both sequences face the same realized processing times in a scenario.}
 \label{fig:stress}
 \end{figure}
 
 \subsection{The relative advantage narrows as variability grows, while the mean absolute advantage stays above 2,500 weighted minutes}\label{sec:sweep}
 
-\sumpara Higher variability raises both plans' tardiness, cuts the relative advantage, and thins the worst periods' gain, while the mean gain holds. \sumparaend
+\sumpara Higher variability raises the tardiness of both sequences, cuts the relative advantage, and thins the worst periods' gain, while the mean gain holds. \sumparaend
 \fin \Cref{tab:sweep} and \cref{fig:sweep} repeat the execution at five coefficients of variation, each with 30~new scenarios. \fine
-\fin The iterated greedy plan's mean weighted tardiness rose from 148.1 at $\nu = 0.1$ to 8,901.6 at $\nu = 0.8$, and the rule plan's from 2,720.1 to 12,230.5. \fine
+\fin The mean weighted tardiness of the iterated greedy sequence rose from 148.1 at $\nu = 0.1$ to 8,901.6 at $\nu = 0.8$, and that of EDD from 2,720.1 to 12,230.5. \fine
 \fin The relative reduction in mean weighted tardiness fell from 94.6~percent at $\nu = 0.1$ to 27.2~percent at $\nu = 0.8$. \fine
 \fin The mean absolute reduction stayed between 2,572.0 and 3,683.7 weighted minutes at every level: it rose from $\nu = 0.1$ (standard error 65.9) to $\nu = 0.5$ (standard error 223.8), and its fall of 354.8 to 3,329.0 at $\nu = 0.8$ (standard error 342.7) is within the combined standard error of 409.3 of the two estimates. \fine
-\fin The gain in a single period became less dependable at $\nu = 0.8$: the 10th percentile of the per-scenario reduction, between 1,781.1 and 2,473.2 weighted minutes at the lower levels, fell to 851.5, and the rule's plan won 1 of the 30~scenarios, by 870.4 weighted minutes, its only win in the 180 paired scenarios of the six sets. \fine
+\fin The gain in a single period became less dependable at $\nu = 0.8$: the 10th percentile of the per-scenario reduction, between 1,781.1 and 2,473.2 weighted minutes at the lower levels, fell to 851.5, and the EDD sequence won 1 of the 30~scenarios, by 870.4 weighted minutes, its only win in the 180 paired scenarios of the six sets. \fine
 
 \begin{table}[ht]
 \centering
-\caption{Sweep over variability on the 45-job instance. Each row uses 30~new scenarios, from seeds 6522 to 6526 in order. Tardiness is in weighted minutes. The reduction is the per-scenario difference between the two plans' weighted tardiness: its mean, with the standard error in parentheses, and its 10th percentile; the percentage compares the two plans' means.}
+\caption{Sweep over variability on the 45-job instance. Each row uses 30~new scenarios, from seeds 6522 to 6526 in order. Tardiness is in weighted minutes. The reduction is the per-scenario difference between the two sequences' weighted tardiness: its mean, with the standard error in parentheses, and its 10th percentile; the percentage compares the two sequences' means.}
 \label{tab:sweep}
 \small
 \setlength{\tabcolsep}{4.5pt}
@@ -118,6 +118,6 @@ $\nu$ & Mean & 90th pct. & Mean & 90th pct. & Mean (s.e.) & 10th pct. & Percent 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.62\textwidth]{stress/stress_cv_sweep.png}
-\caption{Mean total weighted tardiness of the two fixed plans for the 45-job instance at five coefficients of variation of the processing times, 30~scenarios each (\cref{tab:sweep}). The vertical gap between the lines is the absolute reduction, between 2,572.0 and 3,683.7 weighted minutes at every level.}
+\caption{Mean total weighted tardiness of the two fixed sequences for the 45-job instance at five coefficients of variation of the processing times, 30~scenarios each (\cref{tab:sweep}). The vertical gap between the lines is the absolute reduction, between 2,572.0 and 3,683.7 weighted minutes at every level.}
 \label{fig:sweep}
 \end{figure}

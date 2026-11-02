@@ -13,17 +13,17 @@
 \toprule
 Symbol & Meaning & Units & Defined in \\
 \midrule
-$n$ & Number of jobs & jobs & \cref{sec:timing} \\
-$m$ & Number of stages & stages & \cref{sec:timing} \\
-$j$ & Job index, $j = 1, \ldots, n$ & & \cref{sec:timing} \\
+$n$ & Number of jobs & jobs & \cref{sec:setting} \\
+$m$ & Number of stages & stages & \cref{sec:setting} \\
+$j$ & Job index, $j = 1, \ldots, n$ & & \cref{sec:setting} \\
 $h$ & Job index in sums and maxima that already involve $j$ & & \cref{sec:mip} \\
-$k$ & Stage index in line order, $k = 1, \ldots, m$ & & \cref{sec:timing} \\
+$k$ & Stage index in line order, $k = 1, \ldots, m$ & & \cref{sec:setting} \\
 $i$ & Position index within a sequence $\pi$ & & \cref{sec:timing} \\
 $q$ & Position index in the mixed-integer program & & \cref{sec:mip} \\
-$r_j$ & Release time of job $j$ & minutes & \cref{sec:timing} \\
-$d_j$ & Due date of job $j$ & minutes & \cref{sec:timing} \\
-$w_j$ & Weight (priority score) of job $j$ & integer score & \cref{sec:timing} \\
-$p_{jk}$ & Processing time of job $j$ at stage $k$ & minutes & \cref{sec:timing} \\
+$r_j$ & Release date of job $j$ & minutes & \cref{sec:setting} \\
+$d_j$ & Due date of job $j$ & minutes & \cref{sec:setting} \\
+$w_j$ & Weight (priority score) of job $j$ & integer score & \cref{sec:setting} \\
+$p_{jk}$ & Processing time of job $j$ at stage $k$ & minutes & \cref{sec:setting} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -42,7 +42,7 @@ $S_{jk}$, $C_{jk}$ & Start and completion of job $j$ at stage $k$ & minutes & \e
 $T_j$ & Tardiness of job $j$, $\max\{0, C_{jm} - d_j\}$ & minutes & \cref{sec:timing} \\
 $Z(\pi)$ & Total weighted tardiness of $\pi$ (primary measure) & weighted minutes & \eqref{eq:measures} \\
 $W(\pi)$ & Total waiting between stages of $\pi$ (secondary measure) & minutes & \eqref{eq:measures} \\
-$F(\pi)$ & The pair $(Z(\pi), W(\pi))$, compared lexicographically & & \cref{sec:methods} \\
+$F(\pi)$ & The pair $(Z(\pi), W(\pi))$, compared lexicographically & & \cref{sec:ig} \\
 $x_{jq}$ & 1 if job $j$ takes position $q$, 0 otherwise & binary & \cref{sec:mip} \\
 $B_{qk}$, $E_{qk}$ & Start and end of the job in position $q$ at stage $k$ & minutes & \cref{sec:mip} \\
 $U_j$ & Upper bound on the tardiness of job $j$ in \eqref{eq:mip-tardy} & minutes & \cref{sec:mip} \\
@@ -59,12 +59,12 @@ $U_j$ & Upper bound on the tardiness of job $j$ in \eqref{eq:mip-tardy} & minute
 \toprule
 Symbol & Meaning & Value or units & Defined in \\
 \midrule
-$\pi^{\mathrm{EDD}}$ & Sequence of the earliest due date rule & & \cref{alg:ig} \\
+$\pi^{\mathrm{EDD}}$ & Sequence of the earliest due date (EDD) rule & & \cref{sec:edd} \\
 $\pi^{*}$, $\pi'$, $\pi''$ & Best sequence found, a rebuilt sequence, and a local search candidate & & \cref{alg:ig} \\
-$\delta$ & Number of jobs removed in each iteration & 4 & \cref{sec:methods} \\
-$\lambda$ & Temperature factor & 0.5 & \cref{sec:methods} \\
-$\Theta$ & Temperature, $\lambda \sum_{j,k} p_{jk} / (10\, n\, m)$, compared with increases in $Z$ & minutes & \cref{sec:methods} \\
-$\Delta$ & Increase in $Z$ of a candidate over the current sequence & weighted minutes & \cref{sec:methods} \\
+$\delta$ & Number of jobs removed in each iteration & 4 & \cref{sec:ig} \\
+$\lambda$ & Temperature factor & 0.5 & \cref{sec:ig} \\
+$\Theta$ & Temperature, $\lambda \sum_{j,k} p_{jk} / (10\, n\, m)$, compared with increases in $Z$ & minutes & \cref{sec:ig} \\
+$\Delta$ & Increase in $Z$ of a candidate over the current sequence & weighted minutes & \cref{sec:ig} \\
 $L$, $\ell$ & Iteration limit and iteration counter & $L = 5000$ & \cref{alg:ig} \\
 $u$ & Uniform random draw on $[0, 1]$ in the acceptance test & & \cref{alg:ig} \\
 $\omega$ & Scenario index & 30 per test & \cref{sec:stress-design} \\

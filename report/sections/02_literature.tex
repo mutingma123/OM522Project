@@ -1,0 +1,27 @@
+\section{Related literature}\label{sec:literature}
+
+\subsection{Heuristics for tardiness in permutation flow shops settle the deterministic case}\label{sec:lit-deterministic}
+
+\sumpara Insertion-based heuristics and iterated greedy dominate dispatching rules for tardiness on exact data. \sumparaend
+\fin \citet{vallada2008review} reviewed and evaluated 40 heuristics and metaheuristics for total tardiness in the $m$-machine permutation flow shop on a common benchmark. \fine
+\fin Among the heuristics, those built on inserting and interchanging jobs performed best, and EDD ranked below the variant of the insertion heuristic of Nawaz, Enscore, and Ham (NEH) that starts from the EDD order. \fine
+\fin \citet{ruiz2007ig} introduced iterated greedy for the makespan: it removes a few jobs from the incumbent sequence, reinserts each at its best position with the NEH insertion step, and accepts the result under a constant-temperature criterion, with four removed jobs as the most effective setting in their experiments. \fine
+\fin \citet{ruiz2008igwt} extended the algorithm to flow shops with sequence-dependent setup times and the weighted tardiness objective, starting from an NEH variant that orders jobs by $d_j / w_j$; that start beat plain NEH on 470 of 480 instances, and the version with local search had the lowest average deviation from the best known solutions in all four instance sets. \fine
+
+\sumpara These evaluations leave release dates and variable processing times outside their scope. \sumparaend
+\fin All three studies evaluate sequences on instances with fixed processing times and without release dates. \fine
+\fin They therefore establish which sequence is best for the data as given, but not how a sequence chosen on those data performs when the realized times differ. \fine
+
+\subsection{Studies of uncertain processing times settle the expected makespan}\label{sec:lit-uncertain}
+
+\sumpara The stochastic flow shop literature concentrates on the expected makespan and finds deterministic solutions effective. \sumparaend
+\fin In a systematic review of 100 studies of flow shops under uncertainty published from 2001 to 2016, processing time was the uncertain parameter in 74~percent, and most studies optimized the makespan alone~\cite{gonzalezneira2017review}. \fine
+\fin \citet{baker2012stochastic} tested constructive heuristics adapted from deterministic procedures for the stochastic flow shop with lognormal processing times, on instances with up to 10~jobs and 6~machines, and found them within 1~percent of the best sequences found on average, against 5.3~percent for a random sequence. \fine
+\fin \citet{framinan2015stochastic} tested larger instances with coefficients of variation from 0.01 to 1.5 and concluded that the deterministic NEH applied to mean processing times performs extremely well for the expected makespan; following Hopp and Spearman, they classify coefficients of variation below 0.75 as low variability. \fine
+\fin \citet{juan2014simheuristic} combined iterated local search with Monte Carlo simulation on the premise that good deterministic sequences remain good at moderate variability, and they advocated comparing the whole distribution of outcomes, beyond the mean. \fine
+
+\sumpara The review of schedule execution predicts an erosion threshold but leaves its location and its form for weighted tardiness open. \sumparaend
+\fin \citet{aytug2005executing} classify the execution of schedules under uncertainty into completely reactive, robust, and predictive-reactive approaches, and they describe right-shifting, which keeps the sequence and delays operations as disruptions occur. \fine
+\fin Summarizing earlier simulation studies, they conclude that optimized predictive schedules outperform myopic dispatching when uncertainty is low, and that beyond a level of variability that depends on the system the advantage fades. \fine
+\fin Both \citet{baker2012stochastic} and \citet{gonzalezneira2017review} name tardiness criteria as open directions. \fine
+\fin What remains unsettled is how a searched sequence compares with a rule-based sequence for total weighted tardiness with release dates when both are executed unchanged, and whether variability erodes the mean of that comparison or only its worst outcomes. \fine

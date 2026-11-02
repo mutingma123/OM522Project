@@ -1,0 +1,61 @@
+\section{Discussion}\label{sec:discussion}
+
+\subsection{Weights and search explain the deterministic gain}\label{sec:gain}
+
+\sumpara On the 6-job instance, the gain comes from moving a low-weight job behind two high-weight jobs. \sumparaend
+\fin \Cref{fig:gantt} draws both schedules of the 6-job instance. \fine
+\fin EDD places job J005, due at 67 with weight 1, ahead of jobs J003 and J004, which carry weight 4. \fine
+\fin Iterated greedy moves J005 to the end, so J003 finishes at 97 and J004 at 119, against 108 and 139 under EDD, while J005 finishes at 136, against 82. \fine
+\fin The weighted tardiness of J003 and J004 falls by 124 weighted minutes and that of J005 rises by 54, and with a smaller rise for J006 the total falls from 281 to 233. \fine
+\fin The same reordering raises waiting on this instance from 13 to 37~minutes, because the two jobs now at the end, J006 and J005, wait 18 and 19~minutes at stages S2 to S4 behind the long operations of the weight-4 jobs. \fine
+
+\begin{figure}[ht]
+\centering
+{\footnotesize\color{muted}Earliest due date: J001, J002, J005, J003, J006, J004 (total weighted tardiness 281)}\\[2pt]
+\gantt{\eddschedule}\\[6pt]
+{\footnotesize\color{muted}Iterated greedy: J001, J002, J003, J004, J006, J005 (total weighted tardiness 233, the optimum)}\\[2pt]
+\gantt{\igschedule}\\[4pt]
+{\footnotesize\color{muted}Shading gives the job's weight:
+\textcolor{w1}{\rule{0.7em}{0.7em}}~1\quad
+\textcolor{w2}{\rule{0.7em}{0.7em}}~2\quad
+\textcolor{w4}{\rule{0.7em}{0.7em}}~4}
+\caption{Both schedules of the 6-job instance on stages S1 to S4, with time in minutes on the horizontal axis. Each bar is one operation, labeled with its job number and shaded by the job's weight. Iterated greedy moves the weight-1 job J005 behind the weight-4 jobs J003 and J004.}
+\label{fig:gantt}
+\end{figure}
+
+\sumpara On the development instances, weighting turns most late jobs into on-time jobs, and the search removes most of the tardiness that the weighted start leaves. \sumparaend
+\fin The share of jobs finishing on time rises from 0.333, 0.244, and 0.233 under EDD to 0.867, 0.911, and 0.642 under iterated greedy on the instances with 15, 45, and 120~jobs. \fine
+\fin NEH\_EWDD alone already lowers weighted tardiness relative to EDD by 95.1, 84.8, and 58.9~percent on these instances (\cref{tab:comparison}), and the iterations of \cref{alg:ig} lower its value by a further 70.0, 83.9, and 53.6~percent, or 49, 302, and 5,069 weighted minutes. \fine
+\fin On the 120-job instance the search has not converged after 5000~iterations, since five other seeds find sequences 1.8 to 5.1~percent better than the default seed's 4,383, at a computation time that already reaches 37.2~seconds. \fine
+\fin On the 15-job instance, the optimal order found by the solver and the order found by iterated greedy share the tardiness of 21, but the solver's order has 323~minutes of waiting and iterated greedy's 252, so the tie-break removes 71~minutes of work in process that a tardiness-only objective leaves in place. \fine
+
+\subsection{Variability turns the searched sequence's on-time jobs late}\label{sec:loss}
+
+\sumpara Under variability the searched sequence loses on-time jobs, while the EDD sequence mainly lengthens lateness it already has. \sumparaend
+\fin At $\nu = 0.2$, the iterated greedy sequence has 4 late jobs as planned and 11.5 on average across the 30~scenarios, while the EDD sequence has 34 and 36.1. \fine
+\fin The mean weighted tardiness of EDD rises by 1,170.1 weighted minutes over its planned value while its count of late jobs rises by only 2.1, so most of its increase comes from jobs that were already late finishing later still. \fine
+\fin The mean of the iterated greedy sequence rises by 362.6, a factor of 7.25 over its planned 58, against a factor of 1.49 for EDD, because its losses come from jobs that were on time in the plan. \fine
+
+\sumpara The searched sequence's on-time margins are as wide as those of EDD; it is exposed because it has more on-time jobs. \sumparaend
+\fin The on-time jobs of the iterated greedy sequence have a median slack of 31~minutes before their due dates, against 28 for EDD, and in each sequence 3 on-time jobs have slack below one standard deviation of their own total processing time at $\nu = 0.2$, which is $0.2\sqrt{\sum_k p_{jk}^2}$ for job $j$. \fine
+\fin The iterated greedy sequence is exposed because it has 41 on-time jobs that a delay can make late, against 11 for EDD. \fine
+\fin This mechanism is consistent with the observation of \citet{aytug2005executing} that optimized schedules lose their advantage as variability grows, and our sweep shows that, for weighted tardiness, the loss appears first in the tail of the per-period reduction while its mean stays between 2,572.0 and 3,683.7 weighted minutes. \fine
+\fin It also extends to this objective the finding of \citet{framinan2015stochastic} and \citet{juan2014simheuristic} for the expected makespan, that sequences computed on exact or mean processing times remain effective at low to moderate variability. \fine
+
+\subsection{Managerial implications, scope, and extensions}\label{sec:implications}
+
+\sumpara A planner should adopt the searched sequence and monitor the line's variability. \sumparaend
+\fin For a planning period like the 45-job instance with processing times varying at a coefficient of variation of 0.2, the searched sequence lowers mean total weighted tardiness by 3,120.5 weighted minutes (standard error 150.1) in the main scenarios and by 2,866.4 (standard error 121.3) in an independent second set, leaves 11.5~jobs late per period on average against 36.1, and lowers mean waiting between stages by 48.0~percent. \fine
+\fin In exchange, the planner gives up a sequence that can be traced by hand and accepts a result that depends on a seed and takes seconds to compute, 3.22 at 45~jobs and 37.2 at 120. \fine
+\fin At $\nu = 0.8$ the mean gain remains 3,329.0 weighted minutes, but the 10th percentile of the per-period gain falls to 851.5 and EDD is better in 1 of 30~scenarios, so a planner who weighs the worst periods most should repeat the comparison at the line's measured variability. \fine
+
+\sumpara Our design bounds the claim in four ways. \sumparaend
+\fin All four instances come from one generator, with processing times of 2 to 20~minutes and median due-date windows of 154 to 158~minutes, and the stress test covers only the 45-job instance, so lines with tighter due dates or more uneven stages may show different margins. \fine
+\fin Our scenarios draw each of the 360 processing times of the 45-job instance independently, so they do not represent a common cause, such as a slow shift or a degraded machine, that lengthens many operations at once. \fine
+\fin Both sequences are predictive and are never revised, which isolates the value of the sequence itself and leaves out rescheduling and reactive dispatching; in the studies reviewed by \citet{aytug2005executing}, dispatching matched or outperformed predictive schedules once variability was high. \fine
+\fin Optimality is proven only up to 15~jobs, and on the 120-job instance other seeds find better sequences, so the gains reported for the largest instance understate what the search can achieve. \fine
+
+\sumpara Each limit points to one extension with a direct test. \sumparaend
+\fin A search that scores each candidate sequence by its mean tardiness over sampled scenarios, in the manner of the simheuristic of \citet{juan2014simheuristic}, would target the variability directly, and the sweep of \cref{sec:sweep} provides the test. \fine
+\fin Scenarios with correlated factors, in which one draw lengthens a whole stage or a whole shift, would test whether the absolute gain survives a common cause. \fine
+\fin Re-sequencing at each release with the processing times already realized would measure how much of the loss under variability a predictive-reactive policy recovers. \fine

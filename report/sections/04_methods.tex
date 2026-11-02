@@ -1,0 +1,53 @@
+\section{Solution methods}\label{sec:methods}
+
+\subsection{The earliest due date rule sorts the jobs once}\label{sec:edd}
+
+\sumpara The baseline is a single sort by due date. \sumparaend
+\fin The EDD rule sorts the jobs by $d_j$, breaks ties by job identifier, and times the resulting sequence $\pi^{\mathrm{EDD}}$ by \eqref{eq:recursion}. \fine
+\fin Its sequence ignores weights, release dates, and processing times, and it requires no search. \fine
+
+\subsection{Iterated greedy searches the sequences by insertion}\label{sec:ig}
+
+\sumpara Iterated greedy builds a weighted start and then repeatedly destroys and rebuilds the sequence around a local search. \sumparaend
+\fin Our researched method is IG\_RS\_LS, the iterated greedy algorithm with local search that \citet{ruiz2008igwt} proposed for the flow shop with sequence-dependent setup times; the line studied here has no setup times, so we apply its weighted tardiness version with every setup time equal to zero, as shown in \cref{alg:ig}. \fine
+\fin Sequences are compared by the pair $F(\pi) = (Z(\pi), W(\pi))$ in lexicographic order, and the best position for a job is the position in a partial sequence that yields the smallest $F$, the earliest on an exact tie. \fine
+\fin The initial sequence, NEH\_EWDD, orders the jobs by nondecreasing $d_j / w_j$ and inserts them one at a time at their best positions~\cite{ruiz2008igwt}, following the insertion step of NEH as stated by \citet{ruiz2007ig}. \fine
+\fin Each iteration removes $\delta = 4$ jobs at random, reinserts them in the order of removal, and applies a local search that moves single jobs to their best positions until no move improves $F$. \fine
+\fin A worse sequence replaces the current one with probability $\exp(-\Delta/\Theta)$, where $\Delta$ is its increase in $Z$ and $\Theta = \lambda \sum_{j,k} p_{jk} / (10\, n\, m)$ with $\lambda = 0.5$, which are the acceptance rule and the settings of \citet{ruiz2008igwt}. \fine
+
+\begin{algorithm}[ht]
+\caption{Iterated greedy for weighted tardiness, after \citet{ruiz2008igwt}. The pair $F = (Z, W)$ is compared lexicographically, and every insertion is made at the best position.}
+\label{alg:ig}
+\small
+\begin{algorithmic}[1]
+\Require instance; destruction size $\delta = 4$; temperature factor $\lambda = 0.5$; iteration limit $L = 5000$; seed 522
+\State $\pi \gets$ NEH\_EWDD: jobs by nondecreasing $d_j / w_j$, each inserted at its best position
+\If{$F(\pi^{\mathrm{EDD}}) < F(\pi)$} $\pi \gets \pi^{\mathrm{EDD}}$ \Comment{never start worse than EDD}\EndIf
+\State $\pi \gets \textsc{LocalSearch}(\pi)$; \quad $\pi^{*} \gets \pi$; \quad $\Theta \gets \lambda \sum_{j,k} p_{jk} / (10\, n\, m)$
+\For{$\ell = 1, \ldots, L$}
+  \State remove $\delta$ jobs chosen at random from $\pi$, keeping the removed jobs in order of removal
+  \State insert each removed job, in that order, at its best position
+  \State $\pi' \gets \textsc{LocalSearch}$ of the rebuilt sequence
+  \If{$F(\pi') < F(\pi)$} $\pi \gets \pi'$; \textbf{if} $F(\pi) < F(\pi^{*})$ \textbf{then} $\pi^{*} \gets \pi$
+  \ElsIf{$u \leq \exp\bigl(-(Z(\pi') - Z(\pi))/\Theta\bigr)$ for $u$ uniform on $[0,1]$} $\pi \gets \pi'$
+  \EndIf
+\EndFor
+\State \Return $\pi^{*}$
+\Statex
+\Function{LocalSearch}{$\pi$}
+  \Repeat
+    \For{each job $j$, in random order}
+      \State remove $j$ and insert it at its best position, giving $\pi''$
+      \If{$F(\pi'') < F(\pi)$} $\pi \gets \pi''$ \EndIf
+    \EndFor
+  \Until{a full pass changes nothing}
+  \State \Return $\pi$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\sumpara Three design choices are ours, each made for the decision studied here. \sumparaend
+\fin We break ties in $Z$ by $W$, because the planner prefers less work in process among sequences with equal tardiness and because many sequences can share a value of $Z$ when most jobs finish on time. \fine
+\fin We start from $\pi^{\mathrm{EDD}}$ whenever it improves on NEH\_EWDD, so that the method never returns a sequence worse than the baseline; on all four instances, NEH\_EWDD was the better start. \fine
+\fin We stop after $L = 5000$ iterations with a fixed seed, where \citet{ruiz2008igwt} stop at a CPU-time limit, so that a rerun on another computer reproduces each reported sequence. \fine
+\fin The best-position search times the jobs ahead of each candidate position once and abandons a position as soon as its partial pair $(Z, W)$ can no longer improve on the best position found, which is exact because both totals are nondecreasing as jobs are appended. \fine
