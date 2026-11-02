@@ -176,6 +176,9 @@ def run(out_dir: Path) -> dict:
             "total_weighted_tardiness": summarize([r["total_weighted_tardiness"] for r in mine]),
             "total_waiting": summarize([r["total_waiting"] for r in mine]),
             "scenarios_breaking_a_hard_constraint": sum(r["hard_constraint_violations"] > 0 for r in mine),
+            "planned_late_jobs": deterministic[method]["late_jobs"],
+            "mean_late_jobs": float(np.mean([r["late_jobs"] for r in mine])),
+            **slack_profile(instance, plans[method], deterministic[method]),
         }
     pairs = [(a["total_weighted_tardiness"], b["total_weighted_tardiness"])
              for a, b in zip(rows[0::2], rows[1::2])]
@@ -186,6 +189,20 @@ def run(out_dir: Path) -> dict:
     _plot_scenarios(out_dir / "stress_per_scenario.png", rows)
     _plot_sweep(out_dir / "stress_cv_sweep.png", summary["sweep"])
     return summary
+
+
+def slack_profile(instance, seq, result) -> dict:
+    """Planned slack of the jobs a plan finishes on time. A job is at risk when its slack is below
+    one standard deviation of its own total processing time under the stress model, i.e.
+    CV * sqrt(sum_k p_jk^2) for independent factors with coefficient of variation CV."""
+    slack = instance.due[seq] - result["completion"][:, -1]
+    own_sd = CV * np.sqrt((instance.p[seq] ** 2).sum(axis=1))
+    on_time = slack >= 0
+    return {
+        "planned_on_time_jobs": int(on_time.sum()),
+        "planned_median_slack_of_on_time_jobs": float(np.median(slack[on_time])) if on_time.any() else None,
+        "planned_on_time_jobs_with_slack_below_own_sd": int((on_time & (slack < own_sd)).sum()),
+    }
 
 
 def sweep(instance, plans) -> list[dict]:
@@ -233,6 +250,17 @@ def _write_markdown(path: Path, summary: dict) -> None:
             f"{v['total_weighted_tardiness']['mean']:,.1f} | {v['total_weighted_tardiness']['p90']:,.1f} | "
             f"{v['deterministic_total_waiting']:,.1f} | {v['total_waiting']['mean']:,.1f} | "
             f"{v['total_waiting']['p90']:,.1f} | {v['scenarios_breaking_a_hard_constraint']} |"
+        )
+    lines += [
+        "",
+        "| Method | Late jobs in the plan | Mean late jobs across scenarios | On-time jobs in the plan | Median slack of on-time jobs | On-time jobs with slack below one standard deviation of their own processing |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for method in METHODS:
+        v = m[method]
+        lines.append(
+            f"| {names[method]} | {v['planned_late_jobs']} | {v['mean_late_jobs']:.1f} | {v['planned_on_time_jobs']} | "
+            f"{v['planned_median_slack_of_on_time_jobs']:.1f} | {v['planned_on_time_jobs_with_slack_below_own_sd']} |"
         )
     lines += [
         "",
