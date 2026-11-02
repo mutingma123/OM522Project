@@ -1,6 +1,6 @@
 \section{Discussion}\label{sec:discussion}
 
-\subsection{Weights and search explain the deterministic gain}\label{sec:gain}
+\subsection{Sources of the deterministic improvement}\label{sec:gain}
 
 \sumpara On the 6-job instance, the gain comes from moving a low-weight job behind two high-weight jobs. \sumparaend
 \fin \Cref{fig:gantt} draws both schedules of the 6-job instance. \fine
@@ -29,7 +29,7 @@
 \fin On the 120-job instance the search has not converged after 5000~iterations, since five other seeds find sequences 1.8 to 5.1~percent better than the default seed's 4,383, at a computation time that already reaches 37.2~seconds. \fine
 \fin On the 15-job instance, the optimal order found by the solver and the order found by iterated greedy share the tardiness of 21, but the solver's order has 323~minutes of waiting and iterated greedy's 252, so the tie-break removes 71~minutes of work in process that a tardiness-only objective leaves in place. \fine
 
-\subsection{Variability turns the searched sequence's on-time jobs late}\label{sec:loss}
+\subsection{On-time jobs under processing-time variability}\label{sec:loss}
 
 \sumpara Under variability the searched sequence loses on-time jobs, while the EDD sequence mainly lengthens lateness it already has. \sumparaend
 \fin At $\nu = 0.2$, the iterated greedy sequence has 4 late jobs as planned and 11.5 on average across the 30~scenarios, while the EDD sequence has 34 and 36.1. \fine
@@ -42,7 +42,7 @@
 \fin This mechanism is consistent with the observation of \citet{aytug2005executing} that optimized schedules lose their advantage as variability grows, and the sweep shows that, for weighted tardiness, the loss appears first in the tail of the per-period reduction while its mean stays between 2,572.0 and 3,683.7 weighted minutes. \fine
 \fin It also extends to this objective the finding of \citet{framinan2015stochastic} and \citet{juan2014simheuristic} for the expected makespan, that sequences computed on exact or mean processing times remain effective at low to moderate variability. \fine
 
-\subsection{Managerial implications, scope, and extensions}\label{sec:implications}
+\subsection{Implications, scope, and extensions}\label{sec:implications}
 
 \sumpara A planner should adopt the searched sequence and monitor the line's variability. \sumparaend
 \fin For a planning period like the 45-job instance with processing times varying at a coefficient of variation of 0.2, the searched sequence lowers mean total weighted tardiness by 3,120.5 weighted minutes (standard error 150.1) in the main scenarios and by 2,866.4 (standard error 121.3) in an independent second set, leaves 11.5~jobs late per period on average against 36.1, and lowers mean waiting between stages by 48.0~percent. \fine

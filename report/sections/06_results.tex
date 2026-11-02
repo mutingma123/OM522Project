@@ -1,6 +1,6 @@
 \section{Results}\label{sec:results}
 
-\subsection{Iterated greedy lowers weighted tardiness on every instance and reaches the proven optima}\label{sec:deterministic}
+\subsection{Deterministic comparison}\label{sec:deterministic}
 
 \sumpara On exact data the searched sequence beats EDD on all four instances, by the largest margins at 15 and 45 jobs. \sumparaend
 \fin \Cref{tab:comparison} reports every method on every instance, and every one of these schedules is feasible. \fine
@@ -51,7 +51,7 @@ Large development (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
 \fin With seeds 1 to 5, iterated greedy returned exactly the default seed's tardiness on the 6-, 15-, and 45-job instances, and values from 4,159 to 4,306 on the 120-job instance, all below the default seed's 4,383. \fine
 \fin Its computation time grew from 0.21~seconds at 6~jobs to 37.2~seconds at 120~jobs, while EDD took under a millisecond on every instance. \fine
 
-\subsection{The fixed searched sequence has the lower tardiness in all 30 scenarios at a coefficient of variation of 0.2}\label{sec:stress-results}
+\subsection{Paired scenarios at a coefficient of variation of 0.2}\label{sec:stress-results}
 
 \sumpara At a coefficient of variation of 0.2, the searched sequence stays far ahead of the EDD sequence on both measures in every scenario. \sumparaend
 \fin \Cref{tab:stress} summarizes the two fixed sequences for the 45-job instance over the 30~saved scenarios at $\nu = 0.2$. \fine
@@ -85,7 +85,7 @@ Iterated greedy & 58.0 & 420.6 & 592.2 & 794.0 & 1,276.9 & 1,454.9 & 0 \\
 \label{fig:stress}
 \end{figure}
 
-\subsection{The relative advantage narrows as variability grows, while the mean absolute advantage stays above 2,500 weighted minutes}\label{sec:sweep}
+\subsection{Sensitivity to processing-time variability}\label{sec:sweep}
 
 \sumpara Higher variability raises the tardiness of both sequences, cuts the relative advantage, and thins the worst periods' gain, while the mean gain holds. \sumparaend
 \fin \Cref{tab:sweep} and \cref{fig:sweep} repeat the execution at five coefficients of variation, each with 30~new scenarios. \fine

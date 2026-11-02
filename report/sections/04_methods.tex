@@ -1,12 +1,12 @@
 \section{Solution methods}\label{sec:methods}
 
-\subsection{The earliest due date rule sorts the jobs once}\label{sec:edd}
+\subsection{Earliest due date rule}\label{sec:edd}
 
 \sumpara The baseline is a single sort by due date. \sumparaend
 \fin The EDD rule sorts the jobs by $d_j$, breaks ties by job identifier, and times the resulting sequence $\pi^{\mathrm{EDD}}$ by \eqref{eq:recursion}. \fine
 \fin Its sequence ignores weights, release dates, and processing times, and it requires no search. \fine
 
-\subsection{Iterated greedy searches the sequences by insertion}\label{sec:ig}
+\subsection{Iterated greedy algorithm}\label{sec:ig}
 
 \sumpara Iterated greedy builds a weighted start and then repeatedly destroys and rebuilds the sequence around a local search. \sumparaend
 \fin The method is IG\_RS\_LS, the iterated greedy algorithm with local search that \citet{ruiz2008igwt} proposed for the flow shop with sequence-dependent setup times; the line studied here has no setup times, so I apply its weighted tardiness version with every setup time equal to zero, as shown in \cref{alg:ig}. \fine

@@ -1,6 +1,6 @@
 \section{Computational design}\label{sec:design}
 
-\subsection{Four synthetic instances differ mainly in the length of the planning period}\label{sec:instances}
+\subsection{Test instances}\label{sec:instances}
 
 \sumpara The instances come from one generator and range from 6 to 120 jobs. \sumparaend
 \fin I use four synthetic instances generated for a graduate course in production scheduling, with all times in minutes, summarized in \cref{tab:data}. \fine
@@ -27,7 +27,7 @@ Large development & 120 & 8 & 2 to 20 & 3 to 1,690 & 154 & 1 to 5 \\
 \end{tabular}
 \end{table}
 
-\subsection{Both methods run with fixed settings, and an independent checker scores every schedule}\label{sec:settings}
+\subsection{Parameter settings and verification}\label{sec:settings}
 
 \sumpara Both methods receive identical inputs and fixed settings on one computer. \sumparaend
 \fin Iterated greedy runs with $L = 5000$ iterations and seed 522, with a safety cap of 300~seconds that no run reached, and I repeat it with seeds 1 to 5 to measure the dependence of the result on the seed. \fine
@@ -41,7 +41,7 @@ Large development & 120 & 8 & 2 to 20 & 3 to 1,690 & 154 & 1 to 5 \\
 \fin A separately written checker reads only the instance data and the exported schedule, confirms every constraint of \cref{sec:setting} within a tolerance of $10^{-8}$~minutes, and recomputes $Z$, $W$, and the share of jobs finishing on time. \fine
 \fin Every value I report for a schedule is computed by this checker. \fine
 
-\subsection{Thirty saved scenarios at each of six settings test the fixed sequences}\label{sec:stress-design}
+\subsection{Stochastic scenarios}\label{sec:stress-design}
 
 \sumpara Random processing times are drawn once, saved, and then faced by both sequences. \sumparaend
 \fin In scenario $\omega$, each processing time becomes $p_{jk}\,\varepsilon_{jk\omega}$, where the factors $\varepsilon_{jk\omega}$ are independent lognormal draws with mean one and coefficient of variation $\nu$, obtained with $\sigma^2 = \ln(1 + \nu^2)$ and a log-mean of $-\sigma^2/2$, the distribution used by \citet{baker2012stochastic} and \citet{framinan2015stochastic}. \fine

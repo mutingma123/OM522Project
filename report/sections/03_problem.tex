@@ -1,6 +1,6 @@
 \section{Problem formulation}\label{sec:problem}
 
-\subsection{A planner fixes one sequence for jobs with release dates, due dates, and weights}\label{sec:setting}
+\subsection{Problem statement}\label{sec:setting}
 
 \sumpara The line, the jobs, and the planner's commitments define the problem. \sumparaend
 \fin A line of $m$ stages, indexed by $k$ in line order, processes $n$ jobs, indexed by $j$, and each stage has one machine. \fine
@@ -8,7 +8,7 @@
 \fin Every job visits every stage in line order without interruption, jobs cannot pass one another, so one sequence of the jobs holds at every stage, and the buffers between stages are unlimited. \fine
 \fin I assume that every stage is idle at time zero, that the planner fixes the sequence before the first job starts and does not revise it, and that among sequences with equal weighted tardiness the planner prefers less waiting between stages. \fine
 
-\subsection{The earliest-start recursion determines the schedule of a sequence}\label{sec:timing}
+\subsection{Earliest-start recursion}\label{sec:timing}
 
 \sumpara A sequence and the earliest-start recursion determine the schedule and both measures. \sumparaend
 \fin A sequence $\pi$ lists the jobs in the order in which they enter the line, with $\pi(i)$ the job in position $i$. \fine
@@ -28,7 +28,7 @@ Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \
 \fin The planning problem is therefore to choose the sequence that minimizes $Z(\pi)$, which is the permutation flow shop problem with release dates and total weighted tardiness. \fine
 \fin Applied with realized processing times, \eqref{eq:recursion} is also the right-shift execution of a fixed sequence described by \citet{aytug2005executing}, which I use in the stress test. \fine
 
-\subsection{A positional mixed-integer program defines the optimum}\label{sec:mip}
+\subsection{Positional mixed-integer formulation}\label{sec:mip}
 
 \sumpara A positional program states the same problem in a form that a solver can certify. \sumparaend
 \fin To certify optimal values, I state the problem as a mixed-integer program over sequence positions $q = 1, \ldots, n$. \fine
