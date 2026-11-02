@@ -12,6 +12,7 @@ numpy = ">=1.26,<3"
 numba = ">=0.60"
 matplotlib = ">=3.8"
 pytest = ">=8"
+highspy = ">=1.7"
 
 [pypi-dependencies]
 option6-flow-line = { path = ".", editable = true }
@@ -21,5 +22,6 @@ solve = "python -m pfsp solve"
 check = "python -m pfsp_check"
 compare = "python -m pfsp compare"
 stress = "python -m pfsp stress"
+benchmark = "python -m pfsp benchmark"
 reproduce = "python -m pfsp reproduce"
 test = "pytest"
