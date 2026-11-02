@@ -1,0 +1,36 @@
+\section{Data}\label{sec:data}
+
+\sumpara The course supplies five synthetic instances, each described by three files. \sumparaend
+\fin The data are synthetic instances that the course instructor generated for option 6 of the OM 522 team project, with all times in minutes~\cite{om522brief}. \fine
+\fin Each instance consists of a file of jobs, giving each job's release time, due date, and weight, a file of stages, giving their order on the line, and a file with one positive processing time for every job and stage. \fine
+\fin \Cref{tab:data} summarizes the five instances: a 6-job case on 4~stages meant for tracing by hand, development instances with 15, 45, and 120~jobs on 8~stages, and a 10-job edge case on 4~stages. \fine
+
+\begin{table}[ht]
+\centering
+\caption{The five supplied instances. Processing times are per job and stage. The due-date window is the time from a job's release to its due date, and its median is taken over the instance's jobs. All times are in minutes.}
+\label{tab:data}
+\small
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{lrrcrrl}
+\toprule
+Instance & Jobs & Stages & Processing times & Releases & Median due-date window & Weights \\
+\midrule
+hand\_checkable & 6 & 4 & 3 to 19 & 8 to 78 & 30 & 1, 2, 4 \\
+development\_small & 15 & 8 & 2 to 20 & 24 to 210 & 158 & 1, 2, 4, 5 \\
+development\_medium & 45 & 8 & 2 to 20 & 10 to 607 & 154 & 1 to 5 \\
+development\_large & 120 & 8 & 2 to 20 & 3 to 1,690 & 154 & 1 to 5 \\
+edge\_case & 10 & 4 & 0 to 20 & 5 to 126 & 87.5 & 1, 2, 3, 5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\sumpara The development instances differ mainly in the length of the planning period. \sumparaend
+\fin The three development instances share one generator, so their processing times range from 2 to 20~minutes and average between 85.1 and 88.8~minutes of total processing per job over the 8~stages. \fine
+\fin Their releases spread over 186, 597, and 1,687~minutes, which gives arrival rates between 0.071 and 0.081~jobs per minute, so the larger instances cover longer planning periods at a similar density. \fine
+\fin The median time from release to due date is 154 to 158~minutes, and subtracting each job's own total processing time leaves a median of 64.5 to 74~minutes that a job can spend waiting before it is late. \fine
+\fin Weights are integer priority scores from 1 to 5, and a weighted minute is one minute of lateness multiplied by the job's priority~\cite{om522brief}. \fine
+
+\sumpara Every instance is validated before solving, and the edge case fails validation by design. \sumparaend
+\fin Before solving, our tool applies the four checks the project guide requires: every required file and column is present, every value has its declared type, every job and stage referenced by a processing time exists, and every processing time is positive~\cite{om522guide}. \fine
+\fin It reports each failure with its file, column, and line, and it never replaces a missing or invalid value. \fine
+\fin The edge case contains a processing time of zero, so the tool rejects it without writing a decision, as the guide specifies for this option~\cite{om522guide}. \fine
