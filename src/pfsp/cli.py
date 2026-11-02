@@ -97,12 +97,21 @@ def stress(args) -> int:
     return 0
 
 
+def benchmark(args) -> int:
+    from . import benchmark as optimality
+
+    optimality.run(results_dir(args.out, "benchmark"))
+    return 0
+
+
 def reproduce(args) -> int:
     """Regenerate every submitted comparison table and plot."""
+    from . import benchmark as optimality
     from . import compare as comparison
     from . import stress as stress_test
 
     comparison.run(results_dir(None, "comparison"))
+    optimality.run(results_dir(None, "benchmark"))
     stress_test.run(results_dir(None, "stress"))
     return 0
 
@@ -126,6 +135,10 @@ def main(argv: list[str] | None = None) -> int:
     p_compare = commands.add_parser("compare", help="deterministic comparison on four instances")
     p_compare.add_argument("--out", help="output directory (default results/comparison)")
     p_compare.set_defaults(handler=compare)
+
+    p_benchmark = commands.add_parser("benchmark", help="mixed-integer optimum on the two smallest instances")
+    p_benchmark.add_argument("--out", help="output directory (default results/benchmark)")
+    p_benchmark.set_defaults(handler=benchmark)
 
     p_stress = commands.add_parser("stress", help="stress test of both fixed plans")
     p_stress.add_argument("--out", help="output directory (default results/stress)")
