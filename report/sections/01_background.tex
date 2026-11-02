@@ -1,0 +1,29 @@
+\section{Background}\label{sec:background}
+
+\sumpara A planner on a line where jobs cannot pass must fix one order, and the due-date rule the course sets as the baseline cannot see weights, releases, or later stages. \sumparaend
+\fin On a flow line such as printed circuit board assembly or furniture finishing, every job visits the same stages in the same order, and when jobs cannot pass one another, the order chosen at the first stage holds at every stage~\cite{om522brief}. \fine
+\fin On the line studied here operations take 2 to 20~minutes, so a job that needs 2~minutes at the first stage and 20 at a later one would delay every job behind it at that later stage, and the waiting would build up downstream. \fine
+\fin The planner chooses one sequence for a period's jobs, which are released at different times and carry due dates of different importance, expressed as weights. \fine
+\fin Vallada, Ruiz, and Minella report that dispatching rules are used very often in practice and that earliest due date is among the most common rules for total tardiness~\cite{vallada2008review}, and the course brief for this line makes it the rule that a researched method must beat~\cite{om522brief}. \fine
+\fin Earliest due date orders the jobs by due date alone, so it cannot see a job's weight, its release time, or its processing times at the stages after the first. \fine
+
+\sumpara Better sequences require search, and the searches we build on were tested only on exact data without release times. \sumparaend
+\fin Minimizing total tardiness on a permutation flow shop is NP-hard in the ordinary sense with one machine and in the strong sense with two or more~\cite{vallada2008review}, and on this line an exact solver needed 85.8~seconds to certify the optimum for only 15~jobs, so a planner sequencing 45 to 120~jobs per period needs a heuristic. \fine
+\fin Ruiz and St\"utzle's iterated greedy algorithm repeatedly removes a few jobs from a sequence and reinserts each at its best position~\cite{ruiz2007ig}, and on flow shops with sequence-dependent setup times and the weighted tardiness objective it had the lowest average deviation from the best known solutions among the methods they tested~\cite{ruiz2008igwt}. \fine
+\fin In a review of 40 methods for total tardiness, the heuristics built on inserting and interchanging jobs performed best among the heuristics, ahead of every dispatching rule~\cite{vallada2008review}. \fine
+\fin These evaluations used instances with fixed processing times and no release times, and none of them executed a searched sequence on processing times that differ from the plan. \fine
+\fin A sequence tuned to the exact times in a data file could lose its advantage once the 2- to 20-minute operations run long or short, and a planner who must fix the order in advance cannot tell from these studies whether it does. \fine
+
+\sumpara We built both methods, certified small optima, scored every schedule independently, and tested the fixed plans on paired scenarios of random processing times. \sumparaend
+\fin We implemented the earliest due date rule exactly as the course brief states it~\cite{om522brief} and applied iterated greedy with local search~\cite{ruiz2008igwt} to an eight-stage line with release times and no setup times. \fine
+\fin A mixed-integer program solved with HiGHS~\cite{highs} certified the optimal values of the two smallest instances, and a checker that shares no code with either method scored every schedule. \fine
+\fin We then held each method's sequence fixed and executed it on 30~scenarios in which every processing time was multiplied by an independent lognormal factor with mean 1 and a coefficient of variation of 0.2, and on 30~further scenarios at each of five levels of variation from 0.1 to 0.8. \fine
+
+\sumpara The searched sequence left a small fraction of the rule's tardiness and stayed ahead in all but one of 180 paired scenarios. \sumparaend
+\fin On exact data, iterated greedy left 1.5, 2.4, and 19.0~percent of the rule's weighted tardiness on the instances with 15, 45, and 120~jobs, and it matched the proven optimum on the 6-job and 15-job instances. \fine
+\fin Held fixed on the 45-job instance at a coefficient of variation of 0.2, its plan left 11.5~jobs late per period on average, against 36.1 for the rule's plan, and across all six sets of scenarios it had the lower weighted tardiness in 179 of 180. \fine
+\fin The mean reduction stayed between 2,572.0 and 3,683.7 weighted minutes at every level of variation, while the 10th percentile of the reduction in a single period fell from at least 1,781.1 weighted minutes at coefficients up to 0.5 to 851.5 at 0.8. \fine
+
+\sumpara Variability left the mean gain intact and made the gain in a single period less dependable. \sumparaend
+\fin A planner can adopt the searched sequence for an absolute gain that held at every level of variation we tested, at the cost of a sequence that cannot be traced by hand and seconds of computation. \fine
+\fin Processing-time variability is the one condition we varied, and because it eroded the gain in the worst periods first, it is the first quantity to measure on a line before relying on the plan. \fine

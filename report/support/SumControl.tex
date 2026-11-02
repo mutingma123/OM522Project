@@ -1,0 +1,135 @@
+% ============================================================================
+% USAGE DOCUMENTATION FOR SUMCONTROL COMMANDS
+% ============================================================================
+%
+% MARKER-BASED COMMANDS (no braces needed):
+% ------------------------------------------
+% 1. Summary paragraphs:
+%    \sump This is my summary text. \sumpe  (short version)
+%    \sumpara This is my summary text. \sumparaend (long version)
+%
+% 2. TODO markers:
+%    \todostart This needs to be done. \todoend
+%
+% BRACE-BASED COMMANDS (alternative syntax):
+% -------------------------------------------
+% 1. Summary paragraphs with braces:
+%    \sumparab{This is my summary text}
+%
+% 2. TODO items with braces:
+%    \todob{This needs to be done}
+%
+% 3. Final paragraphs (always shown):
+%    \finalpara{This text is always displayed}
+%
+% AUTOMATIC COUNTER MANAGEMENT:
+% -----------------------------
+% Counters automatically increment when you use \section, \subsection, etc.
+% No manual counter commands needed!
+%
+% DRAFT/FINAL MODE:
+% -----------------
+% Set \setboolean{draftmode}{true} for draft (shows markers)
+% Set \setboolean{draftmode}{false} for final (hides markers)
+% ============================================================================
+
+% Counter definitions removed - now in SumCounterControl.tex
+% The counters are defined in SumCounterControl.tex which must be loaded
+
+% Helper macros for final mode (defined outside ifthenelse to avoid parameter nesting issues)
+\long\def\SumControlGobbleSumPara#1\sumparaend{}
+\long\def\SumControlGobbleSump#1\sumpe{}
+\newcommand\SumControlTodoBFinal[1]{%
+  \PackageWarning{main}{TODO item still present: #1}%
+  \stepcounter{SumTodo}%
+  \fcolorbox{gray}{red}{\bfseries\sffamily\scriptsize TODO\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumTodo}}%
+  $\blacktriangleright$#1%
+}
+
+% Marker-based sumpara commands (no braces needed)
+% Usage: \sumpara This is my sentence. \sumparaend
+% Or simply: \sp This is my sentence. \spe
+\ifthenelse{\boolean{draftmode}}{
+  % Draft mode: show colored markers
+  \newcommand\sumpara{%
+    \stepcounter{SumPara}%
+    \fcolorbox{gray}{green}{\bfseries\sffamily\scriptsize Sum\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumPara}}%
+    $\blacktriangleright$\color{red}\slshape%
+  }
+  \newcommand\sumparaend{\normalfont\color{black}$\blacktriangleleft$}
+  % Short aliases (avoid \sp which is already defined in LaTeX)
+  \newcommand\sump{\sumpara}
+  \newcommand\sumpe{\sumparaend}
+}{
+  % Final mode: hide content between markers (gobble content)
+  \let\sumpara\SumControlGobbleSumPara
+  \newcommand\sumparaend{}
+  \let\sump\SumControlGobbleSump
+  \newcommand\sumpe{}
+}
+
+% TODO markers (same pattern)
+\ifthenelse{\boolean{draftmode}}{
+  \newcommand\todostart{%
+    \stepcounter{SumTodo}%
+    \fcolorbox{gray}{red}{\bfseries\sffamily\scriptsize TODO\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumTodo}}%
+    $\blacktriangleright$\color{blue}\slshape%
+  }
+  \newcommand\todoend{\normalfont\color{black}$\blacktriangleleft$}
+}{
+  \newcommand\todostart{%
+    \PackageWarning{main}{TODO marker still present}%
+    \stepcounter{SumTodo}%
+    \fcolorbox{gray}{red}{\bfseries\sffamily\scriptsize TODO\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumTodo}}%
+    $\blacktriangleright$%
+  }
+  \newcommand\todoend{}
+}
+
+% Final/Fixed sentence markers (cyan box, black text)
+% Usage: \finpara This is my fixed sentence. \finparaend
+% Or simply: \fin This is my sentence. \fine
+\ifthenelse{\boolean{draftmode}}{
+  % Draft mode: show cyan markers with black text
+  \newcommand\finpara{%
+    \stepcounter{SumFin}%
+    \fcolorbox{gray}{cyan}{\bfseries\sffamily\scriptsize Fin\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumFin}}%
+    $\blacktriangleright$%
+  }
+  \newcommand\finparaend{$\blacktriangleleft$}
+  % Short aliases
+  \newcommand\fin{\finpara}
+  \newcommand\fine{\finparaend}
+}{
+  % Final mode: empty commands, content shows through
+  \newcommand\finpara{}
+  \newcommand\finparaend{}
+  \newcommand\fin{}
+  \newcommand\fine{}
+}
+
+% Keep the brace-based versions as alternatives (backward compatibility)
+\ifthenelse{\boolean{draftmode}}{
+  \newcommand\sumparab[1]{%
+    \stepcounter{SumPara}%
+    \fcolorbox{gray}{green}{\bfseries\sffamily\scriptsize Sum\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumPara}}%
+    {$\blacktriangleright$\textcolor{red}{\textsl{#1}}$\blacktriangleleft$}%
+  }
+  \newcommand\todob[1]{%
+    \stepcounter{SumTodo}%
+    \fcolorbox{gray}{red}{\bfseries\sffamily\scriptsize TODO\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumTodo}}%
+    {$\blacktriangleright$\textcolor{blue}{\textsl{#1}}$\blacktriangleleft$}%
+  }
+  \newcommand\finparab[1]{%
+    \stepcounter{SumFin}%
+    \fcolorbox{gray}{cyan}{\bfseries\sffamily\scriptsize Fin\arabic{SumSection}-\arabic{SumSubsection}-\arabic{SumSubsubsection}-\arabic{SumFin}}%
+    {$\blacktriangleright$#1$\blacktriangleleft$}%
+  }
+}{
+  \newcommand\sumparab[1]{}
+  \let\todob\SumControlTodoBFinal
+  \newcommand\finparab[1]{#1}
+}
+
+% finalpara stays the same - just outputs content
+\newcommand\finalpara[1]{#1}

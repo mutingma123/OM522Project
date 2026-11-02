@@ -1,0 +1,99 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage{ifthen}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\input{support/aitrading-preamble.tex}
+\newboolean{draftmode}
+\setboolean{draftmode}{false}
+\input{support/SumCounterControl.tex}
+\input{support/SumControl.tex}
+\input{support/SumAuthorControl.tex}
+\usepackage{cleveref}
+\hypersetup{pdftitle={A Fixed Iterated Greedy Sequence Cuts Weighted Tardiness on an Eight-Stage Flow Line},
+  pdfauthor={Muting (Don) Ma},colorlinks=true,linkcolor=uablue,urlcolor=uablue,
+  citecolor=accent,filecolor=accent,menucolor=uablue,linktoc=all,breaklinks=true}
+\fancyhead[L]{\small\textcolor{uablue}{OM 522 Option 6: Sequencing an Eight-Stage Flow Line}}
+\setlength{\headheight}{14pt}
+\graphicspath{{../results/}}
+\renewcommand{\arraystretch}{1.15}
+\numberwithin{equation}{section}
+\crefname{algorithm}{Algorithm}{Algorithms}
+
+% Job weight shading for the Gantt charts: one blue hue, light to dark as weight grows.
+\definecolor{ink}{HTML}{19354A}
+\definecolor{muted}{HTML}{536878}
+\definecolor{gridgray}{HTML}{E4E3DF}
+\definecolor{w1}{HTML}{9EC5F4}
+\definecolor{w2}{HTML}{3987E5}
+\definecolor{w4}{HTML}{184F95}
+\colorlet{lab1}{ink}
+\colorlet{lab2}{ink}
+\colorlet{lab4}{white}
+% \gantt{list of job/stage/start/completion/weight}: one schedule on four stages, 0 to 140 minutes.
+\newcommand{\gantt}[1]{%
+\begin{tikzpicture}[x=0.095cm,y=0.38cm]
+  \foreach \t in {0,20,...,140} {
+    \draw[gridgray,line width=0.4pt] (\t,0) -- (\t,-4);
+    \node[font=\scriptsize,text=muted,anchor=north] at (\t,-4) {\t};}
+  \foreach \s in {1,...,4}
+    \node[font=\footnotesize,text=muted,anchor=east] at (-1,-\s+0.5) {S\s};
+  \foreach \j/\s/\a/\b/\w in #1 {
+    \fill[w\w] (\a+0.3,-\s+0.1) rectangle (\b-0.3,-\s+0.9);
+    \node[font=\scriptsize\bfseries,text=lab\w] at ({(\a+\b)/2},-\s+0.5) {\j};}
+\end{tikzpicture}}
+\newcommand{\eddschedule}{1/1/13/24/2, 1/2/24/34/2, 1/3/34/40/2, 1/4/40/52/2,
+  2/1/24/38/1, 2/2/38/47/1, 2/3/47/60/1, 2/4/60/73/1,
+  5/1/45/62/1, 5/2/62/65/1, 5/3/65/70/1, 5/4/73/82/1,
+  3/1/62/72/4, 3/2/72/75/4, 3/3/75/94/4, 3/4/94/108/4,
+  6/1/78/83/2, 6/2/83/98/2, 6/3/98/101/2, 6/4/108/116/2,
+  4/1/83/95/4, 4/2/98/111/4, 4/3/111/128/4, 4/4/128/139/4}
+\newcommand{\igschedule}{1/1/13/24/2, 1/2/24/34/2, 1/3/34/40/2, 1/4/40/52/2,
+  2/1/24/38/1, 2/2/38/47/1, 2/3/47/60/1, 2/4/60/73/1,
+  3/1/51/61/4, 3/2/61/64/4, 3/3/64/83/4, 3/4/83/97/4,
+  4/1/66/78/4, 4/2/78/91/4, 4/3/91/108/4, 4/4/108/119/4,
+  6/1/78/83/2, 6/2/91/106/2, 6/3/108/111/2, 6/4/119/127/2,
+  5/1/83/100/1, 5/2/106/109/1, 5/3/111/116/1, 5/4/127/136/1}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+\centering
+\vspace*{1.2cm}
+{\LARGE\bfseries\color{uablue} A Fixed Iterated Greedy Sequence Cuts Weighted Tardiness on an Eight-Stage Flow Line by More than 2,500 Weighted Minutes per Period at Every Level of Processing-Time Variation Tested\par}
+\vspace{0.7cm}
+{\large OM 522 Team Project, Option 6\par}
+\vspace{0.5cm}
+{\large Muting (Don) Ma\par}
+{University of Alabama, Fall 2026\par}
+{November 2, 2026\par}
+\vspace{1.0cm}
+\begin{minipage}{0.86\textwidth}
+\small
+\noindent\textbf{Abstract.}
+\sumpara A planner who must fix one job order for a flow line needs to know whether a searched order beats the common due-date rule once processing times vary. \sumparaend
+\fin On a flow line where jobs cannot pass one another, a production planner must commit to one job order for every stage, and the earliest due date rule ignores job weights, release times, and the processing times at later stages. \fine
+\fin We applied the iterated greedy algorithm that Ruiz and St\"utzle proposed for flow shops with sequence-dependent setup times to an eight-stage line without setups but with release times and weighted due dates, and compared its fixed sequence with the earliest due date sequence on exact data and on 180 paired scenarios of random processing times. \fine
+\fin On development instances with 15, 45, and 120~jobs, iterated greedy lowered total weighted tardiness by 98.5, 97.6, and 81.0~percent, and a mixed-integer program solved with HiGHS proved its values optimal on the 6-job and 15-job instances. \fine
+\fin When each processing time of the 45-job instance varied with a coefficient of variation of 0.2, the iterated greedy plan had the lower weighted tardiness in all 30~scenarios, with a mean of 420.6 weighted minutes against 3,541.1, an 88.1~percent reduction. \fine
+\fin As the coefficient of variation rose from 0.1 to 0.8, the relative reduction fell from 94.6 to 27.2~percent while the mean absolute reduction stayed between 2,572.0 and 3,683.7 weighted minutes per period, and at 0.8 the 10th percentile of the per-period reduction fell to 851.5 and the earliest due date plan won 1 of 30~scenarios. \fine
+\fin A planner can therefore adopt the searched sequence for its absolute gain and, on the evidence of the one factor we varied, should expect that gain to arrive less dependably in a single period as processing times grow less predictable. \fine
+\end{minipage}
+\end{titlepage}
+\hypersetup{pageanchor=true}
+\setcounter{page}{1}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+\input{sections/01_background}
+
+\clearpage
+\phantomsection\addcontentsline{toc}{section}{References}
+\bibliographystyle{unsrturl}
+\bibliography{Option6_Report}
+
+\end{document}

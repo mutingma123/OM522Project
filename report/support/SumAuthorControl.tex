@@ -1,0 +1,45 @@
+% ============================================================================
+% AUTHOR NOTES AND COMMENTS SYSTEM
+% ============================================================================
+%
+% USAGE:
+% ------
+% Each author can have their own comment command:
+% \dm{This is DM's comment}
+% \mh{This is MH's comment}
+% \my{This is MY's comment}
+%
+% Add more authors as needed following the same pattern.
+%
+% DRAFT/FINAL MODE:
+% -----------------
+% Comments are shown/hidden based on the draftmode boolean from SumControl.tex
+% ============================================================================
+
+
+% DM (Don Ma) comments
+\newcounter{DMComments}
+\setcounter{DMComments}{0}
+\ifthenelse{\boolean{draftmode}}{
+  \newcommand\dm[1]{%
+    \stepcounter{DMComments}%
+    \fcolorbox{gray}{yellow}{\bfseries\sffamily\scriptsize DM\arabic{DMComments}}%
+    {$\blacktriangleright$\textcolor{green!60!black}{\textsl{#1}}$\blacktriangleleft$}%
+  }
+}{
+  \newcommand\dm[1]{%
+    \stepcounter{DMComments}%
+    \fcolorbox{gray}{yellow}{\bfseries\sffamily\scriptsize DM\arabic{DMComments}}%
+    {$\blacktriangleright$\textcolor{green!60!black}{\textsl{#1}}$\blacktriangleleft$}%
+  }
+}
+
+% Generic author comment template
+% Copy and modify for additional authors:
+% \newcounter{XXComments}
+% \setcounter{XXComments}{0}
+% \ifthenelse{\boolean{draftmode}}{
+%   \newcommand\xx[1]{\stepcounter{XXComments}\nb{XX\arabic{XXComments}}{\textcolor{purple}{\textsl{#1}}}}
+% }{
+%   \newcommand\xx[1]{}
+% }

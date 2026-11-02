@@ -1,0 +1,92 @@
+% Shared house style for the AI Trading 24/7 modular documents.
+% Every module \input's this file, then sets its own \title block and body.
+% Derived from the former InfrastructureSetup.tex / ReplicationExecutionFlow.tex preambles.
+
+% Beamer supplies its own page layout, headings, lists, and page furniture.
+\newif\ifaitradingbeamer
+\makeatletter
+\@ifclassloaded{beamer}{\aitradingbeamertrue}{\aitradingbeamerfalse}
+\makeatother
+\ifaitradingbeamer\else
+\usepackage[top=1in, bottom=1in, left=1.1in, right=1.1in]{geometry}
+\fi
+\usepackage{microtype}
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\ifaitradingbeamer\else
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{titlesec}
+\fi
+\usepackage{xcolor}
+\ifaitradingbeamer\else
+\usepackage{fancyhdr}
+\fi
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{seqsplit}
+\usepackage{hyperref}
+\usepackage{xurl}
+
+% Colors
+\definecolor{uablue}{RGB}{0,56,107}
+\definecolor{sectiongray}{RGB}{64,64,64}
+\definecolor{accent}{RGB}{150,0,24}
+\definecolor{definitiongreen}{RGB}{0,102,51}
+
+% Header (each module may override \fancyhead[L] after \input if it wishes)
+\ifaitradingbeamer\else
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{uablue}{AI Trading 24/7: Step-by-Step Build}}
+\fancyhead[R]{\small\textcolor{uablue}{Muting (Don) Ma}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% Section format
+\titleformat{\section}
+  {\color{uablue}\normalfont\large\bfseries}
+  {\thesection.}{0.5em}{}[\color{uablue}\titlerule]
+\titleformat{\subsection}
+  {\color{sectiongray}\normalfont\normalsize\bfseries}
+  {\thesubsection}{0.5em}{}
+\titlespacing*{\section}{0pt}{1.4ex plus 0.5ex minus .2ex}{0.8ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{1.0ex plus 0.4ex minus .2ex}{0.5ex plus .2ex}
+\newcommand{\sectionbreak}{\clearpage}
+
+\setstretch{1.08}
+\setlength{\parskip}{0.45em}
+\setlength{\parindent}{0pt}
+\fi
+\setlength{\emergencystretch}{3em}
+\hypersetup{colorlinks=true, linkcolor=uablue, urlcolor=uablue,
+  citecolor=accent, filecolor=accent, menucolor=uablue,
+  linktoc=all, breaklinks=true}
+
+% Shared macros (superset of those used by the two former documents)
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcommand{\hd}[1]{\textbf{\textcolor{uablue}{#1}}}
+\newcommand{\callout}[1]{\begin{center}\fcolorbox{uablue}{white}{\parbox{0.96\linewidth}{\small #1}}\end{center}}
+\newcommand{\code}[1]{\texttt{\seqsplit{#1}}}
+\newcommand{\yes}{\textcolor{definitiongreen}{\textbf{Yes}}}
+\newcommand{\no}{\textcolor{accent}{\textbf{No}}}
+\newcommand{\have}{\textcolor{definitiongreen}{\textbf{HAVE}}}
+\newcommand{\wip}{\textcolor{accent}{\textbf{PARTIAL}}}
+\newcommand{\build}{\textcolor{accent}{\textbf{BUILD}}}
+\newcommand{\blank}{\textcolor{accent}{\framebox[0.8em]{\rule{0pt}{0.66em}}}}
+
+% Title block helper: \aitradingtitle{TITLE}{SUBTITLE}{DRAFT LINE}
+\newcommand{\aitradingtitle}[3]{%
+  \begin{center}
+    \Large\bfseries\color{uablue}#1\\[0.2em]
+    \normalsize\color{black}#2\\[0.3em]
+    \small Muting (Don) Ma, Ph.D.\\
+    \small #3
+  \end{center}
+  \vspace{-0.2em}
+}
