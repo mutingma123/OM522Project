@@ -158,7 +158,7 @@ We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which dra
 | --- | --- |
 | `src/pfsp/` | The tool: `data.py` (loader and input checks), `timing.py` (schedule timing kernels), `rule.py` (method 1), `ig.py` (method 2), `output.py` (decision and summary files), `cli.py` (commands), `compare.py`, `mip.py` and `benchmark.py` (mixed-integer benchmark), `stress.py`, `figures.py` |
 | `src/pfsp_check/` | The independent checker |
-| `tests/` | The 30 tests |
+| `tests/` | The 31 tests |
 | `data/` | The supplied instances, worked example, data dictionary, and brief |
 | `results/comparison/` | Comparison tables, plot, settings, and every compared decision |
 | `results/benchmark/` | Mixed-integer benchmark table, settings, and the solver's decisions |
