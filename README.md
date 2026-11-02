@@ -121,7 +121,7 @@ Every decision of both methods is feasible. `pixi run benchmark` solves a positi
 
 ## Stress test
 
-The uncertain input is processing time. In each scenario every processing time of `development_medium` is multiplied by an independent lognormal factor with mean 1 and coefficient of variation 0.2. `pixi run stress` draws 30 scenarios from seed 20261103 and saves them in `results/stress/scenarios/` before either method runs, then executes both deterministic plans on the files read back. Each plan keeps its sequence and starts every operation as early as the realized times allow, and the checker confirms each realized schedule against its scenario.
+The uncertain input is processing time. In each scenario every processing time of `development_medium` is multiplied by an independent lognormal factor with mean 1 and coefficient of variation 0.2. `pixi run stress` draws 30 scenarios from seed 20261103 and saves them in `results/stress/scenarios/` before either method runs, then executes both deterministic plans on the files read back. Each plan keeps its sequence and starts every operation as early as the realized times allow, and the checker confirms each realized schedule against its scenario. Baker and Altheimer (2012) and Framinan and Perez-Gonzalez (2015) find that heuristics run on mean processing times stay close to the best sequences for the expected makespan of a stochastic flow shop. Juan, Barrios, Vallada, Riera, and Jorba (2014) search with a simheuristic aimed at the expected makespan. This test fixes both sequences before the scenarios are drawn and scores total weighted tardiness with release dates. González-Neira, Montoya-Torres, and Barrera (2017) review flow shops under uncertainty, and Aytug, Lawley, McKay, Mohan, and Uzsoy (2005) review the execution of a schedule after the realized times are known.
 
 | Method | Planned TWT | Mean TWT | 90th percentile TWT | Planned waiting | Mean waiting | 90th percentile waiting | Scenarios breaking a hard constraint |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -165,12 +165,17 @@ We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which dra
 | `results/stress/` | Saved scenarios, both plans, per-scenario results, summary, and plots |
 | `library/` | Ledger and index of the papers read (the PDFs are not redistributed) |
 | `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) and the recording transcript (`Option6_Prototype_Transcript.md`) |
-| `report/` | Written report (`Option6_Report.tex`, its sections, and PDF) and `report_numbers.py`, which prints every number the report quotes from the data and results |
+| `report/` | Manuscript *Mean Weighted Tardiness of an Iterated Greedy Sequence in a Stochastic Permutation Flow Shop with Release Dates* (`Option6_Report.tex`, `Option6_Report.pdf`, `Option6_Report.bib`). The sections are introduction, related literature, problem formulation, solution methods, computational design, results, discussion, conclusions, and a notation appendix. `report_numbers.py` prints every number the report quotes from the data and results |
 
 ## References
 
 - Ruiz, R., and Stützle, T. (2007). A simple and effective iterated greedy algorithm for the permutation flowshop scheduling problem. *European Journal of Operational Research*, 177(3), 2033-2049. https://doi.org/10.1016/j.ejor.2005.12.009
 - Ruiz, R., and Stützle, T. (2008). An Iterated Greedy heuristic for the sequence dependent setup times flowshop problem with makespan and weighted tardiness objectives. *European Journal of Operational Research*, 187(3), 1143-1159. https://doi.org/10.1016/j.ejor.2006.07.029
 - Vallada, E., Ruiz, R., and Minella, G. (2008). Minimising total tardiness in the m-machine flowshop problem: A review and evaluation of heuristics and metaheuristics. *Computers & Operations Research*, 35(4), 1350-1373. https://doi.org/10.1016/j.cor.2006.08.016
+- Baker, K. R., and Altheimer, D. (2012). Heuristic solution methods for the stochastic flow shop problem. *European Journal of Operational Research*, 216, 172-177. https://doi.org/10.1016/j.ejor.2011.07.021
+- Framinan, J. M., and Perez-Gonzalez, P. (2015). On heuristic solutions for the stochastic flowshop scheduling problem. *European Journal of Operational Research*, 246, 413-420. https://doi.org/10.1016/j.ejor.2015.05.006
+- Juan, A. A., Barrios, B. B., Vallada, E., Riera, D., and Jorba, J. (2014). A simheuristic algorithm for solving the permutation flow shop problem with stochastic processing times. *Simulation Modelling Practice and Theory*, 46, 101-117. https://doi.org/10.1016/j.simpat.2014.02.005
+- González-Neira, E. M., Montoya-Torres, J. R., and Barrera, D. (2017). Flow-shop scheduling problem under uncertainties: Review and trends. *International Journal of Industrial Engineering Computations*, 8, 399-426. https://doi.org/10.5267/j.ijiec.2017.2.001
+- Aytug, H., Lawley, M. A., McKay, K., Mohan, S., and Uzsoy, R. (2005). Executing production schedules in the face of uncertainties: A review and some future directions. *European Journal of Operational Research*, 161, 86-110. https://doi.org/10.1016/j.ejor.2003.08.027
 
 The NEH insertion heuristic of Nawaz, Enscore, and Ham (1983, *Omega*) underlies steps 1 and 3. We could not obtain that paper through the library, so we take its steps from Section 3 of Ruiz and Stützle (2007).
