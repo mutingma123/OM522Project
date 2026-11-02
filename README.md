@@ -164,8 +164,7 @@ We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which dra
 | `results/benchmark/` | Mixed-integer benchmark table, settings, and the solver's decisions |
 | `results/stress/` | Saved scenarios, both plans, per-scenario results, summary, and plots |
 | `library/` | Ledger and index of the papers read (the PDFs are not redistributed) |
-| `docs/` | Outline of the prototype video |
-| `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) |
+| `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) and the recording transcript (`Option6_Prototype_Transcript.md`) |
 | `report/` | Written report (`Option6_Report.tex`, its sections, and PDF) and `report_numbers.py`, which prints every number the report quotes from the data and results |
 
 ## References
