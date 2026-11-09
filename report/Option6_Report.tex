@@ -15,7 +15,7 @@
 \input{support/SumControl.tex}
 \input{support/SumAuthorControl.tex}
 \usepackage{cleveref}
-\hypersetup{pdftitle={Optimized on the Wrong Processing Times, a Job Sequence Still Beats Earliest Due Date in 179 of 180 Scenarios},
+\hypersetup{pdftitle={The Value of a Wrong Plan: Iterated Greedy Sequencing for Mean Total Weighted Tardiness in a Stochastic Flow Shop},
   pdfauthor={Muting (Don) Ma and Amirhossein Ranjbar},colorlinks=true,linkcolor=uablue,urlcolor=uablue,
   citecolor=accent,filecolor=accent,menucolor=uablue,linktoc=all,breaklinks=true}
 \fancyhead[L]{\small\textcolor{uablue}{Iterated greedy in a stochastic flow shop}}
@@ -63,7 +63,7 @@
 
 \begin{document}
 \begin{center}
-{\LARGE\bfseries\color{uablue} Optimized on the Wrong Processing Times, a Job Sequence Still Beats Earliest Due Date in 179 of 180 Scenarios\par}
+{\LARGE\bfseries\color{uablue} The Value of a Wrong Plan: Iterated Greedy Sequencing for Mean Total Weighted Tardiness in a Stochastic Flow Shop\par}
 \vspace{0.8em}
 {\large Muting (Don) Ma and Amirhossein Ranjbar\par}
 \vspace{0.2em}
@@ -77,7 +77,7 @@
 \fin A planner who sequences jobs on a flow line where jobs cannot pass one another must commit to one job order before the processing times are known. \fine
 \fin We compare the earliest due date (EDD) rule, a dispatching rule widely used in practice, with the iterated greedy algorithm of Ruiz and St\"utzle adapted to an eight-stage permutation flow shop with release dates and total weighted tardiness. \fine
 \fin On instances with 15, 45, and 120~jobs, iterated greedy reduces total weighted tardiness relative to EDD by 98.5, 97.6, and 81.0~percent, and a mixed-integer program solved with HiGHS proves its values optimal on the instances with 6 and 15~jobs. \fine
-\fin We then execute both fixed sequences on 180 paired scenarios of the 45-job instance in which each processing time is multiplied by an independent lognormal factor with mean one. \fine
+\fin We then hold both sequences fixed and execute them on 180 paired scenarios of the 45-job instance in which every planned processing time proves wrong: each is multiplied by an independent lognormal factor with mean one. \fine
 \fin At a coefficient of variation of 0.2, the iterated greedy sequence has the lower weighted tardiness in all 30~scenarios, with a mean across scenarios of 420.6 weighted minutes against 3,541.1, an 88.1~percent reduction. \fine
 \fin As the coefficient of variation rises from 0.1 to 0.8, the relative reduction falls from 94.6 to 27.2~percent while the mean absolute reduction stays between 2,572.0 and 3,683.7 weighted minutes; at 0.8, the 10th percentile of the paired reduction falls to 851.5 weighted minutes and EDD is better in 1 of 30~scenarios. \fine
 \fin Processing-time variability therefore erodes the advantage of the searched sequence first in the worst periods, while its mean advantage persists across the range tested. \fine
