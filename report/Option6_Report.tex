@@ -80,7 +80,7 @@
 \fin We then hold both sequences fixed and execute them on 180 paired scenarios of the 45-job instance in which every planned processing time proves wrong: each is multiplied by an independent lognormal factor with mean one. \fine
 \fin At a coefficient of variation of 0.2, the iterated greedy sequence has the lower weighted tardiness in all 30~scenarios, with a mean across scenarios of 420.6 weighted minutes against 3,541.1, an 88.1~percent reduction. \fine
 \fin As the coefficient of variation rises from 0.1 to 0.8, the relative reduction falls from 94.6 to 27.2~percent while the mean absolute reduction stays between 2,572.0 and 3,683.7 weighted minutes; at 0.8, the 10th percentile of the paired reduction falls to 851.5 weighted minutes and EDD is better in 1 of 30~scenarios. \fine
-\fin Processing-time variability therefore erodes the advantage of the searched sequence first in the worst periods, while its mean advantage persists across the range tested. \fine
+\fin Processing-time variability therefore shrinks the relative advantage of the iterated greedy sequence at every level tested, while its mean absolute advantage over the frozen EDD list persists across that range. \fine
 \end{abstract}
 
 \noindent\textbf{Keywords:} Scheduling; Permutation flow shop; Weighted tardiness; Iterated greedy; Stochastic processing times

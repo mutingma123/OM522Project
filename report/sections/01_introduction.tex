@@ -19,11 +19,11 @@
 \fin A mixed-integer program solved with HiGHS~\cite{highs} certifies the optimal values of the two smallest instances, and a checker that shares no code with either method recomputes the feasibility and the measures of every schedule. \fine
 \fin We then execute both sequences, unchanged, on 180 paired scenarios of the 45-job instance in which each processing time is multiplied by an independent lognormal factor with mean one, at coefficients of variation from 0.1 to 0.8. \fine
 
-\sumpara The searched sequence nearly eliminates the rule's tardiness on exact data and keeps its mean advantage at every level of variability tested, while its advantage in the worst periods erodes. \sumparaend
+\sumpara The iterated greedy sequence nearly eliminates the tardiness of EDD on exact data and keeps its mean advantage at every level of variability tested, while its relative advantage shrinks. \sumparaend
 \fin On exact data, iterated greedy reduces total weighted tardiness relative to EDD by 98.5, 97.6, and 81.0~percent on the instances with 15, 45, and 120~jobs, and it attains the proven optima on the instances with 6 and 15~jobs. \fine
 \fin Across the 180 paired scenarios, the iterated greedy sequence has the lower weighted tardiness in 179, and its mean reduction stays between 2,572.0 and 3,683.7 weighted minutes at every coefficient of variation tested. \fine
 \fin The relative reduction, however, falls from 94.6~percent at a coefficient of variation of 0.1 to 27.2~percent at 0.8, and at 0.8 the 10th percentile of the paired reduction falls to 851.5 weighted minutes. \fine
 
-\sumpara The contribution is a mean-versus-tail account of how variability changes the value of a searched fixed sequence for weighted tardiness. \sumparaend
+\sumpara The contribution is paired evidence on how variability changes the value of a fixed iterated greedy sequence for weighted tardiness. \sumparaend
 \fin The results extend the finding for the expected makespan, that sequences computed on mean processing times remain effective, to total weighted tardiness with release dates, and they locate the erosion that \citet{aytug2005executing} describe in the tail of the per-period gain before its mean. \fine
 \fin On a line like the 45-job instance, the iterated greedy sequence outperforms the frozen EDD list on the mean at every level of variability we tested, and the variability of the line determines how dependably its gain is realized in a given period. \fine
