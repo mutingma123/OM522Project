@@ -16,8 +16,8 @@ INK_SECONDARY = "#52514e"
 GRID = "#e4e3df"
 COLORS = {"rule": "#2a78d6", "ig": "#eb6834", "neh": "#1baf7a"}
 LABELS = {
-    "rule": "EDD rule (rule to beat)",
-    "ig": "Iterated greedy (researched)",
+    "rule": "Earliest due date (EDD)",
+    "ig": "Iterated greedy",
     "neh": "NEH_EWDD (construction only)",
 }
 

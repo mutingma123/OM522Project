@@ -300,7 +300,7 @@ def _write_markdown(path: Path, summary: dict) -> None:
 def _plot_scenarios(path: Path, rows) -> None:
     fig, axes = new_figure(2, width=11)
     panels = [("total_weighted_tardiness", "Total weighted tardiness (weighted minutes)"),
-              ("total_waiting", "Total waiting between stages (minutes)")]
+              ("total_waiting", "Total waiting between stages (job-minutes)")]
     for ax, (key, title) in zip(axes, panels):
         for method in METHODS:
             mine = [r for r in rows if r["method"] == method]

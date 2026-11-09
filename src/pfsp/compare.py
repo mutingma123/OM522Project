@@ -229,12 +229,12 @@ def _plot(path: Path, rows) -> None:
     fig, axes = new_figure(2)
     jobs = sorted({row["jobs"] for row in rows})
     x = np.arange(len(jobs))
-    panels = [("total_weighted_tardiness", "Weighted tardiness, % of the rule"),
-              ("total_waiting", "Waiting between stages, % of the rule")]
+    panels = [("total_weighted_tardiness", "Total weighted tardiness, % of EDD"),
+              ("total_waiting", "Total waiting between stages, % of EDD")]
     for ax, (key, title) in zip(axes, panels):
         rule = {row["jobs"]: row[key] for row in rows if row["method"] == "rule"}
         ax.axhline(100, color=COLORS["rule"], linewidth=2)
-        ax.annotate("EDD rule = 100", (x[-1], 100), xytext=(0, 5), textcoords="offset points",
+        ax.annotate("EDD = 100", (x[-1], 100), xytext=(0, 5), textcoords="offset points",
                     ha="right", color=INK_SECONDARY)
         for method in ("neh", "ig"):  # the researched method drawn last, on top where they meet
             values = [100 * row[key] / rule[row["jobs"]] for j in jobs for row in rows
