@@ -165,7 +165,7 @@ We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which dra
 | `results/benchmark/` | Mixed-integer benchmark table, settings, and the solver's decisions |
 | `results/stress/` | Saved scenarios, both plans, per-scenario results, summary, and plots |
 | `library/` | Ledger and index of the papers read (the PDFs are not redistributed) |
-| `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) and the recording transcript (`Option6_Prototype_Transcript.md`) |
+| `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) and the live recording script (`Option6_Video_Transcript.md`); `Option6_Prototype_Transcript.md` belongs to the earlier prototype deck |
 | `report/` | Manuscript *The Value of a Wrong Plan: Iterated Greedy Sequencing for Mean Total Weighted Tardiness in a Stochastic Flow Shop*, by Muting (Don) Ma and Amirhossein Ranjbar (`Option6_Report.tex`, `Option6_Report.pdf`, `Option6_Report.bib`). The sections are introduction, related literature, problem formulation, solution methods, computational design, results, discussion, conclusions, a notation appendix, and an appendix of idle time by stage. `report_numbers.py` prints every number the report quotes from the data and results |
 
 ## References
