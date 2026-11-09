@@ -10,7 +10,7 @@
 
 \begin{table}[ht]
 \centering
-\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:settings}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the optimal tardiness of 21 was reached by an order with 323~job-minutes of waiting.}
+\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:settings}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the solver returned one optimal order, with 323~job-minutes of waiting.}
 \label{tab:comparison}
 \small
 \begin{tabular}{llrrr}
@@ -47,7 +47,7 @@ Large development (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
 
 \sumpara The solver proves the searched values optimal where it can finish, and the seed matters only at 120 jobs. \sumparaend
 \fin HiGHS proved the optimal total weighted tardiness to be 233 on the 6-job instance in 0.36~seconds and 21 on the 15-job instance in 85.8~seconds, and iterated greedy reached both values. \fine
-\fin On the 15-job instance, the solver's optimal order had 323~job-minutes of waiting and iterated greedy's had 252, because only iterated greedy breaks ties in $Z$ by waiting. \fine
+\fin On the 15-job instance, the optimal order that the solver returned had 323~job-minutes of waiting and iterated greedy's had 252; the program minimizes $Z$ alone, so the value 323 describes that one solution. \fine
 \fin With seeds 1 to 5, iterated greedy returned exactly the default seed's tardiness on the 6-, 15-, and 45-job instances, and values from 4,159 to 4,306 on the 120-job instance, all below the default seed's 4,383. \fine
 \fin Its computation time grew from 0.21~seconds at 6~jobs to 37.2~seconds at 120~jobs, while EDD took under a millisecond on every instance. \fine
 

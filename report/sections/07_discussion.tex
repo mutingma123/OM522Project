@@ -27,7 +27,8 @@
 \fin The share of jobs finishing on time rises from 0.333, 0.244, and 0.233 under EDD to 0.867, 0.911, and 0.642 under iterated greedy on the instances with 15, 45, and 120~jobs. \fine
 \fin NEH\_EWDD alone already lowers weighted tardiness relative to EDD by 95.1, 84.8, and 58.9~percent on these instances (\cref{tab:comparison}), and the iterations of \cref{alg:ig} lower its value by a further 70.0, 83.9, and 53.6~percent, or 49, 302, and 5,069 weighted minutes. \fine
 \fin On the 120-job instance the search has not converged after 5000~iterations, since five other seeds find sequences 1.8 to 5.1~percent better than the default seed's 4,383, at a computation time that already reaches 37.2~seconds. \fine
-\fin On the 15-job instance, the optimal order found by the solver and the order found by iterated greedy share the tardiness of 21, but under earliest-start execution the solver's order has 323~job-minutes of waiting and iterated greedy's 252, so the tie-break removes 71~job-minutes of interstage waiting that a tardiness-only objective leaves in place. \fine
+\fin On the 15-job instance, the solver returned one optimal order, with tardiness 21 and, under earliest-start execution, 323~job-minutes of waiting, and the order found by iterated greedy has the same tardiness and 252~job-minutes. \fine
+\fin This difference of 71~job-minutes of interstage waiting is relative to that particular solver solution: the program minimizes $Z$ alone, so another optimal order could have more or less waiting. \fine
 
 \subsection{On-time jobs under processing-time variability}\label{sec:loss}
 
