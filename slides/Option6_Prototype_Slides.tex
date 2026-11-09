@@ -109,7 +109,7 @@
 \begin{itemize}
 \item Jobs are released over time, each with a due date and a weight.
 \item Every job visits stages S1 to S8 in order, and jobs cannot pass one another, so one sequence holds at every stage.
-\item Primary measure: total weighted tardiness. Secondary measure: total waiting between stages.
+\item Primary measure: total weighted tardiness. Secondary measure: total waiting between stages under earliest-start execution, in job-minutes.
 \end{itemize}
 \end{block}
 \end{column}
@@ -247,31 +247,31 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with setup times and weighted tard
 \weightkey
 \end{center}
 \point{Explain the gain.}{Moving the weight-1 job J005 last lets the weight-4 jobs finish earlier: J003 at 97 instead of 108 and J004 at 119 instead of 139.}
-\point{State the check and the cost.}{Enumerating all 720 sequences confirms 233 is optimal; waiting rises from 13 to 37 minutes.}
+\point{State the check and the cost.}{All 720 sequences confirm 233 is optimal; waiting rises from 13 to 37 job-minutes.}
 \end{frame}
 
 \begin{frame}{Lower weighted tardiness than the rule on all four instances}
 \begin{center}
 \small
-\begin{tabular}{lrrrrrr}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrrrr}
 \toprule
- & & \multicolumn{2}{c}{Weighted tardiness} & \multicolumn{2}{c}{Waiting (min)} & \\
-\cmidrule(lr){3-4}\cmidrule(lr){5-6}
-Instance & Jobs & EDD & Iterated greedy & EDD & Iterated greedy & Seconds \\
+ & & \multicolumn{2}{c}{Weighted tardiness} & \multicolumn{2}{c}{Waiting (job-min)} & \multicolumn{2}{c}{Makespan} & \multicolumn{2}{c}{On-time fraction} \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Instance & Jobs & EDD & IG & EDD & IG & EDD & IG & EDD & IG \\
 \midrule
-Hand-checkable & 6 & 281 & 233 & 13 & 37 & 0.2 \\
-Small development & 15 & 1,417 & 21 & 732 & 252 & 0.5 \\
-Medium development & 45 & 2,371 & 58 & 2,040 & 794 & 3.2 \\
-Large development & 120 & 23,015 & 4,383 & 7,863 & 3,005 & 37.2 \\
+Hand-checkable & 6 & 281 & 233 & 13 & 37 & 139 & 136 & 0.000 & 0.000 \\
+Small & 15 & 1,417 & 21 & 732 & 252 & 417 & 357 & 0.333 & 0.867 \\
+Medium & 45 & 2,371 & 58 & 2,040 & 794 & 781 & 751 & 0.244 & 0.911 \\
+Large & 120 & 23,015 & 4,383 & 7,863 & 3,005 & 1,812 & 1,804 & 0.233 & 0.642 \\
 \bottomrule
 \end{tabular}
 \end{center}
 \small
 \begin{itemize}
-\item All eight decisions pass the checker. Seconds are for iterated greedy; the rule takes under a millisecond. Intel Core Ultra 7 155U laptop.
-\item A mixed-integer program solved with HiGHS proves 233 and 21 optimal on the 6- and 15-job instances, and iterated greedy reaches both.
+\item All eight decisions pass the checker. Iterated greedy (IG) takes 0.21, 0.52, 3.22, and 37.2 seconds; EDD takes under a millisecond.
+\item HiGHS proves 233 and 21 optimal on the 6- and 15-job instances, and iterated greedy reaches both. At 15 jobs the solver's one optimal order has 323 job-minutes of waiting, 71 more than iterated greedy's.
 \item At 120 jobs, 5000 iterations have not converged: five other seeds reached 4,159 to 4,306.
-\item For the final submission: how results change with size, and a stress test of both fixed plans on 30 saved processing-time scenarios.
 \end{itemize}
 \end{frame}
 
