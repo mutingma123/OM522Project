@@ -7,10 +7,10 @@ Instance development_medium. Each processing time is multiplied by an independen
 | EDD rule | 2,371.0 | 3,541.1 | 4,616.6 | 2,040.0 | 2,454.5 | 2,768.6 | 0 |
 | Iterated greedy | 58.0 | 420.6 | 592.2 | 794.0 | 1,276.9 | 1,454.9 | 0 |
 
-| Method | Late jobs in the plan | Mean late jobs across scenarios | On-time jobs in the plan | Median slack of on-time jobs | On-time jobs with slack below one standard deviation of their own processing |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| EDD rule | 34 | 36.1 | 11 | 28.0 | 3 |
-| Iterated greedy | 4 | 11.5 | 41 | 31.0 | 3 |
+| Method | Late jobs in the plan | Mean late jobs across scenarios | On-time jobs in the plan | Median slack of on-time jobs | Median simulated completion standard deviation | Median mean completion delay | On-time jobs with slack below that standard deviation | On-time jobs late in some scenario | Mean late probability of an on-time job | On-time jobs made late per scenario |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| EDD rule | 34 | 36.1 | 11 | 28.0 | 9.9 | 3.5 | 4 | 6 | 0.279 | 3.07 |
+| Iterated greedy | 4 | 11.5 | 41 | 31.0 | 8.3 | 9.3 | 6 | 20 | 0.185 | 7.57 |
 
 Iterated greedy has the lower weighted tardiness in 30 of 30 scenarios; the mean per-scenario reduction is 3,120.5 weighted minutes with a standard error of 150.1; its 10th percentile is 2,235.1 and its smallest value 1,948.6.
 
