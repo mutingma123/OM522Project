@@ -1,5 +1,7 @@
 # Prototype video transcript: one job sequence for an eight-stage line
 
+This script belongs to the earlier prototype deck (commit `f8916f4`). For the current slides, use `Option6_Video_Transcript.md`.
+
 This script goes with `Option6_Prototype_Slides.pdf`. It is planned for a calm pace of about 110 spoken words per minute. Read in full, with all three walk-throughs and the commands pasted, it takes about 9:07, under the 10-minute limit. With one presenter and one walk-through it takes about 8:07, and skipping every optional line saves about 0:26 more.
 
 ## How to use this script
