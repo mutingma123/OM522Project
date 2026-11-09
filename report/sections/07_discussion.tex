@@ -51,7 +51,7 @@
 \sumpara A planner should adopt the searched sequence and monitor the line's variability. \sumparaend
 \fin For a planning period like the 45-job instance with processing times varying at a coefficient of variation of 0.2, the iterated greedy sequence lowers mean total weighted tardiness relative to the frozen EDD list by 3,120.5 weighted minutes (standard error 150.1) in the main scenarios and by 2,866.4 (standard error 121.3) in an independent second set, leaves 11.5~jobs late per period on average against 36.1, and lowers mean waiting between stages by 48.0~percent. \fine
 \fin In exchange, the planner gives up a sequence that can be traced by hand and accepts a result that depends on a seed and takes seconds to compute, 3.22 at 45~jobs and 37.2 at 120. \fine
-\fin At $\nu = 0.8$ the mean gain remains 3,329.0 weighted minutes, but the 10th percentile of the per-period gain falls to 851.5 and EDD is better in 1 of 30~scenarios, so a planner who weighs the worst periods most should repeat the comparison at the line's measured variability. \fine
+\fin At $\nu = 0.8$ the mean gain remains 3,329.0 weighted minutes, but the 10th percentile of the per-period gain falls to 7.0~percent of the EDD mean and EDD is better in 1 of 30~scenarios, so a planner who weighs the worst periods most should repeat the comparison at the line's measured variability. \fine
 
 \sumpara The design bounds the claim in five ways. \sumparaend
 \fin All four instances come from one generator, with processing times of 2 to 20~minutes and median due-date windows of 154 to 158~minutes, and the stress test covers only the 45-job instance, so lines with tighter due dates or more uneven stages may show different margins. \fine
