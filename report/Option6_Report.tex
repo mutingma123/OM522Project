@@ -75,7 +75,7 @@
 \noindent
 \sumpara A planner who must fix one job order needs to know whether a searched order keeps its advantage over a dispatching rule once processing times vary. \sumparaend
 \fin A planner who sequences jobs on a flow line where jobs cannot pass one another must commit to one job order before the processing times are known. \fine
-\fin We compare the earliest due date (EDD) rule, a dispatching rule widely used in practice, with the iterated greedy algorithm of Ruiz and St\"utzle adapted to an eight-stage permutation flow shop with release dates and total weighted tardiness. \fine
+\fin We compare a frozen earliest due date (EDD) sequence, built by a dispatching rule widely used in practice, with the iterated greedy algorithm of Ruiz and St\"utzle adapted to an eight-stage permutation flow shop with release dates and total weighted tardiness. \fine
 \fin On instances with 15, 45, and 120~jobs, iterated greedy reduces total weighted tardiness relative to EDD by 98.5, 97.6, and 81.0~percent, and a mixed-integer program solved with HiGHS proves its values optimal on the instances with 6 and 15~jobs. \fine
 \fin We then hold both sequences fixed and execute them on 180 paired scenarios of the 45-job instance in which every planned processing time proves wrong: each is multiplied by an independent lognormal factor with mean one. \fine
 \fin At a coefficient of variation of 0.2, the iterated greedy sequence has the lower weighted tardiness in all 30~scenarios, with a mean across scenarios of 420.6 weighted minutes against 3,541.1, an 88.1~percent reduction. \fine

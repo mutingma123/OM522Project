@@ -4,7 +4,8 @@
 
 \sumpara The baseline is a single sort by due date. \sumparaend
 \fin The EDD rule sorts the jobs by $d_j$, breaks ties by job identifier, and times the resulting sequence $\pi^{\mathrm{EDD}}$ by \eqref{eq:recursion}. \fine
-\fin Its sequence ignores weights, release dates, and processing times, and it requires no search. \fine
+\fin The sequence ignores weights, release dates, and processing times and requires no search. \fine
+\fin Because the planner fixes the order in advance, we hold this list frozen: it can keep the line idle behind a job that is not yet released, and it does not react to realized times, so it differs from online dispatching. \fine
 
 \subsection{Iterated greedy algorithm}\label{sec:ig}
 
