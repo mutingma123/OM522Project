@@ -37,9 +37,11 @@
 \fin The mean weighted tardiness of EDD rises by 1,170.1 weighted minutes over its planned value while its count of late jobs rises by only 2.1, so most of its increase comes from jobs that were already late finishing later still. \fine
 \fin The mean of the iterated greedy sequence rises by 362.6, a factor of 7.25 over its planned 58, against a factor of 1.49 for EDD, because its losses come from jobs that were on time in the plan. \fine
 
-\sumpara The searched sequence's on-time margins are as wide as those of EDD; it is exposed because it has more on-time jobs. \sumparaend
-\fin The on-time jobs of the iterated greedy sequence have a median slack of 31~minutes before their due dates, against 28 for EDD, and in each sequence 3 on-time jobs have slack below one standard deviation of their own total processing time at $\nu = 0.2$, which is $0.2\sqrt{\sum_k p_{jk}^2}$ for job $j$. \fine
-\fin The iterated greedy sequence is exposed because it has 41 on-time jobs that a delay can make late, against 11 for EDD. \fine
+\sumpara Each on-time job of the searched sequence is less likely to turn late than one of EDD, and the sequence loses more because it has more of them. \sumparaend
+\fin The on-time jobs of the iterated greedy sequence have a median planned slack of 31~minutes before their due dates, against 28 for EDD. \fine
+\fin To include the delays passed on by the jobs ahead, we measure each on-time job's completion at the last stage across the 30~saved scenarios at $\nu = 0.2$: its mean moves later than planned by a median of 9.3~minutes for iterated greedy and 3.5 for EDD, and its standard deviation has a median of 8.3~minutes and 9.9, respectively. \fine
+\fin Slack falls below one such standard deviation for 6 of the 41 on-time jobs of iterated greedy and for 4 of the 11 of EDD. \fine
+\fin An on-time job of the iterated greedy sequence finishes late in 18.5~percent of the scenarios on average, against 27.9~percent for EDD, but with 41 such jobs against 11, an average of 7.6 turn late per scenario, against 3.1. \fine
 \fin This mechanism is consistent with the observation of \citet{aytug2005executing} that optimized schedules lose their advantage as variability grows, and the sweep shows that, for weighted tardiness, the loss appears first in the tail of the per-period reduction while its mean stays between 2,572.0 and 3,683.7 weighted minutes. \fine
 \fin It also extends to this objective the finding of \citet{framinan2015stochastic} and \citet{juan2014simheuristic} for the expected makespan, that sequences computed on exact or mean processing times remain effective at low to moderate variability. \fine
 
