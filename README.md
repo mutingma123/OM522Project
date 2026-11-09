@@ -23,7 +23,8 @@ pixi run reproduce                                             # regenerate ever
 | `pixi run compare` | Deterministic comparison on four instances, written to `results/comparison/` | 5.5 min |
 | `pixi run benchmark` | Solves a mixed-integer formulation with HiGHS on the 6-job and 15-job instances, written to `results/benchmark/` | 1.5 min |
 | `pixi run stress` | Stress test on the medium instance, written to `results/stress/` | 9 s |
-| `pixi run reproduce` | Runs `compare`, `benchmark`, and `stress` | 7 min |
+| `pixi run measures` | Makespan, on-time fraction, and idle time by stage of every saved decision, written to `results/comparison/additional_measures.csv` | under 1 s |
+| `pixi run reproduce` | Runs `compare`, `benchmark`, `measures`, and `stress` | 7 min |
 | `pixi run test` | Runs the 31 tests in `tests/` | 9 s |
 
 Relative paths are read from the directory where the command is typed. The output directory must differ from the input directory, and the tool never writes into the input directory. The first run on a new computer compiles the timing kernels with Numba, which adds a few seconds once; later runs reuse the compiled cache.
@@ -130,7 +131,7 @@ The uncertain input is processing time. In each scenario every processing time o
 
 ![Per-scenario weighted tardiness and waiting of both fixed plans](results/stress/stress_per_scenario.png)
 
-The iterated greedy plan has the lower weighted tardiness in all 30 scenarios. Both plans lose ground to variability: the iterated greedy plan's mean weighted tardiness rises from the planned 58 to 421 and the rule's from 2,371 to 3,541. The iterated greedy plan has 4 late jobs as planned and 11.5 on average across the scenarios, while the rule's plan has 34 and 36.1. The iterated greedy plan's on-time jobs do not have thinner margins (median slack 31 minutes against the rule's 28); it loses more because it has more on-time jobs at stake, 41 against 11. No scenario breaks a hard constraint for either plan. Under the execution rule every operation still follows release, stage order, and one job per stage, and the brief's due dates are soft targets.
+The iterated greedy plan has the lower weighted tardiness in all 30 scenarios. Both plans lose ground to variability: the iterated greedy plan's mean weighted tardiness rises from the planned 58 to 421 and the rule's from 2,371 to 3,541. The iterated greedy plan has 4 late jobs as planned and 11.5 on average across the scenarios, while the rule's plan has 34 and 36.1. Measured on each on-time job's simulated completion time, which includes delays passed on by the jobs ahead, an on-time job of the iterated greedy plan is late in 18.5 percent of the scenarios on average against 27.9 percent for the rule's plan; the iterated greedy plan loses more because it has 41 on-time jobs against 11, so 7.6 turn late per scenario against 3.1. No scenario breaks a hard constraint for either plan. Under the execution rule every operation still follows release, stage order, and one job per stage, and the brief's due dates are soft targets.
 
 We repeated the execution at other coefficients of variation, 30 scenarios each, to find where the comparison changes (`results/stress/stress.md`):
 
@@ -165,7 +166,7 @@ We built the tool with Claude Code (Anthropic, model Claude Opus 5.5), which dra
 | `results/stress/` | Saved scenarios, both plans, per-scenario results, summary, and plots |
 | `library/` | Ledger and index of the papers read (the PDFs are not redistributed) |
 | `slides/` | Beamer slides for the prototype video (`Option6_Prototype_Slides.tex` and its PDF) and the recording transcript (`Option6_Prototype_Transcript.md`) |
-| `report/` | Manuscript *Mean Weighted Tardiness of an Iterated Greedy Sequence in a Stochastic Permutation Flow Shop with Release Dates* (`Option6_Report.tex`, `Option6_Report.pdf`, `Option6_Report.bib`). The sections are introduction, related literature, problem formulation, solution methods, computational design, results, discussion, conclusions, and a notation appendix. `report_numbers.py` prints every number the report quotes from the data and results |
+| `report/` | Manuscript *Optimized on the Wrong Processing Times, a Job Sequence Still Beats Earliest Due Date in 179 of 180 Scenarios*, by Muting (Don) Ma and Amirhossein Ranjbar (`Option6_Report.tex`, `Option6_Report.pdf`, `Option6_Report.bib`). The sections are introduction, related literature, problem formulation, solution methods, computational design, results, discussion, conclusions, a notation appendix, and an appendix of idle time by stage. `report_numbers.py` prints every number the report quotes from the data and results |
 
 ## References
 
