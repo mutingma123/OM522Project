@@ -43,7 +43,7 @@
 \fin Slack falls below one such standard deviation for 6 of the 41 on-time jobs of iterated greedy and for 4 of the 11 of EDD. \fine
 \fin An on-time job of the iterated greedy sequence finishes late in 18.5~percent of the scenarios on average, against 27.9~percent for EDD, but with 41 such jobs against 11, an average of 7.6 turn late per scenario, against 3.1. \fine
 \fin This mechanism is consistent with the observation of \citet{aytug2005executing} that optimized schedules lose their advantage as variability grows, and the sweep shows that, for weighted tardiness on this instance, the relative reduction falls at every level tested while the mean absolute reduction does not. \fine
-\fin It also extends to this objective the finding of \citet{framinan2015stochastic} and \citet{juan2014simheuristic} for the expected makespan, that sequences computed on exact or mean processing times remain effective at low to moderate variability. \fine
+\fin It parallels, for this objective and without a stochastic comparator, the finding of \citet{framinan2015stochastic} and \citet{juan2014simheuristic} for the expected makespan that sequences computed on exact or mean processing times remain effective at low to moderate variability. \fine
 
 \subsection{Implications, scope, and extensions}\label{sec:implications}
 
@@ -52,11 +52,12 @@
 \fin In exchange, the planner gives up a sequence that can be traced by hand and accepts a result that depends on a seed and takes seconds to compute, 3.22 at 45~jobs and 37.2 at 120. \fine
 \fin At $\nu = 0.8$ the mean gain remains 3,329.0 weighted minutes, but the 10th percentile of the per-period gain falls to 851.5 and EDD is better in 1 of 30~scenarios, so a planner who weighs the worst periods most should repeat the comparison at the line's measured variability. \fine
 
-\sumpara The design bounds the claim in four ways. \sumparaend
+\sumpara The design bounds the claim in five ways. \sumparaend
 \fin All four instances come from one generator, with processing times of 2 to 20~minutes and median due-date windows of 154 to 158~minutes, and the stress test covers only the 45-job instance, so lines with tighter due dates or more uneven stages may show different margins. \fine
 \fin The scenarios draw each of the 360 processing times of the 45-job instance independently, so they do not represent a common cause, such as a slow shift or a degraded machine, that lengthens many operations at once, and they replicate processing-time noise for one pair of sequences on one instance, which does not replicate the comparison across instances. \fine
 \fin Both sequences are predictive and are never revised, which isolates the value of the sequence itself and leaves out rescheduling and reactive dispatching; in the studies reviewed by \citet{aytug2005executing}, dispatching matched or outperformed predictive schedules once variability was high. \fine
 \fin Optimality is proven only up to 15~jobs, and on the 120-job instance other seeds find better sequences, so the gains reported for the largest instance understate what the search can achieve. \fine
+\fin NEH\_EWDD, which involves no search, was not executed in the scenarios and no stochastic method was run, so the stress test does not separate the contribution of the search from that of the weighted start or compare the sequence with a method that samples scenarios. \fine
 
 \sumpara Each limit points to one extension with a direct test. \sumparaend
 \fin A search that scores each candidate sequence by its mean tardiness over sampled scenarios, in the manner of the simheuristic of \citet{juan2014simheuristic}, would target the variability directly, and the sweep of \cref{sec:sweep} provides the test. \fine

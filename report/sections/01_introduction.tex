@@ -12,7 +12,7 @@
 \fin That evaluation, like the review of \citet{vallada2008review}, used instances with fixed processing times and no release dates. \fine
 \fin Studies of flow shops with random processing times have concentrated on the expected makespan, for which heuristics adapted from deterministic procedures, including sequences computed from mean processing times, perform close to the best stochastic methods~\cite{baker2012stochastic,framinan2015stochastic,juan2014simheuristic}, and a review of 100 studies of flow shops under uncertainty identifies tardiness and its weighted form as criteria that remain to be examined~\cite{gonzalezneira2017review}. \fine
 \fin A broader review of schedule execution concludes that optimized predictive schedules outperform simple rules when uncertainty is low and lose that advantage beyond a level of variability that depends on the system~\cite{aytug2005executing}. \fine
-\fin For weighted tardiness with release dates, it therefore remains open whether a searched sequence, held fixed, keeps its advantage over a frozen EDD sequence as processing times vary, and at which level of variability that advantage weakens. \fine
+\fin For weighted tardiness with release dates, the studies we reviewed do not establish whether a searched sequence, held fixed, keeps its advantage over a frozen EDD sequence as processing times vary, and at which level of variability that advantage weakens. \fine
 
 \sumpara We compare the two fixed sequences on exact data, certify small optima, and execute both on paired scenarios across a range of variability. \sumparaend
 \fin We adapt the iterated greedy algorithm of \citet{ruiz2008igwt} to an eight-stage permutation flow shop with release dates and total weighted tardiness, and we compare it with EDD on four synthetic instances with 6 to 120~jobs. \fine
@@ -25,5 +25,5 @@
 \fin The relative reduction, however, falls from 94.6~percent at a coefficient of variation of 0.1 to 27.2~percent at 0.8, and at 0.8 the 10th percentile of the paired reduction falls to 851.5 weighted minutes. \fine
 
 \sumpara The contribution is paired evidence on how variability changes the value of a fixed iterated greedy sequence for weighted tardiness. \sumparaend
-\fin The results extend the finding for the expected makespan, that sequences computed on mean processing times remain effective, to total weighted tardiness with release dates, and they locate the erosion that \citet{aytug2005executing} describe in the tail of the per-period gain before its mean. \fine
+\fin On this instance, the results parallel the finding for the expected makespan that sequences computed on mean processing times remain effective, and the paired design shows how the relative and the absolute advantage separate as variability grows. \fine
 \fin On a line like the 45-job instance, the iterated greedy sequence outperforms the frozen EDD list on the mean at every level of variability we tested, and the variability of the line determines how dependably its gain is realized in a given period. \fine
