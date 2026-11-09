@@ -14,10 +14,10 @@
 \fin A broader review of schedule execution concludes that optimized predictive schedules outperform simple rules when uncertainty is low and lose that advantage beyond a level of variability that depends on the system~\cite{aytug2005executing}. \fine
 \fin For weighted tardiness with release dates, it therefore remains open whether a searched sequence, held fixed, keeps its advantage over the EDD sequence as processing times vary, and at which level of variability that advantage weakens. \fine
 
-\sumpara I compare the two fixed sequences on exact data, certify small optima, and execute both on paired scenarios across a range of variability. \sumparaend
-\fin I adapt the iterated greedy algorithm of \citet{ruiz2008igwt} to an eight-stage permutation flow shop with release dates and total weighted tardiness, and I compare it with EDD on four synthetic instances with 6 to 120~jobs. \fine
+\sumpara We compare the two fixed sequences on exact data, certify small optima, and execute both on paired scenarios across a range of variability. \sumparaend
+\fin We adapt the iterated greedy algorithm of \citet{ruiz2008igwt} to an eight-stage permutation flow shop with release dates and total weighted tardiness, and we compare it with EDD on four synthetic instances with 6 to 120~jobs. \fine
 \fin A mixed-integer program solved with HiGHS~\cite{highs} certifies the optimal values of the two smallest instances, and a checker that shares no code with either method recomputes the feasibility and the measures of every schedule. \fine
-\fin I then execute both sequences, unchanged, on 180 paired scenarios of the 45-job instance in which each processing time is multiplied by an independent lognormal factor with mean one, at coefficients of variation from 0.1 to 0.8. \fine
+\fin We then execute both sequences, unchanged, on 180 paired scenarios of the 45-job instance in which each processing time is multiplied by an independent lognormal factor with mean one, at coefficients of variation from 0.1 to 0.8. \fine
 
 \sumpara The searched sequence nearly eliminates the rule's tardiness on exact data and keeps its mean advantage at every level of variability tested, while its advantage in the worst periods erodes. \sumparaend
 \fin On exact data, iterated greedy reduces total weighted tardiness relative to EDD by 98.5, 97.6, and 81.0~percent on the instances with 15, 45, and 120~jobs, and it attains the proven optima on the instances with 6 and 15~jobs. \fine
@@ -26,4 +26,4 @@
 
 \sumpara The contribution is a mean-versus-tail account of how variability changes the value of a searched fixed sequence for weighted tardiness. \sumparaend
 \fin The results extend the finding for the expected makespan, that sequences computed on mean processing times remain effective, to total weighted tardiness with release dates, and they locate the erosion that \citet{aytug2005executing} describe in the tail of the per-period gain before its mean. \fine
-\fin For a planner, the searched sequence is worth adopting at every level of variability I tested, and the variability of the line is the quantity that determines how dependably its gain is realized in a given period. \fine
+\fin For a planner, the searched sequence is worth adopting at every level of variability we tested, and the variability of the line is the quantity that determines how dependably its gain is realized in a given period. \fine

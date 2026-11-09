@@ -6,7 +6,7 @@
 \fin A line of $m$ stages, indexed by $k$ in line order, processes $n$ jobs, indexed by $j$, and each stage has one machine. \fine
 \fin Job $j$ is released at time $r_j$, is due at $d_j$, carries a weight $w_j$ that scores its priority, and requires a processing time $p_{jk} > 0$ at stage $k$. \fine
 \fin Every job visits every stage in line order without interruption, jobs cannot pass one another, so one sequence of the jobs holds at every stage, and the buffers between stages are unlimited. \fine
-\fin I assume that every stage is idle at time zero, that the planner fixes the sequence before the first job starts and does not revise it, and that among sequences with equal weighted tardiness the planner prefers less waiting between stages. \fine
+\fin We assume that every stage is idle at time zero, that the planner fixes the sequence before the first job starts and does not revise it, and that among sequences with equal weighted tardiness the planner prefers less waiting between stages. \fine
 
 \subsection{Earliest-start recursion}\label{sec:timing}
 
@@ -26,12 +26,12 @@ Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \
 \sumpara The recursion yields the smallest tardiness of any schedule with that sequence, so the problem reduces to choosing a sequence. \sumparaend
 \fin By induction over positions and stages, any feasible schedule that keeps sequence $\pi$ starts each operation no earlier than \eqref{eq:recursion}, so the recursion gives every job its earliest completion at the last stage and $\pi$ its smallest value of $Z$. \fine
 \fin The planning problem is therefore to choose the sequence that minimizes $Z(\pi)$, which is the permutation flow shop problem with release dates and total weighted tardiness. \fine
-\fin Applied with realized processing times, \eqref{eq:recursion} is also the right-shift execution of a fixed sequence described by \citet{aytug2005executing}, which I use in the stress test. \fine
+\fin Applied with realized processing times, \eqref{eq:recursion} is also the right-shift execution of a fixed sequence described by \citet{aytug2005executing}, which we use in the stress test. \fine
 
 \subsection{Positional mixed-integer formulation}\label{sec:mip}
 
 \sumpara A positional program states the same problem in a form that a solver can certify. \sumparaend
-\fin To certify optimal values, I state the problem as a mixed-integer program over sequence positions $q = 1, \ldots, n$. \fine
+\fin To certify optimal values, we state the problem as a mixed-integer program over sequence positions $q = 1, \ldots, n$. \fine
 \fin The binary variable $x_{jq}$ equals 1 when job $j$ occupies position $q$, $B_{qk}$ and $E_{qk}$ are the start and end of the job in position $q$ at stage $k$, and $T_j \geq 0$ is the tardiness of job $j$: \fine
 \begin{align}
 \min \quad & \sum_{j=1}^{n} w_j T_j \label{eq:mip-obj}\\
@@ -49,4 +49,4 @@ Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \
 \sumpara The tardiness bound never excludes the optimal schedule, so the program's optimum equals the best sequence's tardiness. \sumparaend
 \fin Under \eqref{eq:recursion}, every job of every sequence finishes by $\max_h r_h + \sum_{h,k} p_{hk}$, because each completion time is a release date plus the processing times along one path through the schedule. \fine
 \fin The bound $U_j$ therefore never forces a positive tardiness on the earliest-start schedule of any sequence, which by \cref{sec:timing} is the best schedule for that sequence, and the optimal value of the program equals $\min_\pi Z(\pi)$. \fine
-\fin I use the program only as a benchmark that certifies optimal values. \fine
+\fin We use the program only as a benchmark that certifies optimal values. \fine

@@ -3,7 +3,7 @@
 \subsection{Test instances}\label{sec:instances}
 
 \sumpara The instances come from one generator and range from 6 to 120 jobs. \sumparaend
-\fin I use four synthetic instances generated for a graduate course in production scheduling, with all times in minutes, summarized in \cref{tab:data}. \fine
+\fin We use four synthetic instances generated for a graduate course in production scheduling, with all times in minutes, summarized in \cref{tab:data}. \fine
 \fin A 6-job instance on 4~stages is small enough to trace by hand and to solve by enumeration, and three development instances with 15, 45, and 120~jobs on 8~stages test the methods at increasing size. \fine
 \fin Processing times range from 2 to 20~minutes on every development instance, and a job's total processing time over the 8~stages averages between 85.1 and 88.8~minutes. \fine
 \fin Releases spread over 186, 597, and 1,687~minutes, which gives arrival rates between 0.071 and 0.081~jobs per minute, so the larger instances cover longer planning periods at a similar density. \fine
@@ -30,26 +30,26 @@ Large development & 120 & 8 & 2 to 20 & 3 to 1,690 & 154 & 1 to 5 \\
 \subsection{Parameter settings and verification}\label{sec:settings}
 
 \sumpara Both methods receive identical inputs and fixed settings on one computer. \sumparaend
-\fin Iterated greedy runs with $L = 5000$ iterations and seed 522, with a safety cap of 300~seconds that no run reached, and I repeat it with seeds 1 to 5 to measure the dependence of the result on the seed. \fine
+\fin Iterated greedy runs with $L = 5000$ iterations and seed 522, with a safety cap of 300~seconds that no run reached, and we repeat it with seeds 1 to 5 to measure the dependence of the result on the seed. \fine
 \fin NEH\_EWDD alone, the first step of \cref{alg:ig}, is reported as a construction-only reference, so that the contribution of the search can be separated from that of the initial sequence. \fine
 \fin All runs use one laptop with an Intel Core Ultra 7 155U processor under Linux, Python 3.12, NumPy 2.5.4, and Numba 0.68.0, and computation time covers the method alone, after one warm-up run that compiles the timing code. \fine
-\fin I solve program \eqref{eq:mip-obj} to \eqref{eq:mip-tardy} with HiGHS 1.15.1~\cite{highs} on the instances with 6 and 15~jobs, using one thread, a relative gap tolerance of zero, and a limit of 600~seconds; the larger instances are not attempted, because the 15-job instance already requires 85.8~seconds and more than 15,000 branch-and-bound nodes. \fine
-\fin I expect iterated greedy to attain the lower weighted tardiness on every instance, because it evaluates the tardiness of each candidate sequence, whereas EDD does not. \fine
+\fin We solve program \eqref{eq:mip-obj} to \eqref{eq:mip-tardy} with HiGHS 1.15.1~\cite{highs} on the instances with 6 and 15~jobs, using one thread, a relative gap tolerance of zero, and a limit of 600~seconds; the larger instances are not attempted, because the 15-job instance already requires 85.8~seconds and more than 15,000 branch-and-bound nodes. \fine
+\fin We expect iterated greedy to attain the lower weighted tardiness on every instance, because it evaluates the tardiness of each candidate sequence, whereas EDD does not. \fine
 
 \sumpara A checker that shares no code with the methods computes every reported value. \sumparaend
 \fin Each method's sequence, and the order read from each solution of the program, is timed by \eqref{eq:recursion} and exported as the start and completion of every operation. \fine
 \fin A separately written checker reads only the instance data and the exported schedule, confirms every constraint of \cref{sec:setting} within a tolerance of $10^{-8}$~minutes, and recomputes $Z$, $W$, and the share of jobs finishing on time. \fine
-\fin Every value I report for a schedule is computed by this checker. \fine
+\fin Every value we report for a schedule is computed by this checker. \fine
 
 \subsection{Stochastic scenarios}\label{sec:stress-design}
 
 \sumpara Random processing times are drawn once, saved, and then faced by both sequences. \sumparaend
 \fin In scenario $\omega$, each processing time becomes $p_{jk}\,\varepsilon_{jk\omega}$, where the factors $\varepsilon_{jk\omega}$ are independent lognormal draws with mean one and coefficient of variation $\nu$, obtained with $\sigma^2 = \ln(1 + \nu^2)$ and a log-mean of $-\sigma^2/2$, the distribution used by \citet{baker2012stochastic} and \citet{framinan2015stochastic}. \fine
-\fin For the main test I draw 30~scenarios of the 45-job instance at $\nu = 0.2$ from seed 20261103 and save them before either method runs, so that both sequences face identical realizations. \fine
+\fin For the main test we draw 30~scenarios of the 45-job instance at $\nu = 0.2$ from seed 20261103 and save them before either method runs, so that both sequences face identical realizations. \fine
 \fin Each sequence is the one computed on the exact data, it is executed unchanged in every scenario by the right-shift rule \eqref{eq:recursion} with the realized processing times, and the checker confirms each realized schedule against the times of its scenario. \fine
-\fin For each sequence I report the mean and the 90th percentile, by linear interpolation, of $Z$ and $W$ over the scenarios, the number of scenarios in which a hard constraint is violated, and the mean, standard error, and 10th percentile of the paired reduction in $Z$. \fine
+\fin For each sequence we report the mean and the 90th percentile, by linear interpolation, of $Z$ and $W$ over the scenarios, the number of scenarios in which a hard constraint is violated, and the mean, standard error, and 10th percentile of the paired reduction in $Z$. \fine
 
 \sumpara A sweep over five levels of variability locates where the comparison changes. \sumparaend
-\fin I repeat the execution with 30~new scenarios at each of $\nu = 0.1$, 0.2, 0.3, 0.5, and 0.8, drawn from seeds 6522 to 6526, so that with the main test the study comprises 180 paired scenarios. \fine
+\fin We repeat the execution with 30~new scenarios at each of $\nu = 0.1$, 0.2, 0.3, 0.5, and 0.8, drawn from seeds 6522 to 6526, so that with the main test the study comprises 180 paired scenarios. \fine
 \fin This range covers the low-variability band below 0.75 in the classification used by \citet{framinan2015stochastic} and extends into the moderate band. \fine
-\fin I expect both sequences to become later as $\nu$ grows and the searched sequence to lose part of its advantage, because a sequence tuned to exact times has more on-time jobs that a delay can make late. \fine
+\fin We expect both sequences to become later as $\nu$ grows and the searched sequence to lose part of its advantage, because a sequence tuned to exact times has more on-time jobs that a delay can make late. \fine

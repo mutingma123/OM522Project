@@ -9,7 +9,7 @@
 \subsection{Iterated greedy algorithm}\label{sec:ig}
 
 \sumpara Iterated greedy builds a weighted start and then repeatedly destroys and rebuilds the sequence around a local search. \sumparaend
-\fin The method is IG\_RS\_LS, the iterated greedy algorithm with local search that \citet{ruiz2008igwt} proposed for the flow shop with sequence-dependent setup times; the line studied here has no setup times, so I apply its weighted tardiness version with every setup time equal to zero, as shown in \cref{alg:ig}. \fine
+\fin The method is IG\_RS\_LS, the iterated greedy algorithm with local search that \citet{ruiz2008igwt} proposed for the flow shop with sequence-dependent setup times; the line studied here has no setup times, so we apply its weighted tardiness version with every setup time equal to zero, as shown in \cref{alg:ig}. \fine
 \fin Sequences are compared by the pair $F(\pi) = (Z(\pi), W(\pi))$ in lexicographic order, and the best position for a job is the position in a partial sequence that yields the smallest $F$, the earliest on an exact tie. \fine
 \fin The initial sequence, NEH\_EWDD, orders the jobs by nondecreasing $d_j / w_j$ and inserts them one at a time at their best positions~\cite{ruiz2008igwt}, following the insertion step of NEH as stated by \citet{ruiz2007ig}. \fine
 \fin Each iteration removes $\delta = 4$ jobs at random, reinserts them in the order of removal, and applies a local search that moves single jobs to their best positions until no move improves $F$. \fine
@@ -47,7 +47,7 @@
 \end{algorithm}
 
 \sumpara Three design choices are ours, each made for the decision studied here. \sumparaend
-\fin I break ties in $Z$ by $W$, because the planner prefers less work in process among sequences with equal tardiness and because many sequences can share a value of $Z$ when most jobs finish on time. \fine
-\fin I start from $\pi^{\mathrm{EDD}}$ whenever it improves on NEH\_EWDD, so that the method never returns a sequence worse than the baseline; on all four instances, NEH\_EWDD was the better start. \fine
-\fin I stop after $L = 5000$ iterations with a fixed seed, where \citet{ruiz2008igwt} stop at a CPU-time limit, so that a rerun on another computer reproduces each reported sequence. \fine
+\fin We break ties in $Z$ by $W$, because the planner prefers less work in process among sequences with equal tardiness and because many sequences can share a value of $Z$ when most jobs finish on time. \fine
+\fin We start from $\pi^{\mathrm{EDD}}$ whenever it improves on NEH\_EWDD, so that the method never returns a sequence worse than the baseline; on all four instances, NEH\_EWDD was the better start. \fine
+\fin We stop after $L = 5000$ iterations with a fixed seed, where \citet{ruiz2008igwt} stop at a CPU-time limit, so that a rerun on another computer reproduces each reported sequence. \fine
 \fin The best-position search times the jobs ahead of each candidate position once and abandons a position as soon as its partial pair $(Z, W)$ can no longer improve on the best position found, which is exact because both totals are nondecreasing as jobs are appended. \fine
