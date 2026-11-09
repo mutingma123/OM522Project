@@ -1,6 +1,6 @@
 # Live transcript for the 10 to 15 minute video: The Value of a Wrong Plan
 
-Read this script aloud while recording, together with `Option6_Prototype_Slides.pdf`. Don presents every slide except slide 20, which Amir presents. At a calm 110 words per minute, with the commands pasted, it takes about 12:00. It stays inside the 10 to 15 minute window from 10:22 at 130 words per minute to 14:20 at 90.
+Read this script aloud while recording, together with `Option6_Prototype_Slides.pdf`. Don presents every slide except slide 20, which Amir presents. TIMING_SUMMARY
 
 ## How to use this script
 
@@ -44,7 +44,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 | HiGHS (the solver) | like the word "highs" |
 | EDD | say the letters: "E, D, D" |
 
-## Slide 1: title (end by 0:24)
+## Slide 1: title
 
 **Don:**
 
@@ -52,11 +52,11 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - Our title is **The Value of a Wrong Plan**.
 - If a plan uses processing times that turn out **wrong**, is it **still worth having**?
 
-## Slide 2: the talk in six parts (end by 0:30)
+## Slide 2: the talk in six parts
 
 - The talk has **six parts**, shown here.
 
-## Slide 3: the decision (end by 1:21)
+## Slide 3: the decision
 
 - A planner must choose the **order** of jobs on a line with **eight stages**.
 - Jobs **cannot pass**, so **one sequence** holds at every stage.
@@ -66,21 +66,21 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - It does not see weights, release dates, or later stages.
 - A job that is **slow at a later stage** holds up **every job behind it**.
 
-## Slide 4: what is known (end by 1:56)
+## Slide 4: what is known
 
 - On **exact data**, iterated greedy was the **best method tested** for weighted tardiness.
 - With **random** times, most studies look at the **makespan**, the finish time of the last job.
 - Reviews warn that an optimized schedule can **lose its advantage** when variability is high.
 - So we ask: for weighted tardiness, does a searched sequence **stay better** when we hold it fixed?
 
-## Slide 5: the model (end by 2:26)
+## Slide 5: the model
 
 - Once we fix a sequence, every start time is **fixed too**.
 - Each operation starts when the job and the stage are **both ready**.
 - From those times we compute tardiness, **Z**, and waiting, **W**.
 - A mixed-integer program defines the **true optimum**, and a solver called **HiGHS** certifies it on the two smallest instances.
 
-## Slide 6: the rule to beat (end by 3:19)
+## Slide 6: the rule to beat
 
 - Here is the rule on a small case with six jobs.
 - Job **one** starts at its release, minute **thirteen**.
@@ -99,7 +99,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 
 - The checker confirms it, and **every measure matches** the worked example.
 
-## Slide 7: the checker (end by 4:17)
+## Slide 7: the checker
 
 - The checker is **separate code**. It reads only the input files and the decision.
 - It checks every constraint, then **recomputes** every measure by itself.
@@ -121,7 +121,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 
 - The tool **rejects** it and names the **file**, the **column**, and the **line**.
 
-## Slide 8: the researched method (end by 4:51)
+## Slide 8: the researched method
 
 - Our method is **iterated greedy**, by **Ruiz** and **Stützle**.
 - They built it for flow shops with setup times, so we set every setup time to **zero**.
@@ -129,15 +129,16 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - So a **heavy** job can move ahead of a **light** one.
 - Neither source has release dates, and our timing includes them.
 
-## Slide 9: how it works (end by 5:36)
+## Slide 9: how it works
 
+- A solution is one **sequence** of all the jobs.
 - **Step one**: order the jobs by **due date divided by weight**, and insert each at its **best position**.
 - **Step two**: take each job out and put it back at its best position, until **nothing improves**.
 - Then **repeat**: remove **four jobs** at random, put them back, and search again.
 - *(optional)* Sometimes we accept a worse sequence, so the search does not get stuck.
 - We **stop** after **five thousand** iterations, with a fixed seed, so a rerun gives the **same answer**.
 
-## Slide 10: the experiment (end by 6:15)
+## Slide 10: the experiment
 
 - We test **four instances**, with six to one hundred twenty jobs.
 - For the stress test, we take the forty-five-job instance and multiply each planned time by a **random factor** with mean one.
@@ -146,7 +147,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - We saved the scenarios **before** running either method, so both sequences face the same times.
 - Both sequences stay **fixed**.
 
-## Slide 11: the six-job result (end by 6:48)
+## Slide 11: the six-job result
 
 - On the six-job case, the darker bars are heavier jobs.
 - E, D, D puts job **five**, with weight **one**, before two jobs with weight **four**.
@@ -154,7 +155,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - Tardiness falls from **two hundred eighty-one** to **two hundred thirty-three**, the **best possible**.
 - The cost is more waiting: **thirty-seven** job-minutes, up from **thirteen**.
 
-## Slide 12: all four instances (end by 7:21)
+## Slide 12: all four instances
 
 - Now our method on the **fresh** medium instance.
 
@@ -165,16 +166,21 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 **Paste:** `pixi run check out/video/fresh_medium out/video/medium_ig/decision.json`
 
 - Feasible. Weighted tardiness is **fifty-eight**, against **two thousand three hundred seventy-one**.
+- Waiting is **seven hundred ninety-four** job-minutes, against **two thousand forty**.
+
+**Paste:** `pixi run python -c "import json; [print(m, json.load(open(f'out/video/medium_{m}/decision.json'))['sequence'][:8]) for m in ('rule','ig')]"`
+
+- These are the first jobs of the **two decisions**. The orders are different.
 - Iterated greedy is **lower on all four** instances.
 - **HiGHS** proves the two smallest results **optimal**.
 
-## Slide 13: results by size (end by 7:43)
+## Slide 13: results by size
 
 - The blue line at one hundred is E, D, D.
 - The gain is **largest** at fifteen and forty-five jobs.
 - At one hundred twenty jobs, other seeds did a little better, so the search has **not finished**.
 
-## Slide 14: the stress test (end by 8:17)
+## Slide 14: the stress test
 
 - Now the key test, at a coefficient of variation of **zero point two**.
 - Iterated greedy wins **all thirty** scenarios.
@@ -183,14 +189,14 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - For tardiness, the two groups of dots **do not overlap**.
 - No hard constraint is broken in any scenario.
 
-## Slide 15: more variability (end by 8:51)
+## Slide 15: more variability
 
 - As variability grows, the **percentage** advantage falls at **every step**, from about **ninety-five** to about **twenty-seven**.
 - But the **mean gain** holds, between about **two thousand six hundred** and **three thousand seven hundred** weighted minutes.
 - E, D, D wins only **one** of the one hundred eighty scenarios.
 - *(optional)* At the highest level, the gain in the weakest tenth of scenarios also drops.
 
-## Slide 16: why this happens (end by 9:23)
+## Slide 16: why this happens
 
 - Why?
 - E, D, D already has **thirty-four** late jobs, and delays make them **later**.
@@ -199,7 +205,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - Each one turns late **less often**: about **eighteen percent**, against **twenty-eight**.
 - But it has **more to lose**: about **eight** turn late per scenario, against **three**.
 
-## Slide 17: recommendation (end by 9:57)
+## Slide 17: recommendation
 
 - We recommend iterated greedy **on this line**.
 - At zero point two, it saves about **three thousand** weighted minutes per period on average.
@@ -207,22 +213,23 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - The trade-off: it **cannot be traced by hand**, and it takes seconds.
 - At very high variability the gain is **less dependable**, so **measure your line first**.
 
-## Slide 18: limits (end by 10:18)
+## Slide 18: limits
 
 - The limits: **one generator**, and the stress test uses **one instance**.
 - The noise is independent, and E, D, D is a **frozen list**.
 - Next, we would add correlated delays and re-sequence when jobs are released.
 
-## Slide 19: Don's walk-through (end by 10:53)
+## Slide 19: Don's walk-through
 
 - Now each of us explains one part that **Claude Code** drafted.
 - Mine is the **mixed-integer benchmark**.
+- It proves the optimum on the two smallest cases.
 - One thing was **wrong**: the agent solved the model **twice**.
 - The solver said **eighty-one seconds**, but the command took more than **three minutes**.
 - We compared the reported time with the **clock** and removed the second solve.
 - A test now requires the optimum of **two hundred thirty-three**.
 
-## Slide 20: Amir's walk-through (end by 11:33)
+## Slide 20: Amir's walk-through
 
 **Amir:**
 
@@ -232,8 +239,9 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - That **misses delays** caused by the jobs ahead of it.
 - So we used **simulated completion times** from the thirty saved scenarios.
 - The jobs at risk changed from **three** in each sequence to **six of forty-one** and **four of eleven**.
+- We recomputed the counts from those saved scenarios, and the tests still pass.
 
-## Slide 21: what we now know (end by 12:00)
+## Slide 21: what we now know
 
 **Don:**
 
