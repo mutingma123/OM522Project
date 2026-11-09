@@ -4,7 +4,7 @@
 \fin On flow lines such as printed circuit board assembly or furniture finishing, every job visits the same stages in the same order, and when jobs cannot pass one another, the order chosen at the first stage holds at every stage. \fine
 \fin A job that is quick at the first stage and slow at a later one then delays every job behind it, and the resulting waiting accumulates downstream. \fine
 \fin The planner of such a line fixes one sequence for the jobs of a planning period before processing begins, although the jobs are released at different times, carry due dates of unequal importance, and take processing times that will differ from their planned values. \fine
-\fin Dispatching rules are used very often in practice, and the earliest due date (EDD) rule is among the most common rules for tardiness objectives~\cite{vallada2008review}. \fine
+\fin \citet{vallada2008review} report that dispatching rules are used very often in practice and that earliest due date (EDD), which would sort this line's jobs by due date alone, is among the most common rules for total tardiness. \fine
 \fin EDD orders the jobs by due date alone, so it cannot account for job weights, release dates, or processing times at the stages after the first. \fine
 
 \sumpara Searched sequences are known to beat dispatching rules on exact data, but whether that advantage survives variable processing times has been studied only for the makespan. \sumparaend

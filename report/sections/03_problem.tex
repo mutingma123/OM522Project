@@ -50,4 +50,4 @@ Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \
 \sumpara The tardiness bound never excludes the optimal schedule, so the program's optimum equals the best sequence's tardiness. \sumparaend
 \fin Under \eqref{eq:recursion}, every job of every sequence finishes by $\max_h r_h + \sum_{h,k} p_{hk}$, because each completion time is a release date plus the processing times along one path through the schedule. \fine
 \fin The bound $U_j$ therefore never forces a positive tardiness on the earliest-start schedule of any sequence, which by \cref{sec:timing} is the best schedule for that sequence, and the optimal value of the program equals $\min_\pi Z(\pi)$. \fine
-\fin We use the program only as a benchmark that certifies optimal values. \fine
+\fin The program serves only to certify the optima of the 6-job and 15-job instances and is never one of the compared methods. \fine
