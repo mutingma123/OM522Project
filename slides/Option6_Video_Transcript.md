@@ -1,6 +1,6 @@
 # Live transcript for the 10 to 15 minute video: The Value of a Wrong Plan
 
-Read this script aloud while recording, together with `Option6_Prototype_Slides.pdf`. Don presents every slide except slide 20, which Amir presents. At a calm 110 words per minute, with the commands pasted, it takes about 11:60. It stays inside the 10 to 15 minute window from 10:22 at 130 words per minute to 14:20 at 90.
+Read this script aloud while recording, together with `Option6_Prototype_Slides.pdf`. Don presents every slide except slide 20, which Amir presents. At a calm 110 words per minute, with the commands pasted, it takes about 12:00. It stays inside the 10 to 15 minute window from 10:22 at 130 words per minute to 14:20 at 90.
 
 ## How to use this script
 
@@ -233,7 +233,7 @@ Read this script aloud while recording, together with `Option6_Prototype_Slides.
 - So we used **simulated completion times** from the thirty saved scenarios.
 - The jobs at risk changed from **three** in each sequence to **six of forty-one** and **four of eleven**.
 
-## Slide 21: what we now know (end by 11:60)
+## Slide 21: what we now know (end by 12:00)
 
 **Don:**
 
