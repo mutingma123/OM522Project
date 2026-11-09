@@ -41,7 +41,7 @@ $\pi$, $\pi(i)$ & A sequence of all jobs, and the job in its position $i$ & & \c
 $S_{jk}$, $C_{jk}$ & Start and completion of job $j$ at stage $k$ & minutes & \eqref{eq:recursion} \\
 $T_j$ & Tardiness of job $j$, $\max\{0, C_{jm} - d_j\}$ & minutes & \cref{sec:timing} \\
 $Z(\pi)$ & Total weighted tardiness of $\pi$ (primary measure) & weighted minutes & \eqref{eq:measures} \\
-$W(\pi)$ & Total waiting between stages of $\pi$ (secondary measure) & minutes & \eqref{eq:measures} \\
+$W(\pi)$ & Total waiting between stages of $\pi$ (secondary measure) & job-minutes & \eqref{eq:measures} \\
 $F(\pi)$ & The pair $(Z(\pi), W(\pi))$, compared lexicographically & & \cref{sec:ig} \\
 $x_{jq}$ & 1 if job $j$ takes position $q$, 0 otherwise & binary & \cref{sec:mip} \\
 $B_{qk}$, $E_{qk}$ & Start and end of the job in position $q$ at stage $k$ & minutes & \cref{sec:mip} \\

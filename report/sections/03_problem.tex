@@ -6,7 +6,7 @@
 \fin A line of $m$ stages, indexed by $k$ in line order, processes $n$ jobs, indexed by $j$, and each stage has one machine. \fine
 \fin Job $j$ is released at time $r_j$, is due at $d_j$, carries a weight $w_j$ that scores its priority, and requires a processing time $p_{jk} > 0$ at stage $k$. \fine
 \fin Every job visits every stage in line order without interruption, jobs cannot pass one another, so one sequence of the jobs holds at every stage, and the buffers between stages are unlimited. \fine
-\fin We assume that every stage is idle at time zero, that the planner fixes the sequence before the first job starts and does not revise it, and that among sequences with equal weighted tardiness the planner prefers less waiting between stages. \fine
+\fin We assume that every stage is idle at time zero, that the planner fixes the sequence before the first job starts and does not revise it, and that among sequences with equal weighted tardiness the planner prefers less waiting between stages under earliest-start execution. \fine
 
 \subsection{Earliest-start recursion}\label{sec:timing}
 
@@ -21,7 +21,8 @@ S_{\pi(i),k} = \max\bigl\{C_{\pi(i),k-1},\; C_{\pi(i-1),k}\bigr\}, \qquad C_{\pi
 \begin{equation}\label{eq:measures}
 Z(\pi) = \sum_{j=1}^{n} w_j T_j, \qquad W(\pi) = \sum_{j=1}^{n} \sum_{k=2}^{m} \bigl(S_{jk} - C_{j,k-1}\bigr),
 \end{equation}
-\fin in weighted minutes and minutes, respectively. \fine
+\fin in weighted minutes and job-minutes, respectively. \fine
+\fin Both measures are evaluated on the earliest-start schedule of \eqref{eq:recursion}, under which a job waits between stages only while the next stage is still occupied by the preceding job. \fine
 
 \sumpara The recursion yields the smallest tardiness of any schedule with that sequence, so the problem reduces to choosing a sequence. \sumparaend
 \fin By induction over positions and stages, any feasible schedule that keeps sequence $\pi$ starts each operation no earlier than \eqref{eq:recursion}, so the recursion gives every job its earliest completion at the last stage and $\pi$ its smallest value of $Z$. \fine
