@@ -1,0 +1,37 @@
+\section{Idle time by stage}\label{sec:idle}
+
+\sumpara Idle time differs across sequences only through their makespans. \sumparaend
+\fin \Cref{tab:idle} reports the idle time of every stage for each schedule of \cref{tab:comparison}. \fine
+\fin A stage's idle time is the makespan minus the stage's total processing time, so it includes any time before the stage starts its first job. \fine
+\fin Because a stage's total processing time is the same for every sequence, two schedules of an instance differ in idle time at every stage by the difference in their makespans. \fine
+
+\begin{table}[!htbp]
+\centering
+\caption{Idle time by stage, in minutes, for each schedule of \cref{tab:comparison}. The 6-job instance has four stages.}
+\label{tab:idle}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{llrrrrrrrr}
+\toprule
+Instance (jobs) & Method & S1 & S2 & S3 & S4 & S5 & S6 & S7 & S8 \\
+\midrule
+Hand-checkable (6) & Earliest due date & 70 & 86 & 76 & 72 &  &  &  &  \\
+ & NEH\_EWDD only & 67 & 83 & 73 & 69 &  &  &  &  \\
+ & Iterated greedy & 67 & 83 & 73 & 69 &  &  &  &  \\
+ & Optimum (HiGHS) & 67 & 83 & 73 & 69 &  &  &  &  \\
+\midrule
+Small development (15) & Earliest due date & 272 & 243 & 246 & 196 & 268 & 222 & 283 & 274 \\
+ & NEH\_EWDD only & 223 & 194 & 197 & 147 & 219 & 173 & 234 & 225 \\
+ & Iterated greedy & 212 & 183 & 186 & 136 & 208 & 162 & 223 & 214 \\
+ & Optimum (HiGHS) & 212 & 183 & 186 & 136 & 208 & 162 & 223 & 214 \\
+\midrule
+Medium development (45) & Earliest due date & 353 & 272 & 316 & 231 & 274 & 358 & 324 & 292 \\
+ & NEH\_EWDD only & 323 & 242 & 286 & 201 & 244 & 328 & 294 & 262 \\
+ & Iterated greedy & 323 & 242 & 286 & 201 & 244 & 328 & 294 & 262 \\
+\midrule
+Large development (120) & Earliest due date & 472 & 501 & 550 & 531 & 411 & 576 & 537 & 476 \\
+ & NEH\_EWDD only & 464 & 493 & 542 & 523 & 403 & 568 & 529 & 468 \\
+ & Iterated greedy & 464 & 493 & 542 & 523 & 403 & 568 & 529 & 468 \\
+\bottomrule
+\end{tabular}
+\end{table}

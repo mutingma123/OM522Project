@@ -6,34 +6,37 @@
 \fin \Cref{tab:comparison} reports every method on every instance, and every one of these schedules is feasible. \fine
 \fin Iterated greedy lowered total weighted tardiness relative to EDD by 17.1~percent on the 6-job instance, from 281 to 233 weighted minutes, and by 98.5, 97.6, and 81.0~percent on the development instances with 15, 45, and 120~jobs. \fine
 \fin It also lowered total waiting on the three development instances, by 65.6, 61.1, and 61.8~percent, but raised it on the 6-job instance from 13 to 37~job-minutes. \fine
+\fin Makespan was shorter by 3, 60, 30, and 8~minutes on the instances with 6, 15, 45, and 120~jobs, and the on-time fractions in \cref{tab:comparison} are discussed in \cref{sec:gain}; \cref{sec:idle} reports idle time by stage. \fine
 \fin \Cref{fig:comparison} shows both effects by instance size: the tardiness of the searched sequence is smallest relative to EDD at 15 and 45~jobs and rises to 19~percent of the EDD value at 120~jobs. \fine
 
 \begin{table}[ht]
 \centering
-\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Seconds are the method's computation time on the laptop of \cref{sec:settings}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the solver returned one optimal order, with 323~job-minutes of waiting.}
+\caption{Deterministic comparison. Each row is one method on one instance, and every schedule is feasible. Tardiness is in weighted minutes, waiting in job-minutes, and makespan in minutes. Seconds are the method's computation time on the laptop of \cref{sec:settings}. The optimum rows come from the mixed-integer program of \cref{sec:mip}; on the 15-job instance the solver returned one optimal order, with 323~job-minutes of waiting.}
 \label{tab:comparison}
 \small
-\begin{tabular}{llrrr}
+\setlength{\tabcolsep}{4.5pt}
+\begin{tabular}{llrrrrr}
 \toprule
-Instance (jobs) & Method & Total weighted tardiness & Total waiting & Seconds \\
+ & & Weighted & Total & & On-time & \\
+Instance (jobs) & Method & tardiness & waiting & Makespan & fraction & Seconds \\
 \midrule
-Hand-checkable (6) & Earliest due date & 281 & 13 & 0.000 \\
- & NEH\_EWDD only & 233 & 37 & 0.000 \\
- & Iterated greedy & 233 & 37 & 0.21 \\
- & Optimum (HiGHS) & 233 & 37 & 0.36 \\
+Hand-checkable (6) & Earliest due date & 281 & 13 & 139 & 0.000 & 0.000 \\
+ & NEH\_EWDD only & 233 & 37 & 136 & 0.000 & 0.000 \\
+ & Iterated greedy & 233 & 37 & 136 & 0.000 & 0.21 \\
+ & Optimum (HiGHS) & 233 & 37 & 136 & 0.000 & 0.36 \\
 \midrule
-Small development (15) & Earliest due date & 1,417 & 732 & 0.000 \\
- & NEH\_EWDD only & 70 & 291 & 0.000 \\
- & Iterated greedy & 21 & 252 & 0.52 \\
- & Optimum (HiGHS) & 21 & 323 & 85.8 \\
+Small development (15) & Earliest due date & 1,417 & 732 & 417 & 0.333 & 0.000 \\
+ & NEH\_EWDD only & 70 & 291 & 368 & 0.733 & 0.000 \\
+ & Iterated greedy & 21 & 252 & 357 & 0.867 & 0.52 \\
+ & Optimum (HiGHS) & 21 & 323 & 357 & 0.867 & 85.8 \\
 \midrule
-Medium development (45) & Earliest due date & 2,371 & 2,040 & 0.000 \\
- & NEH\_EWDD only & 360 & 1,068 & 0.000 \\
- & Iterated greedy & 58 & 794 & 3.22 \\
+Medium development (45) & Earliest due date & 2,371 & 2,040 & 781 & 0.244 & 0.000 \\
+ & NEH\_EWDD only & 360 & 1,068 & 751 & 0.778 & 0.000 \\
+ & Iterated greedy & 58 & 794 & 751 & 0.911 & 3.22 \\
 \midrule
-Large development (120) & Earliest due date & 23,015 & 7,863 & 0.000 \\
- & NEH\_EWDD only & 9,452 & 3,928 & 0.003 \\
- & Iterated greedy & 4,383 & 3,005 & 37.2 \\
+Large development (120) & Earliest due date & 23,015 & 7,863 & 1,812 & 0.233 & 0.000 \\
+ & NEH\_EWDD only & 9,452 & 3,928 & 1,804 & 0.400 & 0.003 \\
+ & Iterated greedy & 4,383 & 3,005 & 1,804 & 0.642 & 37.2 \\
 \bottomrule
 \end{tabular}
 \end{table}
