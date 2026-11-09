@@ -11,6 +11,7 @@
 \input{support/SumCounterControl.tex}
 \input{support/SumAuthorControl.tex}
 \renewcommand{\fine}{\unskip\space}
+\graphicspath{{../results/}}
 
 \definecolor{ink}{HTML}{19354A}
 \definecolor{muted}{HTML}{536878}
@@ -87,47 +88,105 @@
 \title{The Value of a Wrong Plan}
 \subtitle{Iterated Greedy Sequencing for Mean Total Weighted Tardiness in a Stochastic Flow Shop}
 \author{Muting (Don) Ma and Amirhossein Ranjbar}
-\date{OM 522 team project, option 6\\[0.3em] November 9, 2026}
+\date{OM 522 team project, option 6\\[0.3em] November 9, 2026\\[0.3em] \href{https://github.com/mutingma123/OM522Project}{github.com/mutingma123/OM522Project}}
 
 \begin{document}
 \begin{frame}[plain]
 \titlepage
 \end{frame}
 
-\begin{frame}{Ten minutes in five parts}
-\tableofcontents[hideallsubsections]
+\begin{frame}{The talk in six parts}
+\tableofcontents[hideallsubsections,sections={1-6}]
 \vfill
-{\scriptsize\color{muted}Times are the planned share of the 10-minute limit; the title and closing take 30 seconds.}
+{\scriptsize\color{muted}Minutes are the planned share of the video.}
 \end{frame}
 
-\section{The decision (0:50)}\label{sec:decision}
-\begin{frame}{A planner picks one job order for all eight stages}
+\section{The question (1:20)}\label{sec:question}
+\begin{frame}{A planner must fix one job order before the times are known}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.53\textwidth}
 \begin{block}{The decision}
 \small
 \begin{itemize}
-\item Jobs are released over time, each with a due date and a weight.
-\item Every job visits stages S1 to S8 in order, and jobs cannot pass one another, so one sequence holds at every stage.
-\item Primary measure: total weighted tardiness. Secondary measure: total waiting between stages under earliest-start execution, in job-minutes.
+\item Eight stages in a fixed order; jobs cannot pass, so one sequence holds at every stage.
+\item Each job has a release date, a due date, and a weight.
+\item Primary measure: total weighted tardiness.
+\item Secondary measure: total waiting between stages under earliest-start execution, in job-minutes.
 \end{itemize}
 \end{block}
 \end{column}
 \begin{column}{0.44\textwidth}
-\begin{block}{Assumptions we added}
+\begin{block}{The rule to beat}
 \small
 \begin{itemize}
-\item Every stage is free at time zero.
-\item The sequence is fixed before the first job starts and is not revised.
-\item Among sequences with equal weighted tardiness, less waiting is better.
+\item Earliest due date (EDD) is among the most common rules for tardiness \cite{vallada2008review}.
+\item It sorts by due date alone: no weights, no releases, no later-stage times.
+\item We hold its list frozen, as the planner must.
 \end{itemize}
 \end{block}
 \end{column}
 \end{columns}
-\point{State why order matters.}{A job that is slow at a later stage holds up every job behind it, so a good order depends on more than due dates.}
+\point{State why order matters.}{A job that is slow at a later stage holds up every job behind it.}
 \end{frame}
 
-\section{Rule to beat and checker (2:35)}\label{sec:rule}
+\begin{frame}{Is a plan optimized on wrong times still worth having?}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.49\textwidth}
+\begin{block}{Known on exact data}
+\small
+\begin{itemize}
+\item Insertion heuristics beat dispatching rules for tardiness \cite{vallada2008review}.
+\item Iterated greedy was the best method tested for weighted tardiness, on flow shops with setups \cite{ruiz2008igwt}.
+\end{itemize}
+\end{block}
+\begin{block}{Warning from schedule execution}
+\small
+Optimized schedules lose their advantage beyond a level of variability that depends on the system \cite{aytug2005executing}.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Known with random times}
+\small
+\begin{itemize}
+\item Studies concentrate on the expected makespan \cite{gonzalezneira2017review}.
+\item Methods built on exact or mean times stay close to the best stochastic methods \cite{baker2012stochastic,framinan2015stochastic,juan2014simheuristic}.
+\item Tardiness is named as open \cite{baker2012stochastic,gonzalezneira2017review}.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\point{Name the gap.}{The studies we reviewed do not test weighted tardiness with release dates when a searched sequence is held fixed.}
+\end{frame}
+
+\section{Model and methods (3:30)}\label{sec:model}
+\begin{frame}{One sequence fixes every start time}
+\small
+\[
+S_{\pi(i),k} = \max\bigl\{C_{\pi(i),k-1},\, C_{\pi(i-1),k}\bigr\}, \qquad C_{\pi(i),k} = S_{\pi(i),k} + p_{\pi(i),k}
+\]
+\[
+Z(\pi) = \sum_{j} w_j \max\{0,\, C_{jm} - d_j\}, \qquad W(\pi) = \sum_{j} \sum_{k \geq 2} \bigl(S_{jk} - C_{j,k-1}\bigr)
+\]
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.5\textwidth}
+\begin{block}{Assumptions}
+\footnotesize
+\begin{itemize}
+\item Every stage is free at time zero; buffers are unlimited.
+\item The sequence is fixed once and never revised.
+\item With equal tardiness, the planner prefers less waiting.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{block}{Certified optimum}
+\footnotesize
+A positional mixed-integer program defines the optimum. HiGHS \cite{highs} certifies it on the 6- and 15-job instances, as a benchmark only.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
 \begin{frame}{Rule to beat: earliest due date gives 281 on the hand-checkable case}
 \small
 \sumpara State the rule exactly.\sumparaend
@@ -169,34 +228,29 @@
 \point{Say why it is separate.}{It recomputes every measure and imports nothing from the solver, so a method's timing error cannot repeat here.}
 \end{frame}
 
-\section{Researched method (2:00)}\label{sec:method}
-\begin{frame}{Researched method: iterated greedy for weighted tardiness}
+\begin{frame}{Researched method: iterated greedy}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{0.47\textwidth}
 \begin{block}{Source}
 \small
 Ruiz and Stützle's IG\_RS\_LS for flow shops with setup times and weighted tardiness \cite{ruiz2008igwt}, built on their makespan version \cite{ruiz2007ig}; we set every setup time to zero.
 \end{block}
-\begin{block}{Why it should beat EDD here}
+\begin{block}{Why it should beat EDD}
 \small
-\begin{itemize}
-\item EDD sorts on due dates alone; it ignores weights, releases, and processing times.
-\item Iterated greedy compares sequences by their actual weighted tardiness on all eight stages, so a heavy job can move ahead of a light one.
-\end{itemize}
+It compares sequences by their actual weighted tardiness on all eight stages, so a heavy job can move ahead of a light one.
 \end{block}
 \end{column}
 \begin{column}{0.5\textwidth}
 \begin{block}{Evidence in the sources}
 \small
 \begin{itemize}
-\item Its weighted due date start, NEH\_EWDD, beat plain NEH on 470 of 480 instances \cite{ruiz2008igwt}.
-\item IG\_RS\_LS had the lowest average deviation from the best known solutions in all four weighted tardiness instance sets \cite{ruiz2008igwt}.
-\item In a review of 40 tardiness methods, insertion-based heuristics did best and EDD ranked below its NEH variant \cite{vallada2008review}.
+\item Its weighted start, NEH\_EWDD, beat plain NEH on 470 of 480 instances \cite{ruiz2008igwt}.
+\item It had the lowest average deviation from the best known solutions in all four instance sets \cite{ruiz2008igwt}.
 \end{itemize}
 \end{block}
 \end{column}
 \end{columns}
-\point{Name the gap we close.}{Neither source has release times; our timing includes them in every evaluation.}
+\point{Name the gap we close.}{Neither source has release dates; our timing includes them in every evaluation.}
 \end{frame}
 
 \begin{frame}{How it builds, improves, and stops}
@@ -236,7 +290,40 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with setup times and weighted tard
 \end{columns}
 \end{frame}
 
-\section{First implementation against the rule (1:45)}\label{sec:results}
+\section{Experiment design (0:30)}\label{sec:design}
+\begin{frame}{Four instances, one checker, 180 paired scenarios}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.5\textwidth}
+\begin{block}{Instances and settings}
+\footnotesize
+\begin{tabular}{lrr}
+\toprule
+Instance & Jobs & Stages \\
+\midrule
+Hand-checkable & 6 & 4 \\
+Small development & 15 & 8 \\
+Medium development & 45 & 8 \\
+Large development & 120 & 8 \\
+\bottomrule
+\end{tabular}
+\par\medskip
+Iterated greedy: 5000 iterations, seed 522. The independent checker computes every reported value.
+\end{block}
+\end{column}
+\begin{column}{0.47\textwidth}
+\begin{block}{Stress test on the 45-job instance}
+\footnotesize
+\begin{itemize}
+\item Each planned time is multiplied by a lognormal factor with mean one and coefficient of variation $\nu$.
+\item 30 saved scenarios at $\nu = 0.2$, then 30 new ones at each of $\nu = 0.1$, 0.2, 0.3, 0.5, and 0.8.
+\item Both sequences stay fixed; each operation starts as early as the realized times allow.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Results (2:55)}\label{sec:results}
 \begin{frame}{On the hand-checkable case it reaches the optimum: 233 against 281}
 \begin{center}
 {\scriptsize\color{muted}EDD rule: J001, J002, J005, J003, J006, J004}\\
@@ -250,7 +337,7 @@ Ruiz and Stützle's IG\_RS\_LS for flow shops with setup times and weighted tard
 \point{State the check and the cost.}{All 720 sequences confirm 233 is optimal; waiting rises from 13 to 37 job-minutes.}
 \end{frame}
 
-\begin{frame}{Lower weighted tardiness than the rule on all four instances}
+\begin{frame}{On exact data, iterated greedy (IG) is lower than EDD on all four instances}
 \begin{center}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -275,59 +362,166 @@ Large & 120 & 23,015 & 4,383 & 7,863 & 3,005 & 1,812 & 1,804 & 0.233 & 0.642 \\
 \end{itemize}
 \end{frame}
 
-\section{Walk-throughs, one per member (1:30)}\label{sec:walk}
-\begin{frame}{Walk-through: the checker's violation messages}
-\framesubtitle{The independent checker, drafted by Claude Code}
+\begin{frame}{The gain relative to EDD is largest at 15 and 45 jobs}
+\begin{center}
+\includegraphics[width=0.86\textwidth]{comparison/comparison.png}
+\end{center}
+\small
+\point{Read the figure.}{At 120 jobs iterated greedy keeps 19 percent of the EDD tardiness; five other seeds there reached 4,159 to 4,306, so the search has not converged.}
+\end{frame}
+
+\begin{frame}{At $\nu = 0.2$ the iterated greedy sequence wins all 30 scenarios}
+\begin{center}
+\footnotesize
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{Weighted tardiness} & \multicolumn{3}{c}{Waiting (job-minutes)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}
+Sequence & Planned & Mean & 90th pct. & Planned & Mean & 90th pct. \\
+\midrule
+Earliest due date & 2,371.0 & 3,541.1 & 4,616.6 & 2,040.0 & 2,454.5 & 2,768.6 \\
+Iterated greedy & 58.0 & 420.6 & 592.2 & 794.0 & 1,276.9 & 1,454.9 \\
+\bottomrule
+\end{tabular}
+\par\smallskip
+\includegraphics[width=0.74\textwidth]{stress/stress_per_scenario.png}
+\end{center}
+\vspace{-0.2cm}
+{\small\color{uablue}Mean reduction: 3,120.5 weighted minutes (standard error 150.1). No hard constraint is broken.\par}
+\end{frame}
+
+\begin{frame}{As variability grows, the percentage falls and the mean gain holds}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.56\textwidth}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{rrrrrr}
+\toprule
+ & \multicolumn{2}{c}{Mean tardiness} & \multicolumn{3}{c}{Reduction} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}
+$\nu$ & EDD & IG & Mean (s.e.) & 10th pct. & \% \\
+\midrule
+0.1 & 2,720.1 & 148.1 & 2,572.0 (65.9) & 2,048.3 & 94.6 \\
+0.2 & 3,273.5 & 407.2 & 2,866.4 (121.3) & 2,055.3 & 87.6 \\
+0.3 & 4,139.8 & 952.5 & 3,187.3 (203.8) & 1,781.1 & 77.0 \\
+0.5 & 6,680.4 & 2,996.7 & 3,683.7 (223.8) & 2,473.2 & 55.1 \\
+0.8 & 12,230.5 & 8,901.6 & 3,329.0 (342.7) & 851.5 & 27.2 \\
+\bottomrule
+\end{tabular}
+\par\medskip
+\small
+EDD wins 1 of the 180 paired scenarios, at $\nu = 0.8$, by 870.4 weighted minutes.
+\end{column}
+\begin{column}{0.42\textwidth}
+\includegraphics[width=\textwidth]{stress/stress_cv_sweep.png}
+\end{column}
+\end{columns}
+\point{Read the sweep.}{The percentage falls at every step. The mean gain stays between 2,572.0 and 3,683.7 weighted minutes.}
+\end{frame}
+
+\begin{frame}{Why: more on-time jobs to lose, each at lower risk}
+\begin{center}
+\small
+\begin{tabular}{lrr}
+\toprule
+At $\nu = 0.2$, 30 saved scenarios & EDD & Iterated greedy \\
+\midrule
+Late jobs in the plan & 34 & 4 \\
+Mean late jobs across scenarios & 36.1 & 11.5 \\
+On-time jobs in the plan & 11 & 41 \\
+Median planned slack of on-time jobs (minutes) & 28 & 31 \\
+Median simulated completion standard deviation (minutes) & 9.9 & 8.3 \\
+Mean late probability of an on-time job & 27.9\% & 18.5\% \\
+On-time jobs that turn late per scenario & 3.1 & 7.6 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\point{Say what the simulation adds.}{Simulated completion times include the delays passed on by the jobs ahead.}
+\end{frame}
+
+\section{Recommendation and limits (0:55)}\label{sec:recommend}
+\begin{frame}{Recommendation: use the iterated greedy sequence on this line}
+\begin{block}{Expected benefit at $\nu = 0.2$ on the 45-job instance}
+\small
+Mean weighted tardiness falls by 3,120.5 (standard error 150.1) and, in a second independent set, by 2,866.4 (standard error 121.3). Late jobs per period: 11.5 against 36.1. Mean waiting is 48.0 percent lower.
+\end{block}
+\begin{block}{Trade-off we accept}
+\small
+The sequence cannot be traced by hand, depends on a seed, and takes seconds to compute: 3.22 at 45 jobs and 37.2 at 120.
+\end{block}
+\begin{block}{Condition that would change it}
+\small
+At $\nu = 0.8$ the mean gain remains 3,329.0, but the 10th percentile of the per-period gain falls to 7.0 percent of the EDD mean and EDD wins 1 of 30 scenarios. Measure the line's variability first.
+\end{block}
+\end{frame}
+
+\begin{frame}{Limits of the evidence and what comes next}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.53\textwidth}
+\begin{block}{What the study does not show}
+\footnotesize
+\begin{itemize}
+\item One generator; the stress test covers one 45-job instance.
+\item Independent noise: no slow shift or degraded machine.
+\item EDD is a frozen list, not online dispatching.
+\item NEH\_EWDD and stochastic methods were not run in the scenarios.
+\item Optimality is proven only up to 15 jobs.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.44\textwidth}
+\begin{block}{Next tests}
+\footnotesize
+\begin{itemize}
+\item Score sequences over sampled scenarios.
+\item Add correlated delays by stage or shift.
+\item Re-sequence at each release.
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Walk-throughs (1:15)}\label{sec:walk}
+\begin{frame}{Walk-through (Don): the mixed-integer benchmark}
+\framesubtitle{Drafted by Claude Code}
 \begin{block}{What it does}
-\small Reads only the instance files and the exported decision, names every job and stage that breaks a constraint, and recomputes the measures.
+\small Builds the positional program and certifies the optimum of the 6- and 15-job instances with HiGHS.
 \end{block}
 \begin{block}{What was wrong in the agent's version}
-\small Messages printed every time as a float, such as \texttt{starts at 23.0 before it completes S1 at 24.0}. The data are whole minutes, so the messages did not read like the input and did not match the test we wrote.
+\small It set the objective with a call that also solves, then solved again. The solver reported 81 seconds, but the command took more than three minutes.
 \end{block}
 \begin{block}{How we checked it}
-\small Our checker tests damage the worked example in six ways and assert each message; one commit fixed the format.
+\small We compared the reported time with the wall clock and removed the second solve. A test requires the proven optimum of 233, and the checker confirms the solver's order.
 \end{block}
 \end{frame}
 
-\begin{frame}{Walk-through: the shortcut in the insertion search}
-\framesubtitle{The best-position search, drafted by Claude Code}
+\begin{frame}{Walk-through (Amir): which on-time jobs are at risk}
+\framesubtitle{Drafted by Claude Code}
 \begin{block}{What it does}
-\small Tries one job at every position of a partial sequence and returns the best, timing the jobs ahead of each position only once.
+\small Measures how exposed the on-time jobs of each sequence are when processing times vary.
 \end{block}
-\begin{block}{What was unclear in the agent's version}
-\small It abandons a position as soon as the running totals exceed the best position found. Could that skip the true best position?
+\begin{block}{What was wrong in the agent's version}
+\small It compared slack with the variation of a job's own processing times. That misses delays passed on by the jobs ahead.
 \end{block}
 \begin{block}{How we checked it}
-\small The shortcut is safe because weighted tardiness and waiting only grow as jobs are appended. A test compares it with evaluating every position on 20 random cases, and the two always agree.
+\small We replaced it with simulated completion times over the 30 saved scenarios. Jobs with slack below that variation became 6 of 41 and 4 of 11, where the first version showed 3 in each sequence.
 \end{block}
 \end{frame}
 
-\begin{frame}{Walk-through: the method's start and temperature}
-\framesubtitle{The researched method, drafted by Claude Code}
-\begin{block}{What it does}
-\small Builds the NEH\_EWDD start, then runs the destroy, rebuild, local search, and accept loop.
-\end{block}
-\begin{block}{What was wrong in the agent's first plan}
-\small It ordered the start by plain due date and used a temperature factor of 0.4 from the makespan paper \cite{ruiz2007ig}. The weighted tardiness paper orders by $d_j / w_j$ and uses 0.5 \cite{ruiz2008igwt}.
-\end{block}
-\begin{block}{How we checked it}
-\small Reading pages 1146 to 1148 of the 2008 paper; on the hand-checkable case the method matches the optimum from enumerating all 720 sequences, and our tests confirm it beats the rule on all four instances.
-\end{block}
-\end{frame}
-
-\begin{frame}{What this check-in shows}
+\begin{frame}{What we now know}
 \small
 \begin{itemize}
-\item The rule to beat reproduces the worked example exactly, and the independent checker confirms it on the worked example and a fresh development instance.
-\item Iterated greedy \cite{ruiz2008igwt} beats the rule on weighted tardiness on all four instances, and the checker confirms every decision.
-\item It costs seconds of computation and, on the six-job case, more waiting.
-\item Next: compare the methods by instance size and stress-test both fixed plans under processing-time variability.
+\item On exact data, iterated greedy cuts weighted tardiness by 81.0 to 98.5 percent against EDD on the development instances and reaches the proven optimum on the two smallest instances.
+\item At $\nu = 0.2$, its fixed sequence wins all 30 scenarios, with an 88.1 percent lower mean.
+\item As variability grows, the percentage falls to 27.2 at $\nu = 0.8$, while the mean gain stays between 2,572.0 and 3,683.7 weighted minutes.
 \end{itemize}
+\point{State the message.}{A plan optimized on wrong times kept its value on this line at every level of variability we tested.}
 \end{frame}
 
 \section{Sources}\label{sec:sources}
-\begin{frame}{Sources}
-\footnotesize
+\begin{frame}[allowframebreaks]{Sources}
+\scriptsize
 \bibliographystyle{unsrturl}
 \bibliography{Option6_Prototype_Slides}
 \end{frame}
