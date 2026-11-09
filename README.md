@@ -2,6 +2,10 @@
 
 A production planner at a flow line, such as a circuit board assembly line, decides before each planning period the order in which that period's jobs enter the first of eight stages, and because jobs cannot pass one another on the line, that order holds at every stage. Our tool reads the period's job, stage, and processing-time files and returns the order together with the planned start and completion of every operation, chosen to keep total weighted tardiness low. We added three assumptions to the brief. Every stage is free at time zero, so no work carries over from the previous period. The planner fixes the whole sequence before the first job starts and does not revise it when actual times differ, which is the execution rule of the stress test. Among sequences with the same weighted tardiness, the planner prefers the one with less waiting between stages, so the researched method uses waiting to break ties.
 
+## Video
+
+The video presentation is on YouTube: <https://youtu.be/X-LLi2kT_y0>.
+
 ## Running the tool
 
 Install [Pixi](https://pixi.sh), then run every command from the repository root. The lock file covers Linux, macOS (Intel and Apple silicon), and Windows.
