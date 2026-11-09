@@ -153,11 +153,13 @@ def run(out_dir: Path) -> dict:
 
     # 3. Execute both fixed plans on every saved scenario, and check every realized schedule.
     rows = []
+    realized = {method: [] for method in plans}
     with tempfile.TemporaryDirectory() as scratch:
         for s, path in enumerate(paths, start=1):
             p = read_scenario(instance, path)
             for method, seq in plans.items():
                 result = execute(instance, seq, p)
+                realized[method].append(result["completion"][:, -1])
                 decision_path = Path(scratch) / f"{method}_{s:02d}.json"
                 decision_path.write_text(json.dumps(realized_decision(instance, seq, result)))
                 report = check_decision(instance_dir, decision_path, processing_times=path)
@@ -189,7 +191,7 @@ def run(out_dir: Path) -> dict:
             "scenarios_breaking_a_hard_constraint": sum(r["hard_constraint_violations"] > 0 for r in mine),
             "planned_late_jobs": deterministic[method]["late_jobs"],
             "mean_late_jobs": float(np.mean([r["late_jobs"] for r in mine])),
-            **slack_profile(instance, plans[method], deterministic[method]),
+            **slack_profile(instance, plans[method], deterministic[method], np.array(realized[method])),
         }
     pairs = [(a["total_weighted_tardiness"], b["total_weighted_tardiness"])
              for a, b in zip(rows[0::2], rows[1::2])]
@@ -203,17 +205,25 @@ def run(out_dir: Path) -> dict:
     return summary
 
 
-def slack_profile(instance, seq, result) -> dict:
-    """Planned slack of the jobs a plan finishes on time. A job is at risk when its slack is below
-    one standard deviation of its own total processing time under the stress model, i.e.
-    CV * sqrt(sum_k p_jk^2) for independent factors with coefficient of variation CV."""
-    slack = instance.due[seq] - result["completion"][:, -1]
-    own_sd = CV * np.sqrt((instance.p[seq] ** 2).sum(axis=1))
+def slack_profile(instance, seq, planned, realized: np.ndarray) -> dict:
+    """How the jobs a plan finishes on time fare across the saved scenarios. `realized` holds each
+    job's completion at the last stage in every scenario, so its spread includes the delays passed
+    on by the jobs ahead, and not only the variation of the job's own processing times."""
+    due = instance.due[seq]
+    plan = planned["completion"][:, -1]
+    slack = due - plan
     on_time = slack >= 0
+    spread = realized.std(axis=0, ddof=1)
+    late = realized > due
     return {
         "planned_on_time_jobs": int(on_time.sum()),
-        "planned_median_slack_of_on_time_jobs": float(np.median(slack[on_time])) if on_time.any() else None,
-        "planned_on_time_jobs_with_slack_below_own_sd": int((on_time & (slack < own_sd)).sum()),
+        "planned_median_slack_of_on_time_jobs": float(np.median(slack[on_time])),
+        "median_simulated_completion_sd_of_on_time_jobs": float(np.median(spread[on_time])),
+        "median_mean_completion_delay_of_on_time_jobs": float(np.median(realized.mean(axis=0)[on_time] - plan[on_time])),
+        "on_time_jobs_with_slack_below_simulated_sd": int((slack[on_time] < spread[on_time]).sum()),
+        "on_time_jobs_late_in_some_scenario": int(late[:, on_time].any(axis=0).sum()),
+        "mean_late_probability_of_on_time_jobs": float(late[:, on_time].mean()),
+        "mean_on_time_jobs_made_late_per_scenario": float(late[:, on_time].sum(axis=1).mean()),
     }
 
 
@@ -266,14 +276,17 @@ def _write_markdown(path: Path, summary: dict) -> None:
         )
     lines += [
         "",
-        "| Method | Late jobs in the plan | Mean late jobs across scenarios | On-time jobs in the plan | Median slack of on-time jobs | On-time jobs with slack below one standard deviation of their own processing |",
-        "| --- | ---: | ---: | ---: | ---: | ---: |",
+        "| Method | Late jobs in the plan | Mean late jobs across scenarios | On-time jobs in the plan | Median slack of on-time jobs | Median simulated completion standard deviation | Median mean completion delay | On-time jobs with slack below that standard deviation | On-time jobs late in some scenario | Mean late probability of an on-time job | On-time jobs made late per scenario |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
     ]
     for method in METHODS:
         v = m[method]
         lines.append(
             f"| {names[method]} | {v['planned_late_jobs']} | {v['mean_late_jobs']:.1f} | {v['planned_on_time_jobs']} | "
-            f"{v['planned_median_slack_of_on_time_jobs']:.1f} | {v['planned_on_time_jobs_with_slack_below_own_sd']} |"
+            f"{v['planned_median_slack_of_on_time_jobs']:.1f} | {v['median_simulated_completion_sd_of_on_time_jobs']:.1f} | "
+            f"{v['median_mean_completion_delay_of_on_time_jobs']:.1f} | {v['on_time_jobs_with_slack_below_simulated_sd']} | "
+            f"{v['on_time_jobs_late_in_some_scenario']} | {v['mean_late_probability_of_on_time_jobs']:.3f} | "
+            f"{v['mean_on_time_jobs_made_late_per_scenario']:.2f} |"
         )
     lines += [
         "",
