@@ -105,6 +105,13 @@ def benchmark(args) -> int:
     return 0
 
 
+def additional_measures(args) -> int:
+    from . import compare as comparison
+
+    comparison.write_additional_measures(comparison.ROOT / "results")
+    return 0
+
+
 def reproduce(args) -> int:
     """Regenerate every submitted comparison table and plot."""
     from . import benchmark as optimality
@@ -113,6 +120,7 @@ def reproduce(args) -> int:
 
     comparison.run(results_dir(None, "comparison"))
     optimality.run(results_dir(None, "benchmark"))
+    comparison.write_additional_measures(comparison.ROOT / "results")
     stress_test.run(results_dir(None, "stress"))
     return 0
 
@@ -140,6 +148,9 @@ def main(argv: list[str] | None = None) -> int:
     p_benchmark = commands.add_parser("benchmark", help="mixed-integer optimum on the two smallest instances")
     p_benchmark.add_argument("--out", help="output directory (default results/benchmark)")
     p_benchmark.set_defaults(handler=benchmark)
+
+    p_measures = commands.add_parser("measures", help="makespan, on-time fraction, and idle time of saved decisions")
+    p_measures.set_defaults(handler=additional_measures)
 
     p_stress = commands.add_parser("stress", help="stress test of both fixed plans")
     p_stress.add_argument("--out", help="output directory (default results/stress)")

@@ -141,6 +141,25 @@ def run(out_dir: Path) -> list[dict]:
     return rows
 
 
+def write_additional_measures(results: Path) -> list[dict]:
+    """Makespan, on-time fraction, and idle time by stage of every saved decision, from the checker.
+    A stage's idle time is the makespan minus its total processing time, as in the worked example."""
+    sources = [(name, method, results / "comparison" / "decisions" / name / method / "decision.json")
+               for name in INSTANCES for method in (*METHODS, "optimum")]
+    sources += [(name, "highs", results / "benchmark" / "decisions" / name / "decision.json") for name in INSTANCES]
+    rows = []
+    for name, method, path in sources:
+        if not path.is_file():
+            continue
+        found = check_decision(DATA / name, path)["measures"]
+        row = {"instance": name, "method": method, "makespan": found["makespan"], "on_time_rate": found["on_time_rate"]}
+        for k in range(1, 9):
+            row[f"idle_S{k}"] = found["idle_time_by_stage"].get(f"S{k}", "")
+        rows.append(row)
+    _write_csv(results / "comparison" / "additional_measures.csv", rows)
+    return rows
+
+
 def _timed(function, *args):
     began = time.perf_counter()
     seq, details = function(*args)
